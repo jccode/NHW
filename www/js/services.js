@@ -16,11 +16,11 @@ angular.module('nhw.services', [])
             isAuthenticated: function() {
                 // console.log( Util.getAthorizationKey() );
 
-                return false;
+                return true;
             }, 
 
             hasCheckIn: function() {
-                return false;
+                return true;
             }
         };
     }])
