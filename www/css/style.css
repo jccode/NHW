@@ -1,0 +1,27 @@
+.navbar-brand {
+  font-weight: bold;
+  color: #010169;
+}
+.navbar-app {
+  background-color: #ffffff;
+}
+.navbar-app .btn-navbar {
+  text-transform: none;
+}
+.navbar-absolute-top {
+  border-bottom-width: 0px;
+}
+.app-body {
+  background-color: #ffffff;
+}
+.higher-row {
+  margin-bottom: 15px;
+}
+.higher-row [class^="col-"] {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.info-section {
+  background-color: #f0f0f0;
+  color: #8a8a8a;
+}

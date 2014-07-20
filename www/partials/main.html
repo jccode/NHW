@@ -1,2 +1,16 @@
-<h1>Main</h1>
-<div ui-view="mainContent"></div>
+<div class="app">
+    <div class="navbar navbar-app navbar-absolute-top">
+        <div class="navbar-brand">
+            NS Werkplek
+        </div>
+
+        <div class="btn-group pull-right">
+            <div class="btn btn-navbar"> <i class="fa fa-user text-muted"></i> Profiel </div>
+            <div class="btn btn-navbar"> <i class="fa fa-search text-muted"></i> Zoeken </div>
+        </div>
+    </div>
+    <div class="app-body">
+        <div ui-view="mainContent"></div>
+    </div>
+</div>
+

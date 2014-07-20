@@ -1,0 +1,48 @@
+
+// styles
+@import "variables.less";
+
+
+//
+// bootstrap && angular-mobile override
+// 
+.navbar-brand {
+    font-weight: bold;
+    color: @brand-color;
+}
+
+.navbar-app {
+    background-color: @navbar-bg;
+}
+
+.navbar-app .btn-navbar {
+    text-transform: none;
+}
+
+.navbar-absolute-top {
+    border-bottom-width: 0px;
+}
+
+
+
+//
+//
+//
+
+.app-body {
+    background-color: @app-body-bg;
+}
+
+.higher-row {
+    margin-bottom: 15px;
+    
+    [class^="col-"] {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.info-section {
+    background-color: @info-section-bg;
+    color: darken(@info-section-bg, 40%);
+}
