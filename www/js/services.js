@@ -16,7 +16,7 @@ angular.module('nhw.services', [])
             isAuthenticated: function() {
                 // console.log( Util.getAthorizationKey() );
 
-                return true;
+                return false;
             }, 
 
             hasCheckIn: function() {
