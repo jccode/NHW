@@ -1,0 +1,17 @@
+
+{
+  "libs": [
+    "browser",
+    "ecma5"
+  ],
+  "loadEagerly": [
+    "lib/d3.v3.min.js"
+  ],
+  "plugins": {
+    "requirejs": {
+      "baseURL": "./",
+      "paths": {}
+    },
+    "angular": {}
+  }
+}

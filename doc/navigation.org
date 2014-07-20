@@ -1,0 +1,18 @@
+
+* First screen of the App
+
+进入App的第一屏会根据情况的不同而不同. 我们必须分成3种情况来加以讨论.
+
+1. 当用户第一次安装我们的应用,然后进入App.
+   - 显示欢迎画面
+   - 显示登陆窗口,用户进行登陆(email, authorization-key). 
+     登陆成功后,会保存状态到本地.下次不需要再进入此页面. 转到第2步.
+
+2. 用户已经被授权使用, 但还没check-in.
+   - 显示check-in页面. 
+     用户可以通过barcode或者manual check-in.
+
+3. 用户已经被授权使用, 并且已经check-in.
+   - 显示check-in information page.
+     这里显示了用户的登陆信息,楼层平面图,并且提供manual check-out button.
+
