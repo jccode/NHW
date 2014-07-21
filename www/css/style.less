@@ -33,8 +33,7 @@
     background-color: @app-body-bg;
 }
 
-.higher-row {
-    margin-bottom: 15px;
+.row-padding {
     
     [class^="col-"] {
         padding-top: 15px;
@@ -42,10 +41,49 @@
     }
 }
 
+
+// info-section
+
 .info-section {
     background-color: @info-section-bg;
     color: darken(@info-section-bg, 40%);
+    border-bottom: 1px solid @info-section-border;
+    // box-shadow: 0 2px 5px #D4D4D4; //#D4D4D4
+
+    .btn-default {
+        background-color: @info-section-bg;
+        border-color: #fff;
+        color: #007aff;
+    }
+
+    .user {
+        color: darken(@info-section-bg, 80%);
+    }
 }
+
+@media (max-width: @screen-xs-max) {
+    .info-section {
+        font-size: 10px;
+        
+        .avater {
+            padding-right: 7px;
+        }
+
+        .user {
+            padding-left: 0px;
+        }
+
+        .floor-info {
+            background-color: lighten(@info-section-bg, 3%);
+        }
+
+        .btn-wrapper {
+            padding-top: 0px;
+        }
+    }
+}
+
+
 
 
 //

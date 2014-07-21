@@ -14,16 +14,39 @@
 .app-body {
   background-color: #ffffff;
 }
-.higher-row {
-  margin-bottom: 15px;
-}
-.higher-row [class^="col-"] {
+.row-padding [class^="col-"] {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 .info-section {
   background-color: #f0f0f0;
   color: #8a8a8a;
+  border-bottom: 1px solid #e6e6e2;
+}
+.info-section .btn-default {
+  background-color: #f0f0f0;
+  border-color: #fff;
+  color: #007aff;
+}
+.info-section .user {
+  color: #242424;
+}
+@media (max-width: 767px) {
+  .info-section {
+    font-size: 10px;
+  }
+  .info-section .avater {
+    padding-right: 7px;
+  }
+  .info-section .user {
+    padding-left: 0px;
+  }
+  .info-section .floor-info {
+    background-color: #f8f8f8;
+  }
+  .info-section .btn-wrapper {
+    padding-top: 0px;
+  }
 }
 .form-signin {
   max-width: 330px;
