@@ -1,5 +1,5 @@
 
-angular.module('nhw.services', [])
+angular.module('nhw.services', ['ngResource', 'angular-underscore'])
 
     .factory('Util', function() {
 
@@ -10,18 +10,35 @@ angular.module('nhw.services', [])
         };
     })
              
-    .factory('User', ['Util', function(Util) {
+    .factory('User', ['$resource', '$rootScope', 'Util', function($resource, $rootScope, Util) {
+
+        var users = $resource('js/data/users.json').query();
 
         return {
-            isAuthenticated: function() {
-                // console.log( Util.getAthorizationKey() );
+            currUser: function() {
+                return $rootScope.user;
+            }, 
 
-                return true;
+            isAuthenticated: function(user) {
+                var cUser = this.currUser();
+                if(!user && cUser) {
+                    user = {
+                        name: cUser.name,
+                        email: cUser.email
+                    };
+                }
+                var ret =  _.where(users, user);
+                return ret.length > 0 ? ret[0]: false;
             }, 
 
             hasCheckIn: function() {
-                return true;
+                return false;
+            },
+
+            all: function() {
+                return users;
             }
+
         };
     }])
 ;

@@ -1,5 +1,32 @@
 
-angular.module("nhw.controllers", [])
+angular.module("nhw.controllers", ['nhw.services'])
+
+    .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', function($scope, $rootScope, $state, User) {
+        $scope.login = function (user) {
+            // console.log(user);
+            // console.log( User.all() );
+            
+            var available = User.isAuthenticated(user);
+            if( available ){
+                $scope.error = "";
+                $rootScope.user = available;
+                $state.go('home');
+
+            } else {
+                $scope.error = "Sorry, you're not authorized to use this app.";
+            }
+        };
+
+    }])
+
+    .controller('CheckInCtrl', ['$scope', 'User', function($scope, User) {
+
+        $scope.scanBarcode = function () {
+            console.log(User.currUser());
+        };
+
+    }])
+
     .controller('AppIndexCtrl', function($scope) {
 
         // $scope.user = ;

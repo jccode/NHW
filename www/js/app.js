@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services'])
+angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'angular-underscore', 'nhw.services', 'nhw.controllers'])
 
     .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
         
@@ -18,7 +18,6 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services'])
                 controller: ['$scope', '$state', 'User', 'Util', function($scope, $state, User, Util) {
 
                     // do automatically state transition here according to user status
-                    /*
                     if( !User.isAuthenticated() ){
                         $state.go('welcome');
                         return;
@@ -29,7 +28,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services'])
                     } else {
                         $state.go('app.checkin');
                     }
-                     */
+                    
                 }]
             })
         

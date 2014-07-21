@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1", 
+        "name": "Jessie",
+        "email": "junchangchen@gmail.com",
+        "photo": "img/avatar.jpg", 
+        "authKey": "jessie"
+    },
+    {
+        "id": "2", 
+        "name": "Du",
+        "email": "zhiyongdu517@gmail.com",
+        "photo": "img/avatar.jpg", 
+        "authKey": "du"
+    },
+    {
+        "id": "3", 
+        "name": "Ray",
+        "email": "ray.yao.lei@gmail.com",
+        "photo": "img/avatar.jpg", 
+        "authKey": "ray"
+    },
+    {
+        "id": "4", 
+        "name": "Sander Meilink",
+        "email": "sander.meilink@everlink.nl",
+        "photo": "img/avatar.jpg", 
+        "authKey": "sandermeilink"
+    },
+    {
+        "id": "5", 
+        "name": "Floor Weteringa",
+        "email": "floor.weteringa@everlink.nl",
+        "photo": "img/avatar.jpg", 
+        "authKey": "floorweteringa"
+    } 
+]
