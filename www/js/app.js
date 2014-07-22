@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.controllers']) 
+angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.controllers', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
@@ -70,42 +70,6 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
                 }
             })
 
-
-            // ========================================
-            // for testing
-            // ========================================
-            .state("test", {
-                url: "/test", 
-                abstract: true, 
-                templateUrl: "partials/test/test.html"
-            })
-
-            .state("test.navgation", {
-                url: "", 
-                views: {
-                    "testContent": {
-                        templateUrl: "partials/test/navigation.html"
-                    }
-                }
-            })
-
-            .state("test.fns", {
-                url: "/fn", 
-                views: {
-                    "testContent": {
-                        templateUrl: "partials/test/functions.html"
-                    }
-                }
-            })
-
-            .state("test.quicktest", {
-                url: "/quicktest", 
-                views: {
-                    "testContent": {
-                        templateUrl: "partials/test/quicktest.html"
-                    }
-                }
-            })
         ;
         
         $urlRouterProvider.otherwise('/');

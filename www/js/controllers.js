@@ -37,24 +37,4 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-
-    // ========================================
-    // test
-    // ========================================
-
-    .controller('TestNavCtrl', ['$scope', function($scope) {
-        $scope.navs = [
-            {name: "Login page", sref: "welcome"}, 
-            {name: "Checkin page", sref: "app.checkin"}, 
-            {name: "After checkin", sref: "app.index"}, 
-        ];
-        
-    }])
-
-    .controller('TestFnCtrl', ['$scope', function($scope) {
-        $scope.logout = function () {
-            
-        };
-
-    }])
 ;
