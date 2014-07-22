@@ -1,0 +1,11 @@
+<div class="container" ng-controller="TestNavCtrl">
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div class="list-group">
+                <a ng-repeat="nav in navs" ui-sref="{{nav.sref}}" class="list-group-item">
+                    {{nav.name}} <i class="fa fa-chevron-right pull-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div> 

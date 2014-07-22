@@ -1,0 +1,29 @@
+
+<!-- Test Page -->
+<div class="app">
+
+    <!-- Navbars -->
+    <div class="navbar navbar-app navbar-absolute-top test-nav">
+        <div class="navbar-brand navbar-brand-center">
+            Test Page 
+        </div>
+        <div class="btn-group pull-left">
+            <div class="btn btn-navbar">
+                <a ui-sref="home"> <i class="fa fa-chevron-left"></i> </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar navbar-app navbar-absolute-bottom">
+        <div class="btn-group justified">
+            <a ui-sref="test.navgation" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Navigations</a>
+            <a ui-sref="test.fns" class="btn btn-navbar"><i class="fa fa-wrench fa-navbar"></i> Functions</a>
+            <a ui-sref="test.quicktest" class="btn btn-navbar"><i class="fa fa-pencil fa-navbar"></i> Quicktest</a>
+        </div>
+    </div>
+
+    <div class="app-body">
+        <div ui-view="testContent" class="app-content"></div>
+    </div>
+</div>
+

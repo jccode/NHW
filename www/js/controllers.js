@@ -19,6 +19,10 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
+    .controller('NavCtrl', ['$scope', function($scope) {
+        
+    }])
+
     .controller('CheckInCtrl', ['$scope', 'User', function($scope, User) {
 
         $scope.scanBarcode = function () {
@@ -27,10 +31,30 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', function($scope) {
+    .controller('AppIndexCtrl', ['$scope', function($scope) {
 
         // $scope.user = ;
 
-    })
+    }])
 
+
+    // ========================================
+    // test
+    // ========================================
+
+    .controller('TestNavCtrl', ['$scope', function($scope) {
+        $scope.navs = [
+            {name: "Login page", sref: "welcome"}, 
+            {name: "Checkin page", sref: "app.checkin"}, 
+            {name: "After checkin", sref: "app.index"}, 
+        ];
+        
+    }])
+
+    .controller('TestFnCtrl', ['$scope', function($scope) {
+        $scope.logout = function () {
+            
+        };
+
+    }])
 ;
