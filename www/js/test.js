@@ -1,5 +1,5 @@
 
-angular.module("nhw.test", [])
+angular.module("nhw.test", ["nhw.services"])
 
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -58,5 +58,24 @@ angular.module("nhw.test", [])
             
         };
 
+    }])
+
+    .controller('TestQuickCtrl', ['$scope', 'LocalStorage', 'SessionStorage', function($scope, LocalStorage, SessionStorage) {
+        var KEY = 'STORAGE_TEST_KEY';
+        
+        $scope.save = function () {
+            LocalStorage.set(KEY, $scope.localtext);
+            SessionStorage.set(KEY, $scope.sessiontext);
+        };
+
+        $scope.clear = function () {
+            LocalStorage.clear();
+            SessionStorage.clear();
+        };
+
+        var localtext = LocalStorage.get(KEY) || 'not values set',
+            sessiontext = SessionStorage.get(KEY) || 'not values set';
+        $scope.msg = "localStorage: " + localtext + " -- sessionStorage: " + sessiontext;
+        
     }])
 ;

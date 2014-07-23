@@ -1,3 +1,15 @@
-<div class="container">
-    You can do a quicktest here :-)
+<div class="container" ng-controller="TestQuickCtrl">
+    <p>Storage Test</p>
+
+    <form class="form-horizontal" role="form">
+        
+        <input bs-form-control type="text" ng-model="localtext" label="localStorage" placeholder="Customer Name" label-class="col-xs-4" class="col-xs-8" />
+        <input bs-form-control type="text" ng-model="sessiontext" label="sessionStorage" placeholder="Customer Name" label-class="col-xs-4" class="col-xs-8"/>
+        <button class="btn btn-default" ng-click="save()"> Save </button>
+        <button class="btn btn-default" ng-click="clear()"> Clear </button>
+    </form>
+
+    <p> {{msg}} </p>
+    
 </div> 
+

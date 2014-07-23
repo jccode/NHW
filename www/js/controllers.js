@@ -34,7 +34,7 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('AppIndexCtrl', ['$scope', function($scope) {
 
         // $scope.user = ;
-
+        
     }])
 
 ;
