@@ -13,16 +13,40 @@ describe('service', function() {
     // });
 
 
-    // describe("LocalStorage Service", inject(function(LocalStorage){
-    //     var KEY = "UNIT_TEST_KEY";
+    // LocalStorage, SessionStorage 
+    _.each(['LocalStorage', 'SessionStorage'], function(storageType) {
 
-    //     it("should add to localStorage and can get from it", function(){
-    //         var val = "some values";
-    //         LocalStorage.set(KEY, val);
-    //         expect(val).toEqual(LocalStorage.get(KEY));
-    //     });
+        describe(storageType + " Service", function(){
+            var storage,
+                KEY = "UNIT_TEST_KEY",
+                val = "SOME VALUE";
+            
+            beforeEach(inject(function($injector) {
+                storage = $injector.get(storageType);
+            }));
+            // var LocalStorage = $injector.get('LocalStorage');
+            // var KEY = "UNIT_TEST_KEY";
 
-    // }));
+            it("should add to "+storageType+" and can get from it", function(){
+                storage.set(KEY, val);
+                expect(val).toEqual(storage.get(KEY));
+            });
 
+            it("should remove value from "+storageType, function(){
+                storage.remove(KEY);
+                expect(storage.get(KEY)).toBeNull();
+            });
+
+
+            it("should clear "+storageType+" and get nothing", function(){
+                storage.set(KEY, val);
+                expect(val).toEqual(storage.get(KEY));
+                storage.clear();
+                expect(storage.get(KEY)).toBeNull();
+            });
+
+        });
+        
+    });
     
 });

@@ -6,7 +6,8 @@
     "underscore"
   ],
   "loadEagerly": [
-    "lib/d3.v3.min.js"
+    "lib/d3.v3.min.js",
+    "spec/lib/jasmine-1.2.0/jasmine.js"
   ],
   "plugins": {
     "requirejs": {
