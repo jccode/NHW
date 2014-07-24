@@ -1,0 +1,28 @@
+{
+  "name": "NHW",
+  "private": true,
+  "version": "0.0.0",
+  "description": "NHW Project",
+  "repository": "https://github.com/jccode/NHW",
+  "license": "MIT",
+  "devDependencies": {
+    "karma": "~0.10",
+    "protractor": "~0.20.1",
+    "http-server": "^0.6.1",
+    "karma-junit-reporter": "^0.2.2"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 8000",
+
+    "pretest": "npm install",
+    "test": "karma start spec/karma.conf.js",
+    "test-single-run": "karma start spec/karma.conf.js  --single-run",
+
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor spec/protractor-conf.js"
+  }
+}
