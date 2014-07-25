@@ -20,17 +20,18 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
             .state("home", {
                 url: "/",
                 templateUrl: "partials/phonegap.html",
-                controller: ['$scope', '$state', 'User', 'Util', function($scope, $state, User, Util) {
-
-                    // console.log( 'go state home' );
-
+                resolve: {
+                    authenticated: ['User', function(User) {
+                        return User.isAuthenticated();
+                    }]
+                }, 
+                controller: ['$scope', '$state', 'authenticated', 'User', 'Util', function($scope, $state, authenticated, User, Util) {
 
                     // do automatically state transition here according to user status
-                    if( !User.isAuthenticated() ){
+                    if( !authenticated ){
                         $state.go('welcome', {}, {location: false});
                         return;
                     }
-
                     if( User.hasCheckIn() ){
                         $state.go('app.index', {}, {location: false});
                     } else {

@@ -53,9 +53,10 @@ angular.module("nhw.test", ["nhw.services"])
         
     }])
 
-    .controller('TestFnCtrl', ['$scope', function($scope) {
+    .controller('TestFnCtrl', ['$scope', '$state', '$window', 'User', function($scope, $state, $window, User) {
         $scope.logout = function () {
-            
+            User.removeUserFromLocalStorage();
+            $state.go('home', {}, {location: 'replace'});
         };
 
     }])

@@ -1,4 +1,6 @@
 
+
+
 var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
     .factory('Util', function() {
@@ -10,45 +12,40 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
         };
     })
 
-/*
-    .factory('LocalStorage', ['$window', function($window) {
-        var storage = $window[]
-        
-        return {
-            get: function(key) {
-                
-            }, 
+    .factory('User', ['$resource', '_', 'LocalStorage', function($resource, _, LocalStorage) {
 
-            set: function(key, value) {
-                
-            },
-
-            remove: function(key) {
-                
-            }
-
-        };
-    }])*/
-             
-    .factory('User', ['$resource', '$rootScope', '_', 'Util', function($resource, $rootScope, _, Util) {
-
-        var users = $resource('js/data/users.json').query();
+        var KEY_CURR_USER = 'curr_user';
+        var users = $resource('js/data/users.json');
 
         return {
             currUser: function() {
-                return $rootScope.user;
+                return LocalStorage.get(KEY_CURR_USER);
+            },
+
+            storeUserToLocalStorage: function(user) {
+                LocalStorage.set(KEY_CURR_USER, user);
+            },
+
+            removeUserFromLocalStorage: function() {
+                LocalStorage.remove(KEY_CURR_USER);
             }, 
 
             isAuthenticated: function(user) {
                 var cUser = this.currUser();
-                if(!user && cUser) {
+                
+                if(!user && !cUser) {
+                    return false;
+                }
+                else if(!user && cUser) {
                     user = {
                         name: cUser.name,
                         email: cUser.email
                     };
                 }
-                var ret =  _.where(users, user);
-                return ret.length > 0 ? ret[0]: false;
+                return users.query(function(data) {
+                    var ret =  _.where(data, user);
+                    return ret.length > 0 ? ret[0]: false;
+                });
             }, 
 
             hasCheckIn: function() {
@@ -56,7 +53,7 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
             },
 
             all: function() {
-                return users;
+                return users.query();
             }
 
         };

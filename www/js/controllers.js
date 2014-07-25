@@ -10,7 +10,8 @@ angular.module("nhw.controllers", ['nhw.services'])
             if( available ){
                 $scope.error = "";
                 $rootScope.user = available;
-                $state.go('home');
+                User.storeUserToLocalStorage(available);
+                $state.go('app.checkin');
 
             } else {
                 $scope.error = "Sorry, you're not authorized to use this app.";
