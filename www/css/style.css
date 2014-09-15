@@ -82,3 +82,15 @@
   color: #fff;
   background-color: #8eb5e2;
 }
+.floor-list-container {
+  padding: 18px;
+  background-image: -webkit-linear-gradient(top, #e5e5f9 0%, #ceceef 100%);
+  background-image: -o-linear-gradient(top, #e5e5f9 0%, #ceceef 100%);
+  background-image: linear-gradient(to bottom, #e5e5f9 0%, #ceceef 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5f9', endColorstr='#ffceceef', GradientType=0);
+}
+.floor-list-container table {
+  color: #AAA;
+  background-color: #ddd;
+}

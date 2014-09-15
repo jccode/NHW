@@ -58,6 +58,18 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
 
         };
     }])
+
+        .factory('Floors', ['$resource', '_', function($resource, _) {
+            var floors = $resource('js/data/floors.json');
+
+            return {
+                all: function() {
+                    return floors.query();
+                }
+
+            };
+        }])
+
 ;
 
 

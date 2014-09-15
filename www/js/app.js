@@ -71,6 +71,15 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
                 }
             })
 
+            .state("app.floors", {
+                url: "/floors",
+                views: {
+                    "mainContent": {
+                        templateUrl: "partials/floors.html"
+                    }
+                }
+            })
+
         ;
         
         $urlRouterProvider.otherwise('/');

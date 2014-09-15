@@ -38,4 +38,13 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
+    .controller('FloorsCtrl', ['$scope', 'Floors', function($scope, Floors) {
+        var floors = Floors.all();
+        _.each(floors, function(floor) {
+            floor['available'] = (floor.workspace > 0) && (floor.workspace - floor.present_people > 0);
+        });
+        console.log(floors);
+        $scope.floors = floors;
+        
+    }])
 ;

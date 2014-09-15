@@ -1,0 +1,22 @@
+[
+    { "id": "1", "floor": "Verdieping 1", "present_people": 20, "workspace": 70 },
+    { "id": "2", "floor": "Verdieping 2", "present_people": 20, "workspace": 70 },
+    { "id": "3", "floor": "Verdieping 3", "present_people": 20, "workspace": 20 },
+    { "id": "4", "floor": "Verdieping 4", "present_people": 20, "workspace": 70 },
+    { "id": "5", "floor": "Verdieping 5", "present_people": 20, "workspace": 70 },
+    { "id": "6", "floor": "Verdieping 6", "present_people": 20, "workspace": 70 },
+    { "id": "7", "floor": "Verdieping 7", "present_people": 20, "workspace": 70 },
+    { "id": "8", "floor": "Verdieping 8", "present_people": 20, "workspace": 0 },
+    { "id": "9", "floor": "Verdieping 9", "present_people": 20, "workspace": 70 },
+    { "id": "10", "floor": "Verdieping 10", "present_people": 20, "workspace": 70 },
+    { "id": "11", "floor": "Verdieping 11", "present_people": 20, "workspace": 70 },
+    { "id": "12", "floor": "Verdieping 12", "present_people": 20, "workspace": 70 },
+    { "id": "13", "floor": "Verdieping 13", "present_people": 20, "workspace": 70 },
+    { "id": "14", "floor": "Verdieping 14", "present_people": 20, "workspace": 70 },
+    { "id": "15", "floor": "Verdieping 15", "present_people": 20, "workspace": 70 },
+    { "id": "16", "floor": "Verdieping 16", "present_people": 20, "workspace": 70 },
+    { "id": "17", "floor": "Verdieping 17", "present_people": 20, "workspace": 70 },
+    { "id": "18", "floor": "Verdieping 18", "present_people": 20, "workspace": 70 },
+    { "id": "19", "floor": "Verdieping 19", "present_people": 20, "workspace": 70 },
+    { "id": "20", "floor": "Verdieping 20", "present_people": 20, "workspace": 70 }
+]
