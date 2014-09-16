@@ -51,10 +51,6 @@
     padding-top: 0px;
   }
 }
-.info-section + .scrollable,
-.sub-content > .scrollable {
-  padding-top: 44px;
-}
 .sub-content {
   position: relative;
   display: block;
