@@ -56,7 +56,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
             .state("app.checkin", {
                 url: "/checkin",
                 views: {
-                    "mainContent": {
+                    "subContent": {
                         templateUrl: "partials/checkin.html"
                     }
                 }
@@ -74,7 +74,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
             .state("app.floors", {
                 url: "/floors",
                 views: {
-                    "mainContent": {
+                    "subContent": {
                         templateUrl: "partials/floors.html"
                     }
                 }

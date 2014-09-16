@@ -64,7 +64,14 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
 
             return {
                 all: function() {
-                    return floors.query();
+                    // return floors.query();
+                    return floors.query(function(data) {
+                        var floors = _.each(data, function(floor) {
+                            floor['available'] = (floor.workspace > 0)
+                                && (floor.workspace - floor.present_people > 0);
+                        });
+                        return floors;
+                    });
                 }
 
             };

@@ -10,7 +10,18 @@
         </div>
     </div>
     <div class="app-body">
-        <div ui-view="mainContent"></div>
+        <div class="app-content" ui-view="mainContent">
+
+            <div class="container-fluid">
+                <div class="row row-padding info-section" ui-view="infoBar">
+                    <div class="col-xs-12" yield-to="info-bar-title">
+                        Default title
+                    </div>
+                </div>
+                <div ui-view="subContent" class="sub-content"></div>
+            </div>
+            
+        </div>
     </div>
 </div>
 

@@ -51,6 +51,10 @@
     padding-top: 0px;
   }
 }
+.info-section + .scrollable,
+.sub-content > .scrollable {
+  padding-top: 44px;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -82,15 +86,14 @@
   color: #fff;
   background-color: #8eb5e2;
 }
-.floor-list-container {
-  padding: 18px;
-  background-image: -webkit-linear-gradient(top, #e5e5f9 0%, #ceceef 100%);
-  background-image: -o-linear-gradient(top, #e5e5f9 0%, #ceceef 100%);
-  background-image: linear-gradient(to bottom, #e5e5f9 0%, #ceceef 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5f9', endColorstr='#ffceceef', GradientType=0);
-}
-.floor-list-container table {
-  color: #AAA;
+.floor-list-container table.floor-list {
+  color: #777;
   background-color: #ddd;
+}
+.floor-list-container table.floor-list td:first-child {
+  color: #333;
+  font-weight: bold;
+}
+.no-scrollable-x {
+  overflow-x: hidden;
 }

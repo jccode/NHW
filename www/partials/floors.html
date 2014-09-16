@@ -1,23 +1,36 @@
 
-<div class="container-fluid" ng-controller="FloorsCtrl">
-    <div class="row row-padding info-section">
-        <div class="col-xs-12">
-            Selecteer een verdieping:
-        </div>
-    </div>
-    <div class="row row-padding floor-list-container">
-        <table class="table table-striped">
-            <tr ng-repeat="floor in floors">
-                <td>{{floor.floor}}</td>
-                <td><i class="fa fa-users"></i></td>
-                <td>{{floor.present_people}} aanwezigen</td>
-                <td>
-                    <i class="fa fa-ban" ng-if="false"></i>
-                    <i class="fa fa-check-circle" ng-if="floor.available"></i>
-                </td>
-                <td>{{floor.workspace}} werkplekken</td>
-                <td>*</td>
-            </tr>
-        </table>
+
+<div content-for="info-bar-title">
+    Selecteer een verdieping:
+    <i class="pull-right">
+        367 ingecheckt
+    </i>
+</div>
+
+
+<div class="scrollable" ng-controller="FloorsCtrl">
+    <div class="scrollable-content no-scrollable-x">
+        <div class="row ">
+            <div class="col-xs-12 ">
+                <div class="floor-list-container">
+                    <table class="table table-striped floor-list">
+                        <tr ng-repeat="floor in floors">
+                            <td>{{floor.floor}}</td>
+                            <td><i class="fa fa-users"></i></td>
+                            <td>{{floor.present_people}} aanwezig</td>
+                            <td>
+                                <i class="fa fa-ban text-danger" ng-if="!floor.available"></i>
+                                <i class="fa fa-check-circle text-success" ng-if="floor.available"></i>
+                            </td>
+                            <td>{{floor.workspace}} vrij</td>
+                            <td><i class="fa fa-map-marker"></i></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>            
+        
     </div>
 </div>
+
+

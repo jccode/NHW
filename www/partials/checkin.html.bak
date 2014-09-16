@@ -1,0 +1,15 @@
+
+<div class="container-fluid" ng-controller="CheckInCtrl">
+    <div class="row row-padding info-section">
+        <div class="col-xs-12">
+            Barcode scannen om in te checken:
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.floors">Handmatig inchecken</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Barcode scannen</button>
+        </div>
+    </div>  
+</div>
+

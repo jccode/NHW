@@ -86,6 +86,11 @@
     }
 }
 
+.info-section + .scrollable, .sub-content > .scrollable {
+    padding-top: 44px;
+}
+
+
 
 
 
@@ -131,11 +136,21 @@
 }
 
 .floor-list-container {
-    padding: 18px;
-    #gradient > .vertical(#E5E5F9, #CECEEF);
+    // padding: 18px;
+    // #gradient > .vertical(#E5E5F9, #CECEEF);
     
-    table {
-        color: #AAA;
+    table.floor-list {
+        color: #777;
         background-color: #ddd;
+
+        td:first-child {
+            color: #333;
+            font-weight: bold;
+        }
     }
 }
+
+.no-scrollable-x {
+    overflow-x: hidden;
+}
+
