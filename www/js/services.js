@@ -72,6 +72,20 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
                         });
                         return floors;
                     });
+                }, 
+
+                findById: function(id) {
+                    // var floors = this.all();
+                    // return _.find(floors, function(floor) {
+                    //     return floor.id == id;
+                    // });
+
+                    return this.all().$promise.then(function(floors) {
+                        return _.find(floors, function(floor) {
+                            return floor.id == id;
+                        });
+                    });
+                    
                 }
 
             };

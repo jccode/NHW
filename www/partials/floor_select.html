@@ -1,0 +1,14 @@
+
+<div ng-controller="FloorSelectCtrl" class="container-fluid" style="height: 100%;">
+    
+    <div content-for="info-bar-title">
+        {{floor.floor}}
+        <button type="button" class="btn btn-primary btn-sm info-bar-btn">Automatisch inchecken</button>
+    </div>
+
+    <div id="svg-wrapper"></div>
+    <div id="svg-footer">
+        {{msgs}}
+        <span class="text-success">{{floor.free}} werkplekken vrij</span> | Klik op een werkplek om in te checken.
+    </div>
+</div>

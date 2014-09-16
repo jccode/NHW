@@ -80,6 +80,15 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'nhw.services', 'nhw.co
                 }
             })
 
+            .state("app.floor_select", {
+                url: "/floor/:floorId",
+                views: {
+                    "subContent": {
+                        templateUrl: "partials/floor_select.html"
+                    }
+                }
+            })
+
         ;
         
         $urlRouterProvider.otherwise('/');

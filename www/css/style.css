@@ -55,6 +55,13 @@
 .sub-content > .scrollable {
   padding-top: 44px;
 }
+.sub-content {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -96,4 +103,24 @@
 }
 .no-scrollable-x {
   overflow-x: hidden;
+}
+.info-bar-btn {
+  position: absolute;
+  right: 5px;
+  top: 8px;
+}
+#svg-wrapper {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 84px;
+}
+#svg-footer {
+  position: absolute;
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  bottom: 40px;
 }
