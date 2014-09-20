@@ -61,7 +61,11 @@ angular.module("nhw.test", ["nhw.services"])
 
     }])
 
-    .controller('TestQuickCtrl', ['$scope', 'LocalStorage', 'SessionStorage', function($scope, LocalStorage, SessionStorage) {
+    .controller('QuickTestCtrl', ['$scope', function($scope) {
+        
+    }])
+
+    .controller('StorageTestCtrl', ['$scope', 'LocalStorage', 'SessionStorage', function($scope, LocalStorage, SessionStorage) {
         var KEY = 'STORAGE_TEST_KEY';
         
         $scope.save = function () {
@@ -77,6 +81,42 @@ angular.module("nhw.test", ["nhw.services"])
         var localtext = LocalStorage.get(KEY) || 'not values set',
             sessiontext = SessionStorage.get(KEY) || 'not values set';
         $scope.msg = "localStorage: " + localtext + " -- sessionStorage: " + sessiontext;
-        
     }])
+
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+        $scope.items = items;
+        $scope.selected = {
+            item: $scope.items[0]
+        };
+        $scope.ok = function () {
+            $modalInstance.close($scope.selected.item);
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }])
+
+    .controller('ModalTestCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
+        $scope.items = ['item1', 'item2', 'item3'];
+
+        $scope.open = function (size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    items: function() {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(selectedItem) {
+                $scope.selected = selectedItem;
+            }, function() {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+    }])
+
 ;

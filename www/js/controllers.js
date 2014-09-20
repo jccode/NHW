@@ -49,19 +49,28 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
     .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', function($scope, $stateParams, Floors, $window) {
-        Floors.findById($stateParams.floorId).then(function(floor) {
+        var floorId = $stateParams.floorId;
+        Floors.findById(floorId).then(function(floor) {
             floor.free = floor.workspace - floor.present_people;
             $scope.floor = floor;
         });
 
+        var svg_wrapper_size = function() {
+            var el_wrapper = document.getElementById("svg-wrapper"), 
+                style = el_wrapper.currentStyle || $window.getComputedStyle(el_wrapper);
+            return {
+                "w": el_wrapper.offsetWidth,
+                "h": el_wrapper.offsetHeight - (parseInt(style.paddingBottom, 10) + parseInt(style.paddingTop, 10))
+            };
+        }
+
 
         $scope.msgs = [];
         // svg
-        var el_wrapper = document.getElementById("svg-wrapper"), 
-            style = el_wrapper.currentStyle || $window.getComputedStyle(el_wrapper);
         var margin = {top: -5, right: -5, bottom: -5, left: -5},
-            width = el_wrapper.offsetWidth, 
-            height = el_wrapper.offsetHeight - (parseInt(style.paddingBottom, 10) + parseInt(style.paddingTop, 10));
+            ws = svg_wrapper_size(), 
+            width = ws["w"], 
+            height = ws["h"];
 
         var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 10])
@@ -114,49 +123,60 @@ angular.module("nhw.controllers", ['nhw.services'])
         function innersvgLoaded() {
 
             // init seat state, add click event
-            innersvg.selectAll(".seat")
-                .classed('green', true)
-                .on('touch', function() {
+            // innersvg.selectAll(".seat")
+            //     .classed('green', true)
+            //     .on('touch', function() {
 
-                    $scope.$apply(function() {
-                        var p = '[' + $filter('date')(new Date, 'HH:mm:ss.sss') + '] ';
-                        $scope.msgs.push(p + 'rect is clicked.');
-                        $timeout(function() {
-                            $scope.msgs.splice(0, 1);
-                        }, 3000);
+            //         $scope.$apply(function() {
+            //             var p = '[' + $filter('date')(new Date, 'HH:mm:ss.sss') + '] ';
+            //             $scope.msgs.push(p + 'rect is clicked.');
+            //             $timeout(function() {
+            //                 $scope.msgs.splice(0, 1);
+            //             }, 3000);
+            //         });
+
+            //     });
+
+
+            function init_state() {
+                var unavailable_seats = Floors.getUnAvailableSeatsByFloor(floorId);
+                innersvg.selectAll("[id^='circle']").classed('seat-available', true);
+                _.each(unavailable_seats, function(item) {
+                    innersvg.select("#circle" + item.seat)
+                        .classed({"seat-available": false, "seat-unavailable": true})
+                        .attr("data-user", item.userId);
+                });
+            }
+
+            function add_event_handler() {
+                innersvg.selectAll("[id^='circle']").on("click", function() {
+                    var el = d3.select(this);
+
+                    // toggle state
+                    el.classed("seat-available") ? el.classed({
+                        "seat-available": false,
+                        "seat-unavailable": true
+                    }) : el.classed({
+                        "seat-available": true,
+                        "seat-unavailable": false
                     });
 
-                    // var el = d3.select(this);
-                    // var seat = el.attr('data-seat');
-                    // var msg; 
-                    // if( el.classed('green') ){
-                    //     el.classed({
-                    //         'red': true,
-                    //         'green': false
-                    //     });
-                        
-                    //     msg = 'Seat ' + seat + ' was reserved for you!';
-                    // } else {
-                    //     msg = "Here we'll show the user profile who taken the seat " + seat;
-                    // }
-
-                    // var alertPopup = $ionicPopup.alert({
-                    //     title: "Infomation",
-                    //     template: msg
-                    // });
-                    // alertPopup.then(function(res) {
-                    //     // Here can put some code to do some stuff after the popup closed.
-                    // });
-                    
                 });
+            }
+
+            init_state();
+            add_event_handler();
         }
 
 
         // register a resize handler
         $window.onresize = function() {
             $scope.$apply(function() {
-                width = $window.innerWidth - margin.left - margin.right;
-                height = $window.innerHeight / 2 - margin.top - margin.bottom;
+                ws = svg_wrapper_size();
+                // width = $window.innerWidth - margin.left - margin.right;
+                // height = $window.innerHeight / 2 - margin.top - margin.bottom;
+                width = ws["w"];
+                height = ws["h"];
                 d3.select("#svg-wrapper").select("svg")
                     .attr({
                         'width': width + margin.left + margin.right,

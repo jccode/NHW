@@ -86,7 +86,22 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
                         });
                     });
                     
+                },
+
+                getUnAvailableSeatsByFloor: function(floorId) {
+                    // return [73, 75, 77, 79, 133, 135, 137, 139];
+                    return [
+                        {"seat": 73, "userId": 2}, 
+                        {"seat": 75, "userId": 2}, 
+                        {"seat": 77, "userId": 2}, 
+                        {"seat": 79, "userId": 3}, 
+                        {"seat": 133, "userId": 3}, 
+                        {"seat": 135, "userId": 4}, 
+                        {"seat": 137, "userId": 4}, 
+                        {"seat": 139, "userId": 5}, 
+                    ];
                 }
+
 
             };
         }])
