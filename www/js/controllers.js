@@ -48,12 +48,15 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', function($scope, $stateParams, Floors, $window) {
+    .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', function($scope, $stateParams, Floors, $window, User) {
         var floorId = $stateParams.floorId;
         Floors.findById(floorId).then(function(floor) {
             floor.free = floor.workspace - floor.present_people;
             $scope.floor = floor;
         });
+
+
+        // ==================== svg ====================
 
         var svg_wrapper_size = function() {
             var el_wrapper = document.getElementById("svg-wrapper"), 
@@ -64,9 +67,6 @@ angular.module("nhw.controllers", ['nhw.services'])
             };
         }
 
-
-        $scope.msgs = [];
-        // svg
         var margin = {top: -5, right: -5, bottom: -5, left: -5},
             ws = svg_wrapper_size(), 
             width = ws["w"], 
@@ -161,6 +161,12 @@ angular.module("nhw.controllers", ['nhw.services'])
                         "seat-unavailable": false
                     });
 
+
+                    var userId = el.attr("data-user");
+                    User.findById(userId).then(function(user) {
+                        $scope.user = user;
+                    });
+
                 });
             }
 
@@ -189,6 +195,11 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
             });
         }
+
+        $scope.toggle_popup = function () {
+            $scope.pop = !$scope.pop;
+        };
+
                 
     }])
 ;

@@ -54,8 +54,15 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
 
             all: function() {
                 return users.query();
-            }
+            },
 
+            findById: function(id) {
+                return this.all().$promise.then(function(users) {
+                    return _.find(users, function(user) {
+                        return user.id == id;
+                    });
+                });
+            }
         };
     }])
 

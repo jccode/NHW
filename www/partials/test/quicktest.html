@@ -24,6 +24,21 @@
             </div>
 
             <hr />
+            <h4>Popover Test2 <small>popover-window</small></h4>
+            <div ng-init="pop = false">
+                <a href="#" popover="message.html" popover-trigger="mouseenter" >popup mouseenter plain text</a> <br />
+                <a href="#" popover-window="message.html" popover-window-trigger="mouseenter" >popup mouseenter html template</a> <br />
+                <a href="#" popover="message.html" popover-trigger="manual" popover-visible="pop" popover-placement="right" >POPUP</a> <br />
+                <a href="#" popover-window="message.html" popover-window-trigger="manual" popover-window-visible="pop" >POPUP</a> <br />
+                <button class="btn" ng-click="pop = !pop">Example</button>
+                {{pop}}
+
+                <script id="message.html" type="text/ng-template">
+                    <p>Here comes the <b>HTML</b> popover contents!!! It can be bind to scope values also.</p>
+                </script>
+            </div>
+
+            <hr />
             <h4>Modal Test</h4>
             <div ng-controller="ModalTestCtrl">
                 <script type="text/ng-template" id="myModalContent.html">

@@ -21,6 +21,10 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.no-gutter [class^="col-"] {
+  padding-left: 0px;
+  padding-right: 0px;
+}
 .info-section {
   background-color: #f0f0f0;
   color: #8a8a8a;
@@ -38,7 +42,7 @@
   .info-section {
     font-size: 10px;
   }
-  .info-section .avater {
+  .info-section .avatar {
     padding-right: 7px;
   }
   .info-section .user {
@@ -125,4 +129,41 @@
 }
 .seat-unavailable {
   fill: red;
+}
+.popup {
+  background-color: #F0F0F0;
+  padding: 10px;
+  position: absolute;
+  left: 50px;
+  top: 100px;
+}
+.popup .close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.popup .avatar {
+  padding-right: 7px;
+}
+.popup .user {
+  padding-top: 7px;
+}
+.popup .footer-row {
+  margin-top: 10px;
+  height: 30px;
+  line-height: 30px;
+}
+.popup .footer-row > div {
+  text-align: center;
+}
+.popup .footer-row .details {
+  border-right: 1px solid #CECECE;
+}
+@media (max-width: 767px) {
+  .popup {
+    font-size: 12px;
+  }
+}
+.golden {
+  color: #FF9900;
 }
