@@ -11,39 +11,41 @@
         <span class="text-success">{{floor.free}} werkplekken vrij</span> | Klik op een werkplek om in te checken.
     </div>
 
+    <div id="present_popup" popover-window="present_popup.html" popover-window-trigger="manual" popover-window-visible="popup == 'user'"></div>
 
-    
-    <div id="present_popup" class="popup" >
-        <div class="close-btn">
-            <i class="fa fa-times fa-2x"></i>
+    <script id="present_popup.html" type="text/ng-template">
+        <div  class="popup" >
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-3 avatar">
+                        <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                    </div>
+                    <div class="col-xs-9 user">
+                        <b class="uname">{{user.name}}</b><br />
+                        <small>{{user.email}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-xs-offset-3 ">
+                        <b class="text-danger">Niet storen</b>
+                    </div>
+                </div>
+                <div class="row footer-row">
+                    <div class="col-xs-3 details">
+                        <a href="javascript:;">Details</a>
+                    </div>
+                    <div class="col-xs-9">
+                        <a href="javascript:;"><i class="fa fa-star golden"></i>&nbsp;&nbsp; Toevoegen favorieten</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container-fluid no-gutter">
-            <div class="row">
-                <div class="col-xs-3 avatar">
-                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
-                </div>
-                <div class="col-xs-9 user">
-                    <b class="uname">{{user.name}}</b><br />
-                    <small>{{user.email}}</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-xs-offset-3 ">
-                    <b class="text-danger">Niet storen</b>
-                </div>
-            </div>
-            <div class="row footer-row">
-                <div class="col-xs-3 details">
-                    <a href="javascript:;">Details</a>
-                </div>
-                <div class="col-xs-9">
-                    <a href="javascript:;"><i class="fa fa-star golden"></i>&nbsp;&nbsp; Toevoegen favorieten</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </script>
 
-        
 </div>
+
 
 

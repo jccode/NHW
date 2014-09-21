@@ -163,8 +163,16 @@ angular.module("nhw.controllers", ['nhw.services'])
 
 
                     var userId = el.attr("data-user");
-                    User.findById(userId).then(function(user) {
-                        $scope.user = user;
+                    console.log(userId);
+                    if (userId) {
+                        User.findById(userId).then(function(user) {
+                            $scope.user = user;
+                        });
+                    }
+
+
+                    $scope.$apply(function() {
+                        $scope.popup = userId? "user": false;
                     });
 
                 });

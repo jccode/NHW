@@ -124,6 +124,11 @@
   line-height: 44px;
   bottom: 40px;
 }
+#present_popup {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
 .seat-available {
   fill: green;
 }
@@ -133,6 +138,7 @@
 .popup {
   background-color: #F0F0F0;
   padding: 10px;
+  width: 250px;
   position: absolute;
   left: 50px;
   top: 100px;
