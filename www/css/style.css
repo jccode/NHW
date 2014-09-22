@@ -115,7 +115,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding-bottom: 84px;
 }
 #svg-footer {
   position: absolute;
@@ -231,7 +230,7 @@
   border-top-width: 0px;
 }
 .mymodal .modal-footer button {
-  color: #73B4F7;
+  color: #007aff;
   background: #F3F3F3;
   border-color: #fff;
 }

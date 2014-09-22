@@ -35,9 +35,13 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', function($scope) {
+    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'User', function($scope, $stateParams, User) {
+        $scope.user = User.currUser();
 
-        // $scope.user = ;
+        // data cannot be passed. if we want to achieve this purpose. we need to redefine the url to
+        // include the parameters.
+        $scope.floor = $stateParams.floorId;
+        $scope.seat = $stateParams.seat;
         
     }])
 
@@ -60,7 +64,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', function($scope, $stateParams, Floors, $window, User, $modal, $log) {
+    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state) {
         // var floorId = $stateParams.floorId;
         var floorId = $scope.$parent.floorId;
 
@@ -253,7 +257,13 @@ angular.module("nhw.controllers", ['nhw.services'])
 
             modalInstance.result.then(function(ret) {
                 // success
-                $log.info('button "' + ret + '" clicked at: ' + new Date());
+                // $log.info('button "' + ret + '" clicked at: ' + new Date());
+                var data = {
+                    'floorId': floorId,
+                    'seat': $scope.seat
+                };
+                $state.go("app.index", data);
+                
             }, function() {
                 // dismissed
                 $log.info('Modal dismissed at: ' + new Date());
