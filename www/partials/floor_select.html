@@ -7,79 +7,110 @@
     </div>
 
 
-    <div id="svg-wrapper">
+    <div id="svg-wrapper" ng-controller="SvgCtrl">
+
+        <!-- popups -->
+        <div id="user_popup" class="popup " ng-show="popup == 'user'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-3 avatar">
+                        <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                    </div>
+                    <div class="col-xs-9 user">
+                        <b class="uname">{{user.name}}</b><br />
+                        <small>{{user.email}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-xs-offset-3 ">
+                        <b class="text-danger">Niet storen</b>
+                    </div>
+                </div>
+                <div class="row footer-row">
+                    <div class="col-xs-3 details">
+                        <a href="javascript:;">Details</a>
+                    </div>
+                    <div class="col-xs-9">
+                        <i class="fa fa-star golden">&nbsp;&nbsp;</i>
+                        <a href="javascript:;">Toevoegen favorieten</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="workspace_popup" class="popup" ng-show="popup == 'workspace'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <b>Inchecken</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Verdieping:
+                    </div>
+                    <div class="col-xs-8">
+                        {{floor.id}}
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-4">
+                        Werkplek:
+                    </div>
+                    <div class="col-xs-8">
+                        {{seat}}
+                    </div>
+                </div>
+                <div class="row footer-row top-line">
+                    <div class="col-xs-12">
+                        <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
+                        <a ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="checkin_modal.html">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><i class="fa fa-times" ></i></button>
+                <h4 class="modal-title">Check-in geslaagd</h4>
+            </div>
+            <div class="modal-body" id="checkin_modal">
+                <div class="container-fluid no-gutter">
+                    <div class="row">
+                        <div class="col-xs-6 user">
+                            <b>{{curr_user.name}}</b> <br />
+                            <small>{{curr_user.email}}</small> <br />
+                            <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                        </div>
+                        <div class="col-xs-6 workspace">
+                            <p>U bent ingechecked op:</p>
+                            <p>Verdieping:  <b>{{data.floor}}</b></p>
+                            <p>Werkplek:   <b>{{data.seat}}</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" ng-click="ok('Locatie wijzigen')"><i class="fa fa-repeat text-muted">&nbsp;&nbsp;</i> Locatie wijzigen</button>
+                <button class="btn" ng-click="ok('ok')">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+            </div>
+        </script>
+            
     </div>
     
     <div id="svg-footer">
         <span class="text-success">{{floor.free}} werkplekken vrij</span> | Klik op een werkplek om in te checken.
     </div>
 
-    <!-- popups -->
-    <div id="user_popup" class="popup " ng-show="popup == 'user'">
-        <div class="close-btn">
-            <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
-        </div>
-        <div class="container-fluid no-gutter">
-            <div class="row">
-                <div class="col-xs-3 avatar">
-                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
-                </div>
-                <div class="col-xs-9 user">
-                    <b class="uname">{{user.name}}</b><br />
-                    <small>{{user.email}}</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-xs-offset-3 ">
-                    <b class="text-danger">Niet storen</b>
-                </div>
-            </div>
-            <div class="row footer-row">
-                <div class="col-xs-3 details">
-                    <a href="javascript:;">Details</a>
-                </div>
-                <div class="col-xs-9">
-                    <i class="fa fa-star golden">&nbsp;&nbsp;</i>
-                    <a href="javascript:;">Toevoegen favorieten</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="workspace_popup" class="popup" ng-show="popup == 'workspace'">
-        <div class="close-btn">
-            <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
-        </div>
-        <div class="container-fluid no-gutter">
-            <div class="row">
-                <div class="col-xs-12">
-                    <b>Inchecken</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    Verdieping:
-                </div>
-                <div class="col-xs-8">
-                    {{floor.id}}
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-xs-4">
-                    Werkplek:
-                </div>
-                <div class="col-xs-8">
-                    {{seat}}
-                </div>
-            </div>
-            <div class="row footer-row top-line">
-                <div class="col-xs-12">
-                    <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
-                    <a href="javascript:;">Inchecken bevestigen</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+    
     
 </div>
 

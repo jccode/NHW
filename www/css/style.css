@@ -183,3 +183,61 @@
 .golden {
   color: #FF9900;
 }
+#checkin_modal .container-fluid {
+  background-color: #F9F9F9;
+}
+#checkin_modal .user {
+  padding-right: 15px;
+  background-color: #F3F3F3;
+  padding: 20px 10px 5px;
+  text-align: center;
+}
+#checkin_modal .user img {
+  margin: 10px 30px;
+  width: 120px;
+}
+#checkin_modal .workspace {
+  background-color: #F9F9F9;
+  color: #AEA8A9;
+  padding: 30px 5px 30px 20px;
+  line-height: 1.5;
+}
+@media (max-width: 767px) {
+  #checkin_modal {
+    font-size: 12px;
+  }
+  #checkin_modal .user img {
+    width: 80px;
+  }
+}
+.mymodal .modal-dialog {
+  margin: 50px 10px;
+}
+.mymodal .modal-header {
+  padding: 10px;
+  border-bottom-width: 0px;
+}
+.mymodal .modal-header .modal-title {
+  font-weight: bold;
+  line-height: 1.1;
+}
+.mymodal .modal-body {
+  padding: 0px;
+}
+.mymodal .modal-footer {
+  background: #F3F3F3;
+  padding: 9px 10px 10px;
+  margin-top: 0px;
+  border-top-width: 0px;
+}
+.mymodal .modal-footer button {
+  color: #73B4F7;
+  background: #F3F3F3;
+  border-color: #fff;
+}
+@media (min-width: 768px) {
+  .mymodal .modal-dialog {
+    margin: 50px auto;
+    width: 450px;
+  }
+}

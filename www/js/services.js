@@ -42,7 +42,8 @@ var nhmService = angular.module('nhw.services', ['ngResource']) // , 'angular-un
                         email: cUser.email
                     };
                 }
-                return users.query(function(data) {
+
+                return users.query().$promise.then(function(data) {
                     var ret =  _.where(data, user);
                     return ret.length > 0 ? ret[0]: false;
                 });

@@ -3,19 +3,21 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', function($scope, $rootScope, $state, User) {
         $scope.login = function (user) {
-            // console.log(user);
-            // console.log( User.all() );
-            
-            var available = User.isAuthenticated(user);
-            if( available ){
-                $scope.error = "";
-                $rootScope.user = available;
-                User.storeUserToLocalStorage(available);
-                $state.go('app.checkin');
 
-            } else {
+            User.isAuthenticated(user).then(function(ret) {
+                if( ret ){
+                    $scope.error = "";
+                    $rootScope.curr_user = ret;
+                    User.storeUserToLocalStorage(ret);
+                    $state.go('app.checkin');
+
+                } else {
+                    $scope.error = "Sorry, you're not authorized to use this app.";
+                }
+            }, function() {
                 $scope.error = "Sorry, you're not authorized to use this app.";
-            }
+            });
+
         };
 
     }])
@@ -50,13 +52,17 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', function($scope, $stateParams, Floors, $window, User) {
         var floorId = $stateParams.floorId;
+        $scope.floorId = floorId;
         Floors.findById(floorId).then(function(floor) {
             floor.free = floor.workspace - floor.present_people;
             $scope.floor = floor;
         });
 
+    }])
 
-        // ==================== svg ====================
+    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', function($scope, $stateParams, Floors, $window, User, $modal, $log) {
+        // var floorId = $stateParams.floorId;
+        var floorId = $scope.$parent.floorId;
 
         var svg_wrapper_size = function() {
             var el_wrapper = document.getElementById("svg-wrapper"), 
@@ -122,22 +128,6 @@ angular.module("nhw.controllers", ['nhw.services'])
         // init when inner svg loaded
         function innersvgLoaded() {
 
-            // init seat state, add click event
-            // innersvg.selectAll(".seat")
-            //     .classed('green', true)
-            //     .on('touch', function() {
-
-            //         $scope.$apply(function() {
-            //             var p = '[' + $filter('date')(new Date, 'HH:mm:ss.sss') + '] ';
-            //             $scope.msgs.push(p + 'rect is clicked.');
-            //             $timeout(function() {
-            //                 $scope.msgs.splice(0, 1);
-            //             }, 3000);
-            //         });
-
-            //     });
-
-
             function init_state() {
                 var unavailable_seats = Floors.getUnAvailableSeatsByFloor(floorId);
                 innersvg.selectAll("[id^='circle']").classed('seat-available', true);
@@ -168,7 +158,6 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                      */
 
-
                     $scope.seat = seat;
 
                     var userId = el.attr("data-user");
@@ -178,13 +167,16 @@ angular.module("nhw.controllers", ['nhw.services'])
                         });
                     }
 
+                    var t = userId? "user": "workspace";
                     $scope.$apply(function() {
-                        $scope.popup = userId? "user": "workspace";
+                        $scope.popup = t;
                     });
-
-                    d3.select("#" + (userId? "user": "workspace") + "_popup").style({
-                        left: coord[0]+'px',
-                        top: coord[1]+'px'
+                    
+                    var popup = d3.select("#" + t + "_popup");
+                    var pos = calc_popup_pos(popup.node(), coord)
+                    popup.style({
+                        left: pos[0]+'px',
+                        top: pos[1]+'px'
                     });
                 });
             }
@@ -215,6 +207,74 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         }
 
-                
+        /**
+         * Calcuate the popup window position
+         *
+         * coords: Array. [left, top] of the mouse pointer
+         */
+        function calc_popup_pos(el, coords) {
+            var cw = ws["w"],
+                ch = ws["h"],
+                ew = el.offsetWidth,
+                eh = el.offsetHeight,
+                l = coords[0],
+                t = coords[1];
+
+            // console.log("cw:"+cw+" ch:"+ch+" ew:"+ew+" eh:"+eh+" l:"+l+" t:"+t);
+
+            if (t + eh > ch) {
+                t = (ch - eh)/2;
+            }
+            if (l + ew > cw) {
+                l = (cw - ew)/2;
+            }
+            
+            return [l, t];
+        }
+
+
+        $scope.confirm_checkin = function () {
+            $scope.popup = false;
+            var modalInstance = $modal.open({
+                templateUrl: 'checkin_modal.html',
+                controller: 'CheckInModalCtrl',
+                windowClass: 'mymodal',
+                size: 'sm', 
+                resolve: {
+                    data: function() {
+                        return {
+                            floor: floorId,
+                            seat: $scope.seat
+                        };
+                    }
+
+                }
+            });
+
+            modalInstance.result.then(function(ret) {
+                // success
+                $log.info('button "' + ret + '" clicked at: ' + new Date());
+            }, function() {
+                // dismissed
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
     }])
+
+    .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'User', 'data', function($scope, $modalInstance, User, data) {
+        $scope.data = data;
+        $scope.curr_user =  User.currUser();
+
+        $scope.ok = function (n) {
+            $modalInstance.close(n);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }])
+
+
 ;
