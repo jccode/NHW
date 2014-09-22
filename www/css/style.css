@@ -124,11 +124,6 @@
   line-height: 44px;
   bottom: 40px;
 }
-#present_popup {
-  position: absolute;
-  top: 100px;
-  left: 100px;
-}
 .seat-available {
   fill: green;
 }
@@ -136,17 +131,19 @@
   fill: red;
 }
 .popup {
+  position: absolute;
   background-color: #F0F0F0;
   padding: 10px;
-  width: 250px;
-  position: absolute;
-  left: 50px;
-  top: 100px;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .popup .close-btn {
   position: absolute;
   right: 10px;
   top: 10px;
+  z-index: 1;
 }
 .popup .avatar {
   padding-right: 7px;
@@ -169,6 +166,19 @@
   .popup {
     font-size: 12px;
   }
+}
+#user_popup {
+  width: 250px;
+  left: 50px;
+  top: 50px;
+}
+#workspace_popup {
+  width: 250px;
+  left: 50px;
+  top: 50px;
+}
+.top-line {
+  border-top: 1px solid #CECECE;
 }
 .golden {
   color: #FF9900;

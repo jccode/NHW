@@ -149,10 +149,16 @@ angular.module("nhw.controllers", ['nhw.services'])
             }
 
             function add_event_handler() {
-                innersvg.selectAll("[id^='circle']").on("click", function() {
+                innersvg.selectAll("[id^='circle']").on("click", function(d, i) {
                     var el = d3.select(this);
+                    var seat = el.attr("id").substring(6);
+
+                    var coord = d3.mouse(this); //coord: [width, height]
+                    // console.log(coord[0] + ',' + coord[1]);
+                    
 
                     // toggle state
+                    /*
                     el.classed("seat-available") ? el.classed({
                         "seat-available": false,
                         "seat-unavailable": true
@@ -160,21 +166,26 @@ angular.module("nhw.controllers", ['nhw.services'])
                         "seat-available": true,
                         "seat-unavailable": false
                     });
+                     */
 
+
+                    $scope.seat = seat;
 
                     var userId = el.attr("data-user");
-                    console.log(userId);
                     if (userId) {
                         User.findById(userId).then(function(user) {
                             $scope.user = user;
                         });
                     }
 
-
                     $scope.$apply(function() {
-                        $scope.popup = userId? "user": false;
+                        $scope.popup = userId? "user": "workspace";
                     });
 
+                    d3.select("#" + (userId? "user": "workspace") + "_popup").style({
+                        left: coord[0]+'px',
+                        top: coord[1]+'px'
+                    });
                 });
             }
 
@@ -203,10 +214,6 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
             });
         }
-
-        $scope.toggle_popup = function () {
-            $scope.pop = !$scope.pop;
-        };
 
                 
     }])
