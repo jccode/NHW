@@ -89,6 +89,24 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
                 }
             })
 
+            .state("app.profile", {
+                url: "/profile",
+                views: {
+                    "mainContent": {
+                        templateUrl: "partials/profile.html"
+                    }
+                }
+            })
+
+            .state("app.employees", {
+                url: "/employees",
+                views: {
+                    "subContent": {
+                        templateUrl: "partials/employees.html"
+                    }
+                }
+            })
+
         ;
         
         $urlRouterProvider.otherwise('/');

@@ -286,5 +286,8 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
+    .controller('ProfileCtrl', ['$scope', 'User', function($scope, User) {
+        $scope.curr_user = User.currUser();
+    }])
 
 ;

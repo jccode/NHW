@@ -32,7 +32,7 @@
 }
 .info-section .btn-default {
   background-color: #f0f0f0;
-  border-color: #fff;
+  border-color: #ffffff;
   color: #007aff;
 }
 .info-section .user {
@@ -159,7 +159,7 @@
   text-align: center;
 }
 .popup .footer-row .details {
-  border-right: 1px solid #CECECE;
+  border-right: 1px solid #cecece;
 }
 @media (max-width: 767px) {
   .popup {
@@ -177,17 +177,17 @@
   top: 50px;
 }
 .top-line {
-  border-top: 1px solid #CECECE;
+  border-top: 1px solid #cecece;
 }
 .golden {
   color: #FF9900;
 }
 #checkin_modal .container-fluid {
-  background-color: #F9F9F9;
+  background-color: #f8f8f8;
 }
 #checkin_modal .user {
   padding-right: 15px;
-  background-color: #F3F3F3;
+  background-color: #f0f0f0;
   padding: 20px 10px 5px;
   text-align: center;
 }
@@ -196,8 +196,8 @@
   width: 120px;
 }
 #checkin_modal .workspace {
-  background-color: #F9F9F9;
-  color: #AEA8A9;
+  background-color: #f8f8f8;
+  color: #8a8a8a;
   padding: 30px 5px 30px 20px;
   line-height: 1.5;
 }
@@ -224,15 +224,15 @@
   padding: 0px;
 }
 .mymodal .modal-footer {
-  background: #F3F3F3;
+  background: #f0f0f0;
   padding: 9px 10px 10px;
   margin-top: 0px;
   border-top-width: 0px;
 }
 .mymodal .modal-footer button {
   color: #007aff;
-  background: #F3F3F3;
-  border-color: #fff;
+  background: #f0f0f0;
+  border-color: #ffffff;
 }
 @media (min-width: 768px) {
   .mymodal .modal-dialog {

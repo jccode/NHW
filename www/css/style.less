@@ -56,18 +56,18 @@
 
 .info-section {
     background-color: @info-section-bg;
-    color: darken(@info-section-bg, 40%);
+    color: @info-section-text-color;
     border-bottom: 1px solid @info-section-border;
     // box-shadow: 0 2px 5px #D4D4D4; //#D4D4D4
 
     .btn-default {
         background-color: @info-section-bg;
-        border-color: #fff;
-        color: #007aff;
+        border-color: @profile-btn-border-color;
+        color: @profile-btn-text-color;
     }
 
     .user {
-        color: darken(@info-section-bg, 80%);
+        color: @profile-user-text-color;
     }
 }
 
@@ -84,7 +84,7 @@
         }
 
         .floor-info {
-            background-color: lighten(@info-section-bg, 3%);
+            background-color: @profile-workspace-bg;
         }
 
         .btn-wrapper {
@@ -192,12 +192,6 @@
     bottom: 40px;
 }
 
-// #app-index-svg-include {
-//     position: absolute;
-//     left: 0px;
-//     top: 162px;
-//     bottom: 10px;
-// }
 
 .seat-available {
     fill: green;
@@ -243,7 +237,7 @@
         }
 
         .details {
-            border-right: 1px solid #CECECE;
+            border-right: 1px solid @split-line-color;
         }
     }
 }
@@ -270,7 +264,7 @@
 }
 
 .top-line {
-    border-top: 1px solid #CECECE;
+    border-top: 1px solid @split-line-color;
 }
 
 
@@ -280,14 +274,15 @@
 
 
 #checkin_modal {
+// .profile {
 
     .container-fluid {
-        background-color: #F9F9F9;
+        background-color: @profile-workspace-bg; // #F9F9F9;
     }
 
     .user {
         padding-right: 15px;
-        background-color: #F3F3F3;
+        background-color: @profile-user-bg; //#F3F3F3;
         padding: 20px 10px 5px;
         text-align: center;
 
@@ -298,8 +293,8 @@
     }
 
     .workspace {
-        background-color: #F9F9F9;
-        color: #AEA8A9;
+        background-color: @profile-workspace-bg; // #F9F9F9;
+        color: @profile-workspace-text-color;
         padding: 30px 5px 30px 20px;
         line-height: 1.5;
     }
@@ -336,15 +331,15 @@
     }
     
     .modal-footer {
-        background: #F3F3F3;
+        background: @profile-user-bg;
         padding: 9px 10px 10px;
         margin-top: 0px;
         border-top-width: 0px;
 
         button {
-            color: #007aff;
-            background: #F3F3F3;
-            border-color: #fff; //#FCFCFC;
+            color: @profile-btn-text-color;
+            background: @profile-user-bg;
+            border-color: @profile-btn-border-color; //#FCFCFC;
         }
     }
 }
