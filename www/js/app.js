@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.services', 'nhw.controllers', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.services', 'nhw.controllers', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
