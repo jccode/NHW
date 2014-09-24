@@ -1,7 +1,25 @@
 
-<div content-for="info-bar-title">Zoeken</div>
-
-<div class="container-fluid">
-    IN DEVELOPMENT
+<div content-for="info-bar-title">
+    Zoeken 
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-default">Iedereen</button>
+        <button type="button" class="btn btn-default">Favorieten</button>
+        <button type="button" class="btn btn-default">Ingechecked</button>
+        <button type="button" class="btn btn-default">Niet ingechecked</button>
+    </div>
 </div>
 
+<div ng-controller="EmployeesCtrl">
+    <input type="search" class="form-control app-search awesome" ng-model="q" placeholder="&#xF002;"/>
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <ul class="list-group employee-list">
+                <li ng-repeat="employee in employees | filter:q " class="list-group-item">
+                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" width="25px"/>
+                    <b>{{employee.name}}</b>
+                    <a class="star" ng-class="{'active': $first}"><i class="fa fa-star"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -290,4 +290,8 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.curr_user = User.currUser();
     }])
 
+    .controller('EmployeesCtrl', ['$scope', 'User', function($scope, User) {
+        $scope.employees = User.all();
+    }])
+
 ;

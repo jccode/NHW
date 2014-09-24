@@ -59,15 +59,21 @@
     color: @info-section-text-color;
     border-bottom: 1px solid @info-section-border;
     // box-shadow: 0 2px 5px #D4D4D4; //#D4D4D4
+    height: 45px;
+    line-height: 45px;
 
-    .btn-default {
-        background-color: @info-section-bg;
-        border-color: @profile-btn-border-color;
-        color: @profile-btn-text-color;
-    }
+    // .btn-default {
+    //     background-color: @info-section-bg;
+    //     border-color: @profile-btn-border-color;
+    //     color: @profile-btn-text-color;
+    // }
 
-    .user {
-        color: @profile-user-text-color;
+    // .user {
+    //     color: @profile-user-text-color;
+    // }
+
+    .btn-group {
+        margin-left: 10px;
     }
 }
 
@@ -75,20 +81,25 @@
     .info-section {
         font-size: @xs-font-size;
         
-        .avatar {
-            padding-right: 7px;
-        }
+        // .avatar {
+        //     padding-right: 7px;
+        // }
 
-        .user {
-            padding-left: 0px;
-        }
+        // .user {
+        //     padding-left: 0px;
+        // }
 
-        .floor-info {
-            background-color: @profile-workspace-bg;
-        }
+        // .floor-info {
+        //     background-color: @profile-workspace-bg;
+        // }
 
-        .btn-wrapper {
-            padding-top: 0px;
+        // .btn-wrapper {
+        //     padding-top: 0px;
+        // }
+
+        .btn-group {
+            margin-left: 0px;
+            margin-right: -13px;
         }
     }
 }
@@ -296,6 +307,8 @@
             margin: 10px 30px;
             width: 120px;
         }
+
+        
     }
 
     .workspace {
@@ -303,6 +316,15 @@
         color: @profile-workspace-text-color;
         padding: 30px 5px 30px 20px;
         line-height: 1.5;
+    }
+
+    .footer {
+        background-color: @profile-user-bg;
+        margin: 5px 5px
+        
+        button {
+            .btn-profile();
+        }
     }
 
     .top-line {
@@ -373,9 +395,7 @@
         border-top-width: 0px;
 
         button {
-            color: @profile-btn-text-color;
-            background: @profile-user-bg;
-            border-color: @profile-btn-border-color; //#FCFCFC;
+            .btn-profile();
         }
     }
 }
@@ -387,6 +407,12 @@
             width: 450px;
         }
     }
+}
+
+.btn-profile {
+    color: @profile-btn-text-color;
+    background: @profile-user-bg;
+    border-color: @profile-btn-border-color; //#FCFCFC;    
 }
 
 // switch
@@ -422,3 +448,28 @@
 }
 
 
+// employee
+.employee-list {
+    .list-group-item {
+        img {
+            width: 28px;
+            margin: -7px 7px -7px;
+        }
+
+        .star {
+            float: right;
+            color: @gray;
+
+            &.active {
+                color: #FF6600;
+            }
+        }
+    }
+}
+
+input.awesome {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
