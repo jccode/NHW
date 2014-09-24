@@ -273,13 +273,19 @@
 }
 
 
-#checkin_modal {
-// .profile {
+// #checkin_modal {
+// // .profile {
 
-    .container-fluid {
-        background-color: @profile-workspace-bg; // #F9F9F9;
-    }
+//     .container-fluid {
+//         background-color: @profile-workspace-bg; // #F9F9F9;
+//     }
 
+
+// }
+
+.profile {
+    background-color: @profile-workspace-bg;
+    
     .user {
         padding-right: 15px;
         background-color: @profile-user-bg; //#F3F3F3;
@@ -298,10 +304,14 @@
         padding: 30px 5px 30px 20px;
         line-height: 1.5;
     }
+
+    .top-line {
+        border-color: #E8E8E8;
+    }
 }
 
 @media (max-width: @screen-xs-max) {
-    #checkin_modal {
+    .profile {
         font-size: 12px;
         
         .user img {
@@ -309,6 +319,32 @@
         }
     }
 }
+
+#user-profile {
+    background-color: @profile-user-bg;
+    padding: 20px 30px 0 20px;
+
+    .row.row-padding {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    
+    .workspace {
+        margin: 0 0 20px;
+        padding: 0px;
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+    #user-profile {
+        padding: 0px;
+        
+        .workspace {
+            margin: 0px 0px 15px;
+        }
+    }
+}
+
 
 .mymodal {
     .modal-dialog {
@@ -349,6 +385,38 @@
         .modal-dialog {
             margin: 50px auto;
             width: 450px;
+        }
+    }
+}
+
+// switch
+.switch.inline {
+    display: inline-block;
+}
+
+.switch.green.active {
+    background-color: #66CC66;
+    border: 1px solid #66CC66;
+
+    .switch-handle {
+        border-color: #66CC66;
+    }
+}
+
+
+
+.switch.switch-sm {
+    height: @switch-sm-height;
+    width: 2*@switch-sm-height;
+
+    .switch-handle {
+        width: @switch-sm-height;
+        height: @switch-sm-height;
+    }
+
+    &.active {
+        .switch-handle {
+            transform: translate3d(@switch-sm-height, 0px, 0px);
         }
     }
 }

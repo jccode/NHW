@@ -182,31 +182,54 @@
 .golden {
   color: #FF9900;
 }
-#checkin_modal .container-fluid {
+.profile {
   background-color: #f8f8f8;
 }
-#checkin_modal .user {
+.profile .user {
   padding-right: 15px;
   background-color: #f0f0f0;
   padding: 20px 10px 5px;
   text-align: center;
 }
-#checkin_modal .user img {
+.profile .user img {
   margin: 10px 30px;
   width: 120px;
 }
-#checkin_modal .workspace {
+.profile .workspace {
   background-color: #f8f8f8;
   color: #8a8a8a;
   padding: 30px 5px 30px 20px;
   line-height: 1.5;
 }
+.profile .top-line {
+  border-color: #E8E8E8;
+}
 @media (max-width: 767px) {
-  #checkin_modal {
+  .profile {
     font-size: 12px;
   }
-  #checkin_modal .user img {
+  .profile .user img {
     width: 80px;
+  }
+}
+#user-profile {
+  background-color: #f0f0f0;
+  padding: 20px 30px 0 20px;
+}
+#user-profile .row.row-padding {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+#user-profile .workspace {
+  margin: 0 0 20px;
+  padding: 0px;
+}
+@media (max-width: 767px) {
+  #user-profile {
+    padding: 0px;
+  }
+  #user-profile .workspace {
+    margin: 0px 0px 15px;
   }
 }
 .mymodal .modal-dialog {
@@ -239,4 +262,25 @@
     margin: 50px auto;
     width: 450px;
   }
+}
+.switch.inline {
+  display: inline-block;
+}
+.switch.green.active {
+  background-color: #66CC66;
+  border: 1px solid #66CC66;
+}
+.switch.green.active .switch-handle {
+  border-color: #66CC66;
+}
+.switch.switch-sm {
+  height: 20px;
+  width: 40px;
+}
+.switch.switch-sm .switch-handle {
+  width: 20px;
+  height: 20px;
+}
+.switch.switch-sm.active .switch-handle {
+  transform: translate3d(20px, 0px, 0px);
 }
