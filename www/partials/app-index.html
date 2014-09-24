@@ -1,50 +1,29 @@
-<!--
-<div class="container-fluid" ng-controller="AppIndexCtrl">
-    <div class="row profile">
-        <div class="col-sm-6 col-xs-7">
-            <div class="row row-padding ">
-                <div class="col-sm-3 col-xs-3 avatar">
-                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
-                </div>
-                <div class="col-sm-9 col-xs-9 user">
-                    <b>{{user.name}}</b><br/>
-                    {{user.email}}
-                </div>
-            </div>
-        </div>
 
-        <div class="col-sm-6 col-xs-5 floor-info">
-            <div class="row row-padding ">
-                <div class="col-sm-6 col-xs-12">
-                    Ingechecked op: <br />
-                    Verdieping: {{floor}}<br />
-                    Werkplek: {{seat}}
-                </div>
-                <div class="col-sm-6 col-xs-12 btn-wrapper">
-                    <button type="button" class="btn btn-default btn-block">Uitchecken</button>
-                    <button type="button" class="btn btn-default btn-block">Floors</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
-<div class="container-fluid no-gutter profile " ng-controller="AppIndexCtrl">
+<div id="info-section-profile" class="container-fluid no-gutter profile " ng-controller="AppIndexCtrl">
     <div class="row">
         <div class="col-xs-7 user">
-            <b>{{user.name}}</b> <br />
-            <small>{{user.email}}</small> <br />
-            <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+            <div class="row">
+                <div class="col-xs-3 col-sm-4 text-center">
+                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                </div>
+                <div class="col-xs-9 col-xs-8">
+                    <span class="valign-wrapper">
+                        <strong>{{user.name}}</strong> <br />
+                        {{user.email}}
+                    </span>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-5 workspace">
-            <p>U bent ingechecked op:</p>
-            <p>Verdieping:  <b>{{data.floor}}</b></p>
-            <p>Werkplek:   <b>{{data.seat}}</b></p>
+        <div class="col-xs-5 workspace text-center">
+            <div class="text-left inline-block">
+                Ingecheckt op: <br />
+                Verdieping:  <b>{{data.floor}}</b> <br />
+                Werkplek:   <b>{{data.seat}}</b>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 footer">
+        <div class="col-xs-12 footer top-line">
             <button class="btn"><i class="fa fa-repeat text-muted">&nbsp;&nbsp;</i> Locatie wijzigen</button>
             <button class="btn">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
         </div>

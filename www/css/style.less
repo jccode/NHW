@@ -59,18 +59,8 @@
     color: @info-section-text-color;
     border-bottom: 1px solid @info-section-border;
     // box-shadow: 0 2px 5px #D4D4D4; //#D4D4D4
-    height: 45px;
-    line-height: 45px;
-
-    // .btn-default {
-    //     background-color: @info-section-bg;
-    //     border-color: @profile-btn-border-color;
-    //     color: @profile-btn-text-color;
-    // }
-
-    // .user {
-    //     color: @profile-user-text-color;
-    // }
+    height: 44px;
+    line-height: 44px;
 
     .btn-group {
         margin-left: 10px;
@@ -80,26 +70,15 @@
 @media (max-width: @screen-xs-max) {
     .info-section {
         font-size: @xs-font-size;
-        
-        // .avatar {
-        //     padding-right: 7px;
-        // }
-
-        // .user {
-        //     padding-left: 0px;
-        // }
-
-        // .floor-info {
-        //     background-color: @profile-workspace-bg;
-        // }
-
-        // .btn-wrapper {
-        //     padding-top: 0px;
-        // }
 
         .btn-group {
-            margin-left: 0px;
+            margin-left: 3px;
             margin-right: -13px;
+
+            > .btn {
+                font-size: @xs-font-size;
+                padding: 5px 5px;
+            }
         }
     }
 }
@@ -284,15 +263,14 @@
 }
 
 
-// #checkin_modal {
-// // .profile {
-
-//     .container-fluid {
-//         background-color: @profile-workspace-bg; // #F9F9F9;
-//     }
-
-
-// }
+#checkin_modal {
+    .profile {
+        .workspace {
+            
+            line-height: 1.5;
+        }
+    }
+}
 
 .profile {
     background-color: @profile-workspace-bg;
@@ -307,20 +285,18 @@
             margin: 10px 30px;
             width: 120px;
         }
-
-        
     }
 
     .workspace {
         background-color: @profile-workspace-bg; // #F9F9F9;
         color: @profile-workspace-text-color;
         padding: 30px 5px 30px 20px;
-        line-height: 1.5;
     }
 
     .footer {
         background-color: @profile-user-bg;
-        margin: 5px 5px
+        padding: 10px;
+        text-align: right;
         
         button {
             .btn-profile();
@@ -336,11 +312,49 @@
     .profile {
         font-size: 12px;
         
-        .user img {
-            width: 80px;
+        .user {
+            img {
+                width: 80px;
+            }
+        }
+
+        .workspace {
+            padding: 20px;
         }
     }
 }
+
+#info-section-profile {
+    background-color: @profile-user-bg;
+    
+    &.profile {
+        .user {
+            text-align: left;
+            // height: 80px;
+            line-height: 80px;
+
+            img {
+                width: 80px;
+                margin: 0px 0px 0px 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+    #info-section-profile.profile {
+        
+        .user {
+            // height: 34px;
+            line-height: 34px;
+            
+            img {
+                width: 34px;
+            }
+        }
+    }
+}
+
 
 #user-profile {
     background-color: @profile-user-bg;
@@ -366,6 +380,8 @@
         }
     }
 }
+
+
 
 
 .mymodal {
@@ -473,3 +489,15 @@ input.awesome {
     font-weight: normal;
     text-decoration: inherit;
 }
+
+.inline-block {
+    display: inline-block;
+}
+
+.valign-wrapper {
+    display:inline-block;
+    line-height:normal;
+    vertical-align:middle;
+}
+
+

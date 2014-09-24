@@ -29,8 +29,8 @@
   background-color: #f0f0f0;
   color: #8a8a8a;
   border-bottom: 1px solid #e6e6e2;
-  height: 45px;
-  line-height: 45px;
+  height: 44px;
+  line-height: 44px;
 }
 .info-section .btn-group {
   margin-left: 10px;
@@ -40,8 +40,12 @@
     font-size: 10px;
   }
   .info-section .btn-group {
-    margin-left: 0px;
+    margin-left: 3px;
     margin-right: -13px;
+  }
+  .info-section .btn-group > .btn {
+    font-size: 10px;
+    padding: 5px 5px;
   }
 }
 .sub-content {
@@ -171,6 +175,9 @@
 .golden {
   color: #FF9900;
 }
+#checkin_modal .profile .workspace {
+  line-height: 1.5;
+}
 .profile {
   background-color: #f8f8f8;
 }
@@ -188,10 +195,11 @@
   background-color: #f8f8f8;
   color: #8a8a8a;
   padding: 30px 5px 30px 20px;
-  line-height: 1.5;
 }
 .profile .footer {
   background-color: #f0f0f0;
+  padding: 10px;
+  text-align: right;
 }
 .profile .footer button {
   color: #007aff;
@@ -207,6 +215,28 @@
   }
   .profile .user img {
     width: 80px;
+  }
+  .profile .workspace {
+    padding: 20px;
+  }
+}
+#info-section-profile {
+  background-color: #f0f0f0;
+}
+#info-section-profile.profile .user {
+  text-align: left;
+  line-height: 80px;
+}
+#info-section-profile.profile .user img {
+  width: 80px;
+  margin: 0px 0px 0px 10px;
+}
+@media (max-width: 767px) {
+  #info-section-profile.profile .user {
+    line-height: 34px;
+  }
+  #info-section-profile.profile .user img {
+    width: 34px;
   }
 }
 #user-profile {
@@ -286,6 +316,9 @@
 .switch.switch-sm.active .switch-handle {
   transform: translate3d(20px, 0px, 0px);
 }
+#myswitch .switch.active .switch-handle {
+  transform: translate3d(20px, 0px, 0px);
+}
 .employee-list .list-group-item img {
   width: 28px;
   margin: -7px 7px -7px;
@@ -302,4 +335,12 @@ input.awesome {
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
+}
+.inline-block {
+  display: inline-block;
+}
+.valign-wrapper {
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
 }
