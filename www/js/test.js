@@ -36,7 +36,16 @@ angular.module("nhw.test", ["nhw.services"])
                         templateUrl: "partials/test/quicktest.html"
                     }
                 }
-            })        
+            })
+
+            .state("test.plugintest", {
+                url: "/plugintest",
+                views: {
+                    "testContent": {
+                        templateUrl: "partials/test/plugintest.html"
+                    }
+                }
+            })
     }])
 
 
@@ -49,6 +58,7 @@ angular.module("nhw.test", ["nhw.services"])
             {name: "Login page", sref: "welcome"}, 
             {name: "Checkin page", sref: "app.checkin"}, 
             {name: "After checkin", sref: "app.index"}, 
+            {name: "Plugin Test", sref: "test.plugintest"}, 
         ];
         
     }])
@@ -115,6 +125,91 @@ angular.module("nhw.test", ["nhw.services"])
                 $scope.selected = selectedItem;
             }, function() {
                 $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+    }])
+
+    .controller('IBeaconTestCtrl', ['$scope', 'Util', function($scope, Util) {
+
+        // var uuid = $scope.beacon.uuid;             // mandatory
+        // var identifier = $scope.beacon.identifier; // mandatory
+        // var major = $scope.beacon.major;
+        // var minor = $scope.beacon.minor;
+
+        $scope.beacon = {};
+        $scope.beacon.uuid = "b9407f30-f5f8-466e-aff9-25556b57fe6d";
+        $scope.beacon.identifier = "Estimote Beacon";
+        $scope.beacon.major = "58877";
+        $scope.beacon.minor = "52730";
+
+        
+        function createBeacon(identifier, uuid, major, minor) {
+            var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+            return beaconRegion; 
+        }
+
+
+        var writeMsg = function(message) {
+            // $scope.$apply(function() {
+            //     $scope.result = ($scope.result || '') + ' ' + message;
+            // });
+
+            // window.plugin.notification.local.add({
+            //     id: "1",
+            //     title: "NHW",
+            //     message: message
+            // });
+
+            Util.createLocalNotification( message );
+        }
+
+
+        var delegate = new cordova.plugins.locationManager.Delegate().implement({
+            didDetermineStateForRegion: function (pluginResult) {
+                writeMsg('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+                cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
+                                                                  + JSON.stringify(pluginResult));
+            },
+            didStartMonitoringForRegion: function (pluginResult) {
+                writeMsg('didStartMonitoringForRegion:', pluginResult);
+                writeMsg('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+            },
+            didRangeBeaconsInRegion: function (pluginResult) {
+                writeMsg('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+            }
+        });
+
+        var beaconRegion = createBeacon($scope.beacon.identifier, $scope.beacon.uuid, $scope.beacon.major, $scope.beacon.minor);
+
+        $scope.startMonitoringSingleBeacon = function () {
+            cordova.plugins.locationManager.setDelegate(delegate);
+            cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+                .fail(writeMsg)
+                .done();
+        };
+
+        $scope.stopMonitoringSingleBeacon = function () {
+            cordova.plugins.locationManager.stopRangingBeaconsInRegion(beaconRegion)
+                .fail(writeMsg)
+                .done();
+        };
+
+        $scope.testWriteMsg = function () {
+            writeMsg(Math.round(Math.random()*100));
+            // writeMsg( $scope.beacon.uuid + ";" + $scope.beacon.identifier );
+        };
+
+
+    }])
+
+    .controller('NotificationTestCtrl', ['$scope', 'Util', function($scope, Util) {
+        $scope.notify1 = function () {
+            Util.createLocalNotification('sample message');
+        };
+        $scope.notify2 = function () {
+            Util.createLocalNotification({
+                "id": "ID",
+                "message": "sample message2"
             });
         };
     }])

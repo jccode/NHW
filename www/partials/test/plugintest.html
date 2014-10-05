@@ -1,0 +1,34 @@
+
+<div class="scrollable">
+    <div class="scrollable-content">
+        <div class="container">
+
+            <h4>iBeacon Test</h4>
+            <div ng-controller="IBeaconTestCtrl">
+                
+                <input bs-form-control type="text" ng-model="beacon.uuid" label="uuid" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="b9407f30-f5f8-466e-aff9-25556b57fe6d" />
+                <input bs-form-control type="text" ng-model="beacon.identifier" label="identifier" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="Estimote Beacon" />
+                <input bs-form-control type="text" ng-model="beacon.major" label="major" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="58877" />
+                <input bs-form-control type="text" ng-model="beacon.minor" label="minor" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" placeholder="52730" />
+
+
+                <button class="btn btn-default" ng-click="startMonitoringSingleBeacon()">Start Monitoring</button>
+                <button class="btn btn-default" ng-click="stopMonitoringSingleBeacon()">Stop Monitoring</button>
+                <button class="btn btn-default" ng-click="testWriteMsg()">Test Write Msg</button>
+                <button class="btn btn-default" ng-click="result = ''">Clear Msg</button>
+                <p>{{result}}</p>
+            </div>
+            <hr />
+
+            <h4>Notification Test</h4>
+            <div ng-controller="NotificationTestCtrl">
+                <button class="btn btn-default" ng-click="notify1()">Notify 1</button>
+                <button class="btn btn-default" ng-click="notify2()">Notify 2</button>
+            </div>
+
+        </div> 
+        
+    </div>
+</div>
+
+
