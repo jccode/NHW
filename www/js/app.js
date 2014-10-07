@@ -3,13 +3,48 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
 
     .constant("_", window._)    // allow DI for underscore
 
-    .run(['$rootScope', '$state', '$stateParams', function($rootScope, $state, $stateParams) {
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Beacons', 'SingleBeacon', function($rootScope, $state, $stateParams, Util, Beacons, SingleBeacon) {
         
         // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
         $rootScope._ = window._;
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications
+
+
+        // device ready
+        $rootScope.$on('deviceready', function(e) {
+            
+            var startIbeacon = function() {
+                Beacons.all().$promise.then(function(beacons) {
+                    _.each(beacons, function(beacon) {
+                        var singleBeacon = new SingleBeacon(beacon.uuid, beacon.identifier, beacon.major, beacon.minor);
+                        singleBeacon.addEventListener('enter', function(result) {
+                            Util.createLocalNotification(beacon.message);
+                        });
+                        singleBeacon.startMonitoring();
+                    });
+                });
+            };
+
+            // check and enable bluetooth, run ibeacon.
+            bluetoothle.isEnabled(function(ret) {
+                if(!ret['isEnabled']) {
+                    bluetoothle.initialize(function(data) {
+                        var status = data['status'];
+                        if(status == 'enabled') {
+                            Log.log('Bluetooth enabled');
+                            startIbeacon();
+                        } else {
+                            Log.log('Bluetooth enable failed.');
+                        }
+                    }, Log.log, {'request': true});
+                } else {
+                    startIbeacon();
+                }
+            });
+            
+        });
         
     }])
 
@@ -113,3 +148,4 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         
     }])
 ;
+

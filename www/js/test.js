@@ -214,4 +214,73 @@ angular.module("nhw.test", ["nhw.services"])
         };
     }])
 
+    .controller('BluetoothleTestCtrl', ['$scope', function($scope) {
+
+        function showMsg(msg) {
+            console.log(msg);
+        }
+
+        function leErrorCallback(e) {
+            showMsg('Bluetooth request failded. type: ' + e["error"] + " error msg: " + e["message"]);
+        }
+
+        
+        $scope.leIsEnabled = function() {
+            bluetoothle.isEnabled(function(ret) {
+                showMsg('Bluetooth is' + ret?' ':' not ' + "enabled");
+            });
+        }
+        $scope.leIsInitialize = function() {
+            bluetoothle.isInitialized(function(data) {
+                var ret = data['isInitialized'];
+                showMsg('Bluetooth is' + ret?' ':' not ' + "initialize");
+            });
+        }
+        $scope.leInitialize = function() {
+            bluetoothle.initialize(function(data) {
+                var ret = data['status'] == 'enabled';
+                if(ret) {
+                    showMsg('Bluetooth initialize successful')
+                } else {
+                    showMsg('Bluetooth initialize failed. status: ' + data['status'])
+                }
+            }, leErrorCallback, {'request': true});
+        }
+        $scope.leStartScan = function() {
+            bluetoothle.startScan(function(data) {
+                var status = data['status'];
+                if(status == 'scanStarted') {
+                    showMsg('Bluetooth scan started ...');
+                }
+                else if(status == 'scanResult') {
+                    showMsg('Find device ' + data['name'] + ', address: ' + data['address']);
+                }
+                else {
+                    showMsg("Bluetooth successful callback");
+                }
+            }, leErrorCallback, null);
+        }
+        $scope.leStopScan = function() {
+            bluetoothle.stopScan(function(data) {
+                var status = data['status'];
+                if(status == 'scanStopped') {
+                    showMsg('Bluetooth scan stopped');
+                }
+                else {
+                    showMsg('Bluetooth stopScan callback');
+                }
+            }, leErrorCallback);
+        }
+        $scope.leClose = function() {
+            bluetoothle.close(function(data) {
+                var status = data['status'];
+                if(status == 'closed') {
+                    showMsg('Bluetooth closed.');
+                } else {
+                    showMsg('bluetooth close callback');
+                }
+            }, leErrorCallback);
+        }
+    }])
+
 ;

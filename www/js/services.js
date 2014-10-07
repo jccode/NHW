@@ -58,52 +58,61 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         };
     }])
 
-        .factory('Floors', ['$resource', '_', function($resource, _) {
-            var floors = $resource('js/data/floors.json');
+    .factory('Floors', ['$resource', '_', function($resource, _) {
+        var floors = $resource('js/data/floors.json');
 
-            return {
-                all: function() {
-                    // return floors.query();
-                    return floors.query(function(data) {
-                        var floors = _.each(data, function(floor) {
-                            floor['available'] = (floor.workspace > 0)
-                                && (floor.workspace - floor.present_people > 0);
-                        });
-                        return floors;
+        return {
+            all: function() {
+                // return floors.query();
+                return floors.query(function(data) {
+                    var floors = _.each(data, function(floor) {
+                        floor['available'] = (floor.workspace > 0)
+                            && (floor.workspace - floor.present_people > 0);
                     });
-                }, 
+                    return floors;
+                });
+            }, 
 
-                findById: function(id) {
-                    // var floors = this.all();
-                    // return _.find(floors, function(floor) {
-                    //     return floor.id == id;
-                    // });
+            findById: function(id) {
+                // var floors = this.all();
+                // return _.find(floors, function(floor) {
+                //     return floor.id == id;
+                // });
 
-                    return this.all().$promise.then(function(floors) {
-                        return _.find(floors, function(floor) {
-                            return floor.id == id;
-                        });
+                return this.all().$promise.then(function(floors) {
+                    return _.find(floors, function(floor) {
+                        return floor.id == id;
                     });
-                    
-                },
+                });
+                
+            },
 
-                getUnAvailableSeatsByFloor: function(floorId) {
-                    // return [73, 75, 77, 79, 133, 135, 137, 139];
-                    return [
-                        {"seat": 73, "userId": 2}, 
-                        {"seat": 75, "userId": 2}, 
-                        {"seat": 77, "userId": 2}, 
-                        {"seat": 79, "userId": 3}, 
-                        {"seat": 133, "userId": 3}, 
-                        {"seat": 135, "userId": 4}, 
-                        {"seat": 137, "userId": 4}, 
-                        {"seat": 139, "userId": 5}, 
-                    ];
-                }
+            getUnAvailableSeatsByFloor: function(floorId) {
+                // return [73, 75, 77, 79, 133, 135, 137, 139];
+                return [
+                    {"seat": 73, "userId": 2}, 
+                    {"seat": 75, "userId": 2}, 
+                    {"seat": 77, "userId": 2}, 
+                    {"seat": 79, "userId": 3}, 
+                    {"seat": 133, "userId": 3}, 
+                    {"seat": 135, "userId": 4}, 
+                    {"seat": 137, "userId": 4}, 
+                    {"seat": 139, "userId": 5}, 
+                ];
+            }
 
 
-            };
-        }])
+        };
+    }])
 
+    .factory('Beacons', ['$resource', '_', function($resource, _) {
+        var beacons = $resource('js/data/beacons.json');
+
+        return {
+            all: function() {
+                return beacons.query();
+            }
+        };
+    }])
 ;
 
