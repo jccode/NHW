@@ -1,15 +1,19 @@
 
-angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.utils', 'nhw.services', 'nhw.controllers', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Beacons', 'SingleBeacon', function($rootScope, $state, $stateParams, Util, Beacons, SingleBeacon) {
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Beacons', 'SingleBeacon', 'Storage', function($rootScope, $state, $stateParams, Util, Beacons, SingleBeacon, Storage) {
         
         // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
         $rootScope._ = window._;
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications
+
+        if(!Util.isRunningOnPhonegap()) {
+            Storage.initDB();
+        }
 
 
         // device ready
@@ -45,7 +49,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
             });
             
         });
-        
+
     }])
 
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

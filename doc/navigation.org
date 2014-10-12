@@ -1,5 +1,5 @@
 
-* First screen of the App
+* DONE First screen of the App 
 
 进入App的第一屏会根据情况的不同而不同. 我们必须分成3种情况来加以讨论.
 
@@ -15,4 +15,48 @@
 3. 用户已经被授权使用, 并且已经check-in.
    - 显示check-in information page.
      这里显示了用户的登陆信息,楼层平面图,并且提供manual check-out button.
+
+
+* question
+1. nhw.service.json, nhw.service.sqlite, 可以手动切换到两种存储引擎. 前者是demo. 后者是
+   应用.
+   - 这个可以直接通过 angular 启动时, 读取依赖模块时, 指定读取 json包 或者是 sqlite包.
+2. 对于 sqlite 的实现,判断是在移动设备,还是在网页, 自动切换到 webstorage 或者 phonegap
+   plugin.
+   - 对于 phonegap plugin,需要在 deviceready 后才能创建 db.
+3. sqlite需要提前建好数据库吗? 还是只能由代码创建. 
+   - 把建表的sql脚本写好. 然后由代码创建.
+4. phonegap file api 与 html5 的 file api 一样吗?
+   - 使用的是html5 File API的规范
+5. 创建的 sql 脚本存到一个文件中, 然后直接从里面读取创建脚本, 初始化 db.
+   - 是
+6. 为整个数据库保存一个最后更新时间, 每次应用启动时, 要通过这个时间去后台读取增量更新数
+   据.
+   - 创建一个表来存储吧.
+7. 存储到DB的数据 与 存储到文件系统的数据 与 实时状态数据
+   - 存储到DB的数据 
+     employee, building, floor, seat
+   - 实时状态数据
+     seat status, login, logout
+   - 半实时数据
+     favorite. 
+     (添加或取消关注时, 会更新到服务器, 同时记录在本地. 如果更新失败, 在连网后更新到服务器)
+   - 存储到文件系统的数据
+     user-avatar, svg file.
+
+* DB结构
+1. employee
+   id / name / email / pic 
+2. building
+   id / code / name / floorCount 
+3. floor
+   id / buildingId / num / svg 
+4. 
+
+* 图片
+1. 图片使用File API读取本地的图片进行显示, 注意使用默认图片,如果当图片不存在时;
+2. 从服务器检索图片, 缓存到本地. 
+
+* 登陆
+1. 修改为从 Licence Server读取服务器的 url.
 
