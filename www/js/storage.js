@@ -129,7 +129,7 @@ angular.module('nhw.storage', ['nhw.services'])
         function query(sql, argArray) {
             var deferred = $q.defer();
             executeSql(sql, argArray, function(transaction, resultSet) {
-                console.log('QUERY' + resultSet.rows);
+                // console.log('QUERY' + resultSet.rows);
                 var rets = [];
                 for(var i = 0; i < resultSet.rows.length; i++) {
                     rets.push(_.clone(resultSet.rows.item(i)));
