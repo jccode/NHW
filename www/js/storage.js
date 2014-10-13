@@ -48,7 +48,7 @@
 
 
 angular.module('nhw.storage', ['nhw.services'])
-    .factory('Storage', ['$window', '$q', '_', 'User', 'Floors', 'Beacons', function($window, $q, _, User, Floors, Beacons) {
+    .factory('Storage', ['$window', '$q', '_', 'User', 'Building', 'Floors', 'Beacons', function($window, $q, _, User, Building, Floors, Beacons) {
 
         var isPhonegap = typeof sqlitePlugin != 'undefined',
             // chrome support. firefox not support.
@@ -152,23 +152,24 @@ angular.module('nhw.storage', ['nhw.services'])
             }, 
             all: function() {
                 var sql = "SELECT name, email, photo FROM user;";
-                // return $q(function(resolve, reject) {
-                //     executeSql(sql, [], function(transaction, resultSet) {
-                //         var users = [];
-                //         for(var i = 0; i < resultSet.rows.length; i++) {
-                //             users.push(_.clone(resultSet.rows.item(i)));
-                //         }
-                //         resolve(users);
-                //     }, function(transaction, error) {
-                //         console.log("SQLITE DB ERROR. " + error.message + " (Code " + error.code + ")");
-                //         reject(error);
-                //     });
-                // });
                 return query(sql, []);
             }, 
             findById: function(id) {
                 var sql = "SELECT name, email, photo FROM user where id = ?";
                 return query(sql, [id]);
+            },
+
+            fetch: function(date) {
+                var self = this;
+                if(date) {      // incremental update
+                    
+                } else {
+                    User.all().$promise.then(function(users) {
+                        _.each(users, function(user) {
+                            self.insert(user);
+                        });
+                    });
+                }
             }
         };
 
@@ -178,10 +179,24 @@ angular.module('nhw.storage', ['nhw.services'])
                     args = [data.code, data.name, data.floor_count];
                 executeSql(sql, args, null);
             }, 
-
             all: function() {
-                
+                var sql = "SELECT code, name, floor_count FROM building;";
+                return query(sql, []);
+            },
+
+            fetch: function(date) {
+                var self = this;
+                if(date) {      // incremental update
+                    
+                } else {
+                    Building.all().$promise.then(function(buildings) {
+                        _.each(buildings, function(building) {
+                            self.insert(building);
+                        });
+                    });
+                }
             }
+
         };
 
         var sFloors = {
@@ -190,15 +205,26 @@ angular.module('nhw.storage', ['nhw.services'])
                     args = [data.building_id, data.num, data.svg];
                 executeSql(sql, args, null);
             }, 
-
             all: function() {
-                
+                var sql = "SELECT id, building_id, num, svg FROM floor;";
+                return query(sql, []);
             }, 
             findById: function(id) {
-                
-            }, 
-            getUnAvailableSeatsByFloor: function(floorId) {
-                
+                var sql = "SELECT id, building_id, num, svg FROM floor WHERE id = ?;";
+                return query(sql, [id]);
+            },
+
+            fetch: function(date) {
+                var self = this;
+                if(date) {      // incremental update
+
+                } else {
+                    Floors.all().$promise.then(function(floors) {
+                        _.each(floors, function(floor) {
+                            self.insert(floor);
+                        });
+                    });
+                }
             }
         };
 
@@ -208,9 +234,22 @@ angular.module('nhw.storage', ['nhw.services'])
                     args = [data.uuid, data.identifier, data.major, data.minor, data.message, data.active];
                 executeSql(sql, args, null);
             }, 
-
             all: function() {
-                
+                var sql = "SELECT uuid, identifier, major, minor, message, active FROM beacon;";
+                return query(sql, []);
+            },
+
+            fetch: function(date) {
+                var self = this;
+                if(date) {      // incremental update
+                    
+                } else {
+                    Beacons.all().$promise.then(function(beacons) {
+                        _.each(beacons, function(beacon) {
+                            self.insert(beacon);
+                        });
+                    });
+                }
             }
         };
 
@@ -226,15 +265,10 @@ angular.module('nhw.storage', ['nhw.services'])
             },
 
             syncData: function(date) {
-                // full data
-                if(!date) {
-                    
-                }
-                
-                // incremental data
-                else {
-                    
-                }
+                sUser.fetch(date);
+                sBuilding.fetch(date);
+                sFloors.fetch(date);
+                sBeacons.fetch(date);
             }, 
 
             User: sUser,

@@ -54,6 +54,24 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                         return user.id == id;
                     });
                 });
+            },
+
+            incrementalUpdate: function(date) {
+                return [];
+            }
+        };
+    }])
+
+    .factory('Building', ['$resource', '_', function($resource, _) {
+        var buildings = $resource('js/data/buildings.json');
+
+        return {
+            all: function() {
+                return buildings.query();
+            },
+
+            incrementalUpdate: function(date) {
+                return [];
             }
         };
     }])
@@ -99,9 +117,11 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     {"seat": 137, "userId": 4}, 
                     {"seat": 139, "userId": 5}, 
                 ];
+            }, 
+
+            incrementalUpdate: function(date) {
+                return [];
             }
-
-
         };
     }])
 
@@ -111,6 +131,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         return {
             all: function() {
                 return beacons.query();
+            }, 
+
+            incrementalUpdate: function(date) {
+                return [];
             }
         };
     }])
