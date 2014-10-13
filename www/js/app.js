@@ -11,8 +11,22 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications
 
-        if(!Util.isRunningOnPhonegap()) {
-            Storage.initDB();
+
+        function initPersistenceData() {
+            Storage.createDBs();
+            var date = Util.lastUpdateDate();
+            if(!date) {
+                // 
+            }
+        }
+
+        
+        if(!Util.isRunningOnPhonegap() && Storage) {
+            Storage.createDBs();
+            // Storage.User.insert({"name":"Tom", "email":"Tom@gmail.com", "photo":"img/tom.jpg"});
+            // Storage.User.all().then(function(data) {
+            //     console.log(data);
+            // });
         }
 
 

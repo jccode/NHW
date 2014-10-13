@@ -62,7 +62,18 @@ var Util = {
         var obj = _.isObject(msg)? msg: {"message": msg};
         obj = _.extend(defaultOpts, obj);
         window.plugin.notification.local.add(obj);
+    }, 
+
+    lastUpdateDate: function(date) {
+        var KEY = 'last_update_date',
+            localStorage = WebStorage('LocalStorage')(window);
+        if(date) {
+            localStorage.set(KEY, date);
+        } else {
+            return localStorage.get(KEY);
+        }
     }
+
 };
 
 var Log = {
