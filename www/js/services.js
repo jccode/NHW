@@ -5,7 +5,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
     .factory('User', ['$resource', '_', 'LocalStorage', function($resource, _, LocalStorage) {
 
-        var KEY_CURR_USER = 'curr_user';
+        var KEY_CURR_USER = 'CURR_USER';
         var users = $resource('js/data/users.json');
 
         return {
@@ -21,7 +21,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 LocalStorage.remove(KEY_CURR_USER);
             }, 
 
-            isAuthenticated: function(user) {
+            isAuthenticated: function(user) { // TODO: only need to verify email
                 var cUser = this.currUser();
                 
                 if(!user && !cUser) {
@@ -126,7 +126,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('Beacons', ['$resource', '_', function($resource, _) {
-        var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
+        // var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
+        var beacons = $resource('js/data/beacons.json');
 
         return {
             all: function() {
@@ -135,6 +136,15 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
             incrementalUpdate: function(date) {
                 return [];
+            }
+        };
+    }])
+
+    .factory('LicenseServer', ['$resource', '$q', function($resource, $q) {
+        
+        return {
+            getCustomerServerURL: function(key) {
+                return $q.when('http://customer_url_here');
             }
         };
     }])

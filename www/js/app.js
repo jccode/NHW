@@ -3,55 +3,22 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
 
     .constant("_", window._)    // allow DI for underscore
 
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Beacons', 'SingleBeacon', 'Storage', function($rootScope, $state, $stateParams, Util, Beacons, SingleBeacon, Storage) {
-        
-        // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
-        $rootScope._ = window._;
-        
-        // It's very handy to add references to $state and $stateParams to the $rootScope
-        // so that you can access them from any scope within your applications
+    // bootstrap etc
+    .factory("Bootstrap", ['Util', 'Beacons', 'SingleBeacon', 'Storage', function(Util, Beacons, SingleBeacon, Storage) {
 
-
-        // do some testing here
-        // Beacons.all().$promise.then(function(beacons) {
-        //     console.log(beacons);
-        // });
-
-
-        function initPersistenceData() {
-            Storage.createDBs();
-            var date = Util.lastUpdateDate();
-            if(!date) {
-                // 
-            }
-        }
-
-        
-        if(!Util.isRunningOnPhonegap() && Storage) {
-            Storage.createDBs();
-            // Storage.User.insert({"name":"Tom", "email":"Tom@gmail.com", "photo":"img/tom.jpg"});
-            // Storage.User.all().then(function(data) {
-            //     console.log(data);
-            // });
-        }
-
-
-        // device ready
-        $rootScope.$on('deviceready', function(e) {
-            
-            var startIbeacon = function() {
-                Beacons.all().$promise.then(function(beacons) {
-                    _.each(beacons, function(beacon) {
-                        var singleBeacon = new SingleBeacon(beacon.uuid, beacon.identifier, beacon.major, beacon.minor);
-                        singleBeacon.addEventListener('enter', function(result) {
-                            Util.createLocalNotification(beacon.message);
-                        });
-                        singleBeacon.startMonitoring();
+        function startIbeacon() {
+            Beacons.all().$promise.then(function(beacons) {
+                _.each(beacons, function(beacon) {
+                    var singleBeacon = new SingleBeacon(beacon.uuid, beacon.identifier, beacon.major, beacon.minor);
+                    singleBeacon.addEventListener('enter', function(result) {
+                        Util.createLocalNotification(beacon.message);
                     });
+                    singleBeacon.startMonitoring();
                 });
-            };
+            });
+        }
 
-            // check and enable bluetooth, run ibeacon.
+        function checkAndEnableBluetooth() {
             bluetoothle.isEnabled(function(ret) {
                 if(!ret['isEnabled']) {
                     bluetoothle.initialize(function(data) {
@@ -67,7 +34,61 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
                     startIbeacon();
                 }
             });
-            
+        }
+
+        function syncDataFromServer(callback) {
+            console.log('sync data');
+            Storage.createDBs();
+            var date = Util.lastUpdateDate();
+            if(Util.customerServerURL()) {
+                console.log('sync data 2');
+                Storage.syncData(date).then(function() {
+                    Util.lastUpdateDate(new Date());
+
+                    console.log('success');
+                    if(callback) callback(true);
+                }, function() {
+                    Log.log('sync data error. ');
+
+                    if(callback) callback(false);
+                });
+            }
+        }
+
+
+
+        function deviceready() {
+            checkAndEnableBluetooth();
+            syncDataFromServer();
+        }
+
+        
+        return {
+            deviceready: deviceready,
+            syncData: syncDataFromServer
+        };
+    }])
+
+     // run config on startup
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap) {
+        
+        // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
+        $rootScope._ = window._;
+        
+        // It's very handy to add references to $state and $stateParams to the $rootScope
+        // so that you can access them from any scope within your applications
+
+
+        
+        // if(!Util.isRunningOnPhonegap() && Storage) {
+        //     Storage.createDBs();
+        // }
+
+
+        // device ready
+        $rootScope.$on('deviceready', function(e) {
+            console.log('bootstrap');
+            Bootstrap.deviceready();
         });
 
     }])
@@ -78,7 +99,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         
             .state("home", {
                 url: "/",
-                templateUrl: "partials/phonegap.html",
+                templateUrl: "partials/phonegap.html", // "partials/phonegap.html"
                 resolve: {
                     authenticated: ['User', function(User) {
                         return User.isAuthenticated();

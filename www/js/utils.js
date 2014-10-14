@@ -65,10 +65,20 @@ var Util = {
     }, 
 
     lastUpdateDate: function(date) {
-        var KEY = 'last_update_date',
+        var KEY = 'LAST_UPDATE_DATE',
             localStorage = WebStorage('LocalStorage')(window);
         if(date) {
             localStorage.set(KEY, date);
+        } else {
+            return localStorage.get(KEY);
+        }
+    }, 
+
+    customerServerURL: function(url) {
+        var KEY = 'CUSTOMER_SERVER_URL', 
+            localStorage = WebStorage('LocalStorage')(window);
+        if(url) {
+            localStorage.set(KEY, url);
         } else {
             return localStorage.get(KEY);
         }

@@ -1,9 +1,9 @@
 
 angular.module("nhw.controllers", ['nhw.services'])
 
-    .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', function($scope, $rootScope, $state, User) {
+    .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', 'LicenseServer', 'Util', 'Bootstrap', function($scope, $rootScope, $state, User, LicenseServer, Util, Bootstrap) {
         $scope.login = function (user) {
-
+            /*
             User.isAuthenticated(user).then(function(ret) {
                 if( ret ){
                     $scope.error = "";
@@ -17,9 +17,53 @@ angular.module("nhw.controllers", ['nhw.services'])
             }, function() {
                 $scope.error = "Sorry, you're not authorized to use this app.";
             });
+             */
 
+            var errorHandler = function() {
+                $scope.error = "Sorry, you're not authorized to use this app.";
+            }
+
+            LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
+                console.log(ret);
+                if(ret) {       // authenticated by license server
+                    Util.customerServerURL(ret);
+                    
+                    User.isAuthenticated(user).then(function(ret) {
+                        if( ret ){
+                            $scope.error = "";
+                            $rootScope.curr_user = ret;
+                            User.storeUserToLocalStorage(ret);
+                            // $state.go('app.checkin');
+                            // $state.go('home');
+
+                            $scope.loading = true;
+                            console.log('loading');
+                            Bootstrap.syncData(function(ret) {
+                                console.log('loaded ' + ret);
+                                $scope.loading = false;
+                                if(ret) {
+                                    $state.go('app.checkin');
+                                } else {
+                                    $scope.error = "Sorry, some error occured when loading data from server";
+                                }
+                            });
+
+                        } else {
+                            errorHandler();
+                        }
+                    }, errorHandler);
+                    
+                }
+                else {          // reject by license server
+                    errorHandler();
+                }
+            }, errorHandler);
         };
 
+    }])
+
+    .controller('LoadingCtrl', ['$scope', function($scope) {
+        
     }])
 
     .controller('NavCtrl', ['$scope', function($scope) {
