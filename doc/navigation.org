@@ -62,3 +62,19 @@
 * 登陆
 1. 修改为从 Licence Server读取服务器的 url.
 
+* Q
+1. 就是把地图缩小整个显示出来这个，我叫SANDER再和用户确认下，如果他们还坚持我们就要缩小
+   显示整个地图给他们。(这个等确认后再做);
+2. 当用户点击了位置，显示用户信息的那个POPUP的DETAILS这个LABLE他它隐藏先，暂时没有
+   DETAILS信息可以看
+3. 当前用户CHECK IN 座位后，把他自己的座位标记成蓝色
+4. the text ‘handmatig inchecken’ and ‘barcode scannen’; request to change the text
+   ‘barcode scannen’ (suggestion? eg ‘Inchecken via scan’).
+   把BARDCODE SCANNEN 改成INCHEKEN VIA SCAN
+5. Screen to select the building before the floor selection.
+   [Ray]Sander is going to send me the screenshot for this.
+   要先进入楼房和层的选择，再进入FLLOR
+6. show a message if a phone does not support iBeacons?
+
+
+   
