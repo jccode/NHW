@@ -12,6 +12,12 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         // so that you can access them from any scope within your applications
 
 
+        // do some testing here
+        // Beacons.all().$promise.then(function(beacons) {
+        //     console.log(beacons);
+        // });
+
+
         function initPersistenceData() {
             Storage.createDBs();
             var date = Util.lastUpdateDate();

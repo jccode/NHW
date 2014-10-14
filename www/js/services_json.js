@@ -126,7 +126,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('Beacons', ['$resource', '_', function($resource, _) {
-        var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
+        var beacons = $resource('js/data/beacons.json');
 
         return {
             all: function() {
