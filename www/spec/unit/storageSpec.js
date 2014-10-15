@@ -8,8 +8,9 @@ describe('Storage', function() {
             // custom mocks
             $provide.value('_', _);
             $provide.value('User', jasmine.createSpy('User'));
-            $provide.value('User', jasmine.createSpy('Floors'));
-            $provide.value('User', jasmine.createSpy('Beacon'));
+            $provide.value('Floors', jasmine.createSpy('Floors'));
+            $provide.value('Beacon', jasmine.createSpy('Beacon'));
+            $provide.value('Log', jasmine.createSpyObj('Log', ['log']));
         });
 
         inject(function(Storage, $window, $rootScope) {

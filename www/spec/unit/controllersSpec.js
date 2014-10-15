@@ -8,7 +8,7 @@ describe('controllers', function(){
 
   it('should ....', inject(function($controller) {
     //spec body
-    var myCtrl1 = $controller('LoginCtrl', { $scope: {}, $rootScope: {}, $state: {}, User: {} });
+    var myCtrl1 = $controller('LoginCtrl', { $scope: {}, $rootScope: {}, $state: {}, User: {}, LicenseServer:{}, Util:{}, Bootstrap:{} });
     expect(myCtrl1).toBeDefined();
   }));
 

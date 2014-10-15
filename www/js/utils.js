@@ -1,6 +1,13 @@
 
 // Utilities
 
+var Log = {
+    log: function(msg) {
+        console.log("["+new Date()+"] "+msg);
+    }
+};
+
+
 /**
  * Helper function to return a factory function which construct 
  * `localStorage` & `sessionStorage` service
@@ -44,7 +51,19 @@ var WebStorage = function(type) {
 
 };
 
+
+
+
+var STORAGE_KEYS = {
+    CURR_USER: 'KEY_CURR_USER',
+    USER_DATA: 'KEY_USER_DATA', 
+    LAST_UPDATE_DATE: 'KEY_LAST_UPDATE_DATE',
+    CUSTOMER_SERVER_URL: 'KEY_CUSTOMER_SERVER_URL'
+};
+
 var Util = {
+    localStorage: WebStorage('LocalStorage')(window), 
+
     getAthorizationKey: function() {
         return "sdfkihernvioerj";
     },
@@ -62,35 +81,100 @@ var Util = {
         var obj = _.isObject(msg)? msg: {"message": msg};
         obj = _.extend(defaultOpts, obj);
         window.plugin.notification.local.add(obj);
+    },
+
+    currUser: function(user) {
+        var key = STORAGE_KEYS.CURR_USER;
+        if(user) {
+            this.localStorage.set(key, user);
+        } else {
+            return this.localStorage.get(key);
+        }
+    },
+
+    clearCurrUser: function() {
+        this.localStorage.remove(STORAGE_KEYS.CURR_USER);
+    },
+
+    /**
+     *
+     * @param uId is optional. if omitted, use current user email.
+     */
+    getUserData: function(key, uid) {
+        if(!uid) {
+            var user = this.currUser();
+            if(!user) {
+                Log.log('getUserData Error. Current user not exist.');
+                // throw 'getUserData Error. Current user not exist.';
+                return null;
+            }
+            uid = user.email;
+        }
+        var dataKey = STORAGE_KEYS.USER_DATA;
+        var userdata = this.localStorage.get(dataKey);
+        if(!userdata) {
+            return null;
+        } else {
+            return userdata[uid][key];
+        }
+    }, 
+
+    setUserData: function(key, value, uid) {
+        if(!uid) {
+            var user = this.currUser();
+            if(!user) {
+                Log.log('getUserData Error. Current user not exist.');
+                throw 'getUserData Error. Current user not exist.';
+            }
+            uid = user.email;
+        }
+
+        var dataKey = STORAGE_KEYS.USER_DATA;
+        var userdata = this.localStorage.get(dataKey);
+        if(!userdata) {
+            userdata = {};
+        }
+        
+        userdata2 = userdata[uid];
+        if(!userdata2) {
+            userdata[uid] = {};
+        }
+
+        // console.log(uid);
+        // console.log(key);
+        // console.log(userdata);
+        
+        userdata[uid][key] = value;
+        this.localStorage.set(dataKey, userdata);
     }, 
 
     lastUpdateDate: function(date) {
-        var KEY = 'LAST_UPDATE_DATE',
-            localStorage = WebStorage('LocalStorage')(window);
+        var key = STORAGE_KEYS.LAST_UPDATE_DATE;
         if(date) {
-            localStorage.set(KEY, date);
+            // this.localStorage.set(key, date);
+            this.setUserData(key, date);
         } else {
-            return localStorage.get(KEY);
+            // return this.localStorage.get(key);
+            return this.getUserData(key);
         }
     }, 
 
-    customerServerURL: function(url) {
-        var KEY = 'CUSTOMER_SERVER_URL', 
-            localStorage = WebStorage('LocalStorage')(window);
-        if(url) {
-            localStorage.set(KEY, url);
-        } else {
-            return localStorage.get(KEY);
-        }
-    }
+    /**
+     * @param uid is optional. 
+     */
+    getCustomerServerURL: function(uid) {
+        return this.getUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, uid);
+    }, 
 
-};
-
-var Log = {
-    log: function(msg) {
-        console.log("["+new Date()+"] "+msg);
+    /**
+     * @param uid is optional. 
+     */
+    setCustomerServerURL: function(url, uid) {
+        this.setUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, url, uid);
     }
 };
+
+
 
 
 // ibeacon

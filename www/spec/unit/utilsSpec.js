@@ -50,12 +50,38 @@ describe('utils', function() {
     });
 
     describe("Utils", function() {
-        it("should set date to storage, if we past the date argument. Also can get it back, if we past nothing", inject(function(Util) {
-            var date = new Date();
+        // it("should set date to storage, if we past the date argument. Also can get it back, if we past nothing", inject(['Util', function(Util) {
+        //     var date = new Date();
+        //     Util.lastUpdateDate(date);
+        //     var date2 = Util.lastUpdateDate();
+        //     expect( JSON.stringify(date) ).toEqual(date2);
+        // }]));
+
+        it("should save user to localStorage", inject(['Util', function(Util) {
+            var user = {'name':'Tom', 'email':'Tom@gmail.com'};
+            Util.currUser(user);
+            var user2 = Util.currUser();
+            expect(user).toEqual(user2);
+        }]));
+
+        it("should get lastUpdateDate from user data", inject(['Util', function(Util) {
+            var email = 'Tom@gmail.com', 
+                user = {'name':'Tom', 'email':email},
+                date = new Date();
+            // expect(Util.lastUpdateDate).toThrow();
+            
+            Util.currUser(user);
             Util.lastUpdateDate(date);
             var date2 = Util.lastUpdateDate();
-            expect( JSON.stringify(date) ).toEqual(date2);
-        }));
+            expect( date.toISOString() ).toEqual(date2);
+        }]));
+
+        it("should get customer server url from user data", inject(['Util', function(Util) {
+            var url = "http://some_url",
+                uid = "tom@gmail.com";
+            Util.setCustomerServerURL(url, uid);
+            expect(url).toEqual(Util.getCustomerServerURL(uid));
+        }]));
     });
     
 });

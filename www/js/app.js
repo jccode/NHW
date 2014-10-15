@@ -37,6 +37,11 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         }
 
         function syncDataFromServer(callback) {
+            if(!Storage) {      // for Firefox that not support WebSQL
+                callback && callback(true);
+                return ;
+            } 
+            
             Storage.createDBs();
             var date = Util.lastUpdateDate();
             if(Util.customerServerURL()) {

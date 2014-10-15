@@ -25,12 +25,13 @@ angular.module("nhw.controllers", ['nhw.services'])
 
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
                 if(ret) {       // authenticated by license server
-                    Util.customerServerURL(ret);
+                    Util.setCustomerServerURL(ret, user.email);
                     User.isAuthenticated(user).then(function(ret) {
                         if( ret ){
                             $scope.error = "";
                             $rootScope.curr_user = ret;
-                            User.storeUserToLocalStorage(ret);
+                            Util.currUser(ret);
+                            
                             // $state.go('app.checkin');
                             // $state.go('home');
 
@@ -75,8 +76,8 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'User', function($scope, $stateParams, User) {
-        $scope.user = User.currUser();
+    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'Util', function($scope, $stateParams, Util) {
+        $scope.user = Util.currUser();
 
         // data cannot be passed. if we want to achieve this purpose. we need to redefine the url to
         // include the parameters.
@@ -313,9 +314,9 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'User', 'data', function($scope, $modalInstance, User, data) {
+    .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {
         $scope.data = data;
-        $scope.curr_user =  User.currUser();
+        $scope.curr_user = Util.currUser();
 
         $scope.ok = function (n) {
             $modalInstance.close(n);
@@ -326,8 +327,8 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('ProfileCtrl', ['$scope', 'User', function($scope, User) {
-        $scope.curr_user = User.currUser();
+    .controller('ProfileCtrl', ['$scope', 'Util', function($scope, Util) {
+        $scope.curr_user = Util.currUser();
     }])
 
     .controller('EmployeesCtrl', ['$scope', 'User', function($scope, User) {

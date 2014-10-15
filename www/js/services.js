@@ -3,26 +3,26 @@
 
 angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
-    .factory('User', ['$resource', '$q', '_', 'LocalStorage', function($resource, $q, _, LocalStorage) {
+    .factory('User', ['$resource', '$q', '_', 'Util', function($resource, $q, _, Util) {
 
         var KEY_CURR_USER = 'CURR_USER';
         var users = $resource('js/data/users.json');
 
         return {
-            currUser: function() {
-                return LocalStorage.get(KEY_CURR_USER);
-            },
+            // currUser: function() {
+            //     return LocalStorage.get(KEY_CURR_USER);
+            // },
 
-            storeUserToLocalStorage: function(user) {
-                LocalStorage.set(KEY_CURR_USER, user);
-            },
+            // storeUserToLocalStorage: function(user) {
+            //     LocalStorage.set(KEY_CURR_USER, user);
+            // },
 
-            removeUserFromLocalStorage: function() {
-                LocalStorage.remove(KEY_CURR_USER);
-            }, 
+            // removeUserFromLocalStorage: function() {
+            //     LocalStorage.remove(KEY_CURR_USER);
+            // }, 
 
             isAuthenticated: function(user) { // TODO: only need to verify email
-                var cUser = this.currUser();
+                var cUser = Util.currUser();
                 
                 if(!user && !cUser) {
                     return false;
