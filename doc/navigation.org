@@ -59,7 +59,7 @@
 1. 图片使用File API读取本地的图片进行显示, 注意使用默认图片,如果当图片不存在时;
 2. 从服务器检索图片, 缓存到本地. 
 
-* 登陆
+* DONE 登陆
 1. 修改为从 Licence Server读取服务器的 url.
 
 * Q
@@ -76,5 +76,7 @@
    要先进入楼房和层的选择，再进入FLLOR
 6. show a message if a phone does not support iBeacons?
 
-
+* url
+http://10.81.231.198/hnwapi/help
+license api:http://10.81.231.198/license/help
    

@@ -3,26 +3,26 @@
 
 angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
-    .factory('User', ['$resource', '_', 'LocalStorage', function($resource, _, LocalStorage) {
+    .factory('User', ['$resource', '$q', '_', 'Util', function($resource, $q, _, Util) {
 
-        var KEY_CURR_USER = 'curr_user';
+        var KEY_CURR_USER = 'CURR_USER';
         var users = $resource('js/data/users.json');
 
         return {
-            currUser: function() {
-                return LocalStorage.get(KEY_CURR_USER);
-            },
+            // currUser: function() {
+            //     return LocalStorage.get(KEY_CURR_USER);
+            // },
 
-            storeUserToLocalStorage: function(user) {
-                LocalStorage.set(KEY_CURR_USER, user);
-            },
+            // storeUserToLocalStorage: function(user) {
+            //     LocalStorage.set(KEY_CURR_USER, user);
+            // },
 
-            removeUserFromLocalStorage: function() {
-                LocalStorage.remove(KEY_CURR_USER);
-            }, 
+            // removeUserFromLocalStorage: function() {
+            //     LocalStorage.remove(KEY_CURR_USER);
+            // }, 
 
-            isAuthenticated: function(user) {
-                var cUser = this.currUser();
+            isAuthenticated: function(user) { // TODO: only need to verify email
+                var cUser = Util.currUser();
                 
                 if(!user && !cUser) {
                     return false;
@@ -57,12 +57,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             },
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Building', ['$resource', '_', function($resource, _) {
+    .factory('Building', ['$resource', '$q', '_', function($resource, $q, _) {
         var buildings = $resource('js/data/buildings.json');
 
         return {
@@ -71,12 +71,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             },
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Floors', ['$resource', '_', function($resource, _) {
+    .factory('Floors', ['$resource', '$q', '_', function($resource, $q, _) {
         var floors = $resource('js/data/floors.json');
 
         return {
@@ -120,12 +120,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Beacons', ['$resource', '_', function($resource, _) {
+    .factory('Beacons', ['$resource', '$q', '_', function($resource, $q, _) {
+        // var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
         var beacons = $resource('js/data/beacons.json');
 
         return {
@@ -134,7 +135,16 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
+            }
+        };
+    }])
+
+    .factory('LicenseServer', ['$resource', '$q', function($resource, $q) {
+        
+        return {
+            getCustomerServerURL: function(key) {
+                return $q.when('http://customer_url_here');
             }
         };
     }])
