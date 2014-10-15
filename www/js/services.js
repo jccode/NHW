@@ -3,7 +3,7 @@
 
 angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
-    .factory('User', ['$resource', '_', 'LocalStorage', function($resource, _, LocalStorage) {
+    .factory('User', ['$resource', '$q', '_', 'LocalStorage', function($resource, $q, _, LocalStorage) {
 
         var KEY_CURR_USER = 'CURR_USER';
         var users = $resource('js/data/users.json');
@@ -57,12 +57,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             },
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Building', ['$resource', '_', function($resource, _) {
+    .factory('Building', ['$resource', '$q', '_', function($resource, $q, _) {
         var buildings = $resource('js/data/buildings.json');
 
         return {
@@ -71,12 +71,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             },
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Floors', ['$resource', '_', function($resource, _) {
+    .factory('Floors', ['$resource', '$q', '_', function($resource, $q, _) {
         var floors = $resource('js/data/floors.json');
 
         return {
@@ -120,12 +120,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])
 
-    .factory('Beacons', ['$resource', '_', function($resource, _) {
+    .factory('Beacons', ['$resource', '$q', '_', function($resource, $q, _) {
         // var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
         var beacons = $resource('js/data/beacons.json');
 
@@ -135,7 +135,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             incrementalUpdate: function(date) {
-                return [];
+                return $q.when([]);
             }
         };
     }])

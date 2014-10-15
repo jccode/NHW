@@ -37,24 +37,17 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         }
 
         function syncDataFromServer(callback) {
-            console.log('sync data');
             Storage.createDBs();
             var date = Util.lastUpdateDate();
             if(Util.customerServerURL()) {
-                console.log('sync data 2');
                 Storage.syncData(date).then(function() {
                     Util.lastUpdateDate(new Date());
-
-                    console.log('success');
                     if(callback) callback(true);
                 }, function() {
-                    Log.log('sync data error. ');
-
                     if(callback) callback(false);
                 });
             }
         }
-
 
 
         function deviceready() {

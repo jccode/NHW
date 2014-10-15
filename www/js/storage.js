@@ -168,27 +168,28 @@ angular.module('nhw.storage', ['nhw.services'])
             },
 
             fetch: function(date) {
+                Log.log('fetching user data..');
                 var self = this,
                     error = false,
                     defer = $q.defer();
-                if(date) {      // incremental update
-                    
-                } else {
-                    User.all().$promise.then(function(users) {
-                        _.each(users, function(user) {
-                            self.insert(user, null, function() {
-                                error = true;
-                                return true;
-                            });
+
+                var queryPromise = date ? User.incrementalUpdate() : Building.all().$promise;
+                queryPromise.then(function(users) {
+                    _.each(users, function(user) {
+                        self.insert(user, null, function() {
+                            error = true;
+                            return true;
                         });
-                        
-                        if(error) {
-                            defer.reject(false);
-                        } else {
-                            defer.resolve(true);
-                        }
                     });
-                }
+                    Log.log('fetch user successful');
+                    
+                    if(error) {
+                        defer.reject(false);
+                    } else {
+                        defer.resolve(true);
+                    }
+                });
+
                 return defer.promise;
             }
         };
@@ -205,27 +206,28 @@ angular.module('nhw.storage', ['nhw.services'])
             },
 
             fetch: function(date) {
+                Log.log('fetching building data..');
                 var self = this,
                     error = false,
                     defer = $q.defer();
-                if(date) {      // incremental update
-                    
-                } else {
-                    Building.all().$promise.then(function(buildings) {
-                        _.each(buildings, function(building) {
-                            self.insert(building, null, function() {
-                                error = true;
-                                return true;
-                            });
-                        });
 
-                        if(error) {
-                            defer.reject(false);
-                        } else {
-                            defer.resolve(true);
-                        }
+                var queryPromise = date ? Building.incrementalUpdate() : Building.all().$promise;
+                queryPromise.then(function(buildings) {
+                    _.each(buildings, function(building) {
+                        self.insert(building, null, function() {
+                            error = true;
+                            return true;
+                        });
                     });
-                }
+                    Log.log('fetching building data successful');
+
+                    if(error) {
+                        defer.reject(false);
+                    } else {
+                        defer.resolve(true);
+                    }
+                });
+
                 return defer.promise;
             }
 
@@ -247,27 +249,28 @@ angular.module('nhw.storage', ['nhw.services'])
             },
 
             fetch: function(date) {
+                Log.log('fetching floor data..');
                 var self = this,
                     error = false,
                     defer = $q.defer();
-                if(date) {      // incremental update
-
-                } else {
-                    Floors.all().$promise.then(function(floors) {
-                        _.each(floors, function(floor) {
-                            self.insert(floor, null, function() {
-                                error = true;
-                                return true;
-                            });
+                
+                var queryPromise = date ? Floors.incrementalUpdate() : Floors.all().$promise;
+                queryPromise.then(function(floors) {
+                    _.each(floors, function(floor) {
+                        self.insert(floor, null, function() {
+                            error = true;
+                            return true;
                         });
-
-                        if(error) {
-                            defer.reject(false);
-                        } else {
-                            defer.resolve(true);
-                        }
                     });
-                }
+
+                    Log.log('fetching floor data successfuls');
+
+                    if(error) {
+                        defer.reject(false);
+                    } else {
+                        defer.resolve(true);
+                    }
+                });
                 return defer.promise;
             }
         };
@@ -284,27 +287,26 @@ angular.module('nhw.storage', ['nhw.services'])
             },
 
             fetch: function(date) {
+                Log.log('fetching beacon data..');
                 var self = this,
                     error = false,
                     defer = $q.defer();
-                if(date) {      // incremental update
-                    
-                } else {
-                    Beacons.all().$promise.then(function(beacons) {
-                        _.each(beacons, function(beacon) {
-                            self.insert(beacon, null, function() {
-                                error = true;
-                                return true;
-                            });
+                var queryPromise = date ? Beacons.incrementalUpdate() : Beacons.all().$promise;
+                queryPromise.then(function(beacons) {
+                    _.each(beacons, function(beacon) {
+                        self.insert(beacon, null, function() {
+                            error = true;
+                            return true;
                         });
-
-                        if(error) {
-                            defer.reject(false);
-                        } else {
-                            defer.resolve(true);
-                        }
                     });
-                }
+                    Log.log('fetching beacon data successfuls');
+
+                    if(error) {
+                        defer.reject(false);
+                    } else {
+                        defer.resolve(true);
+                    }
+                });
                 return defer.promise;
             }
         };
@@ -327,6 +329,7 @@ angular.module('nhw.storage', ['nhw.services'])
             }, 
 
             syncData: function(date, callback) {
+                Log.log('syncData ' + date);
                 var promise_arr = [];
                 promise_arr.push( sUser.fetch(date) );
                 promise_arr.push( sBuilding.fetch(date) );

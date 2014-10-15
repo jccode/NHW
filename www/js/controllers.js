@@ -24,10 +24,8 @@ angular.module("nhw.controllers", ['nhw.services'])
             }
 
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
-                console.log(ret);
                 if(ret) {       // authenticated by license server
                     Util.customerServerURL(ret);
-                    
                     User.isAuthenticated(user).then(function(ret) {
                         if( ret ){
                             $scope.error = "";
@@ -37,9 +35,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                             // $state.go('home');
 
                             $scope.loading = true;
-                            console.log('loading');
                             Bootstrap.syncData(function(ret) {
-                                console.log('loaded ' + ret);
                                 $scope.loading = false;
                                 if(ret) {
                                     $state.go('app.checkin');
