@@ -68,7 +68,7 @@
 2. 当用户点击了位置，显示用户信息的那个POPUP的DETAILS这个LABLE他它隐藏先，暂时没有
    DETAILS信息可以看
 3. 当前用户CHECK IN 座位后，把他自己的座位标记成蓝色
-4. the text ‘handmatig inchecken’ and ‘barcode scannen’; request to change the text
+4. [DONE] the text ‘handmatig inchecken’ and ‘barcode scannen’; request to change the text
    ‘barcode scannen’ (suggestion? eg ‘Inchecken via scan’).
    把BARDCODE SCANNEN 改成INCHEKEN VIA SCAN
 5. Screen to select the building before the floor selection.

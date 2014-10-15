@@ -47,6 +47,11 @@ var app = {
 
         console.log('Received Event: ' + id);
          */
+
+        console.log('------ receive event -----');
+        console.log(document.body);
+        console.log(angular.element(document.body));
+        console.log(angular.element(document.body).scope());
         
         angular.element(document.body).scope().$emit('deviceready');
     }

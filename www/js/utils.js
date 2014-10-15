@@ -55,10 +55,11 @@ var WebStorage = function(type) {
 
 
 var STORAGE_KEYS = {
-    CURR_USER: 'KEY_CURR_USER',
-    USER_DATA: 'KEY_USER_DATA', 
-    LAST_UPDATE_DATE: 'KEY_LAST_UPDATE_DATE',
-    CUSTOMER_SERVER_URL: 'KEY_CUSTOMER_SERVER_URL'
+    CURR_USER: 'KEY_LOCAL_CURR_USER',
+    USER_DATA: 'KEY_LOCAL_USER_DATA', 
+    LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
+    CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
+    SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN'
 };
 
 var Util = {
@@ -171,7 +172,31 @@ var Util = {
      */
     setCustomerServerURL: function(url, uid) {
         this.setUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, url, uid);
+    },
+
+    // trim: function(x) {
+    //     return x.replace(/^\s+|\s+$/gm,'');
+    // }, 
+
+    parseBarcode: function(content) {
+        //  e.g.     HNW://001-10-0001
+        //  format.  "HNW://" + building_code(3 bit) + floor_num(2 bit) + seat_code(4 bit)
+
+        if(!content) return null;
+        content = content.trim().toLowerCase();
+        // var prefix = 'hnw://';
+        var reg = /hnw:\/\/\d{3}-\d{2}-\d{4}/;
+        if(!reg.test(content)) {
+            return null;
+        }
+
+        return {
+            building: content.substring(6,9),
+            floor: content.substring(10,12),
+            seat: content.substring(13)
+        };
     }
+
 };
 
 

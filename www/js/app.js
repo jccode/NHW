@@ -19,6 +19,10 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
         }
 
         function checkAndEnableBluetooth() {
+            if(!bluetoothle) {  // bluetoothle is not support
+                Log.log('Bluetooth LE is not supported.');
+                return; 
+            }
             bluetoothle.isEnabled(function(ret) {
                 if(!ret['isEnabled']) {
                     bluetoothle.initialize(function(data) {
@@ -44,7 +48,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
             
             Storage.createDBs();
             var date = Util.lastUpdateDate();
-            if(Util.customerServerURL()) {
+            if(Util.getCustomerServerURL()) {
                 Storage.syncData(date).then(function() {
                     Util.lastUpdateDate(new Date());
                     if(callback) callback(true);

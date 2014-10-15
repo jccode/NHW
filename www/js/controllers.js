@@ -19,6 +19,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
              */
 
+
             var errorHandler = function() {
                 $scope.error = "Sorry, you're not authorized to use this app.";
             }
@@ -55,6 +56,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     errorHandler();
                 }
             }, errorHandler);
+            
         };
 
     }])
@@ -67,11 +69,41 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('CheckInCtrl', ['$scope', '$state', 'User', function($scope, $state, User) {
+    .controller('CheckInCtrl', ['$scope', '$state', 'Util', 'SessionStorage', function($scope, $state, Util, SessionStorage) {
 
         $scope.scanBarcode = function () {
-            // console.log(User.currUser());
-            $state.go('app.index');
+            
+            if(!cordova) {      // For desktop browser
+                $state.go('app.index');
+                return ;
+            }
+
+            cordova.plugins.barcodeScanner.scan(function(result) {
+
+                // console.log(JSON.stringify(result));
+                
+                var text = result.text;
+                var ret = Util.parseBarcode(text);
+                if(!ret) {
+                    var msg = 'Sorry, the barcode is not for HNW application!<br>'
+                            + 'Barcode content is: <br>'
+                            + text;
+
+                    $scope.$apply(function() {
+                        $scope.error = msg;
+                    });
+                    
+                } else {
+                    SessionStorage.set(STORAGE_KEYS.SEAT_WILLING_CHECKIN, ret);
+                    $state.go('app.index');
+                }
+                
+            }, function(error) {
+                 $scope.$apply(function() {
+                    $scope.error = error;
+                });
+            });
+
         };
 
     }])
