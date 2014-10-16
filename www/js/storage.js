@@ -173,7 +173,7 @@ angular.module('nhw.storage', ['nhw.services'])
                     error = false,
                     defer = $q.defer();
 
-                var queryPromise = date ? User.incrementalUpdate() : Building.all().$promise;
+                var queryPromise = date ? User.incrementalUpdate(date) : Building.all().$promise;
                 queryPromise.then(function(users) {
                     _.each(users, function(user) {
                         self.insert(user, null, function() {
@@ -211,7 +211,7 @@ angular.module('nhw.storage', ['nhw.services'])
                     error = false,
                     defer = $q.defer();
 
-                var queryPromise = date ? Building.incrementalUpdate() : Building.all().$promise;
+                var queryPromise = date ? Building.incrementalUpdate(date) : Building.all().$promise;
                 queryPromise.then(function(buildings) {
                     _.each(buildings, function(building) {
                         self.insert(building, null, function() {
@@ -254,7 +254,7 @@ angular.module('nhw.storage', ['nhw.services'])
                     error = false,
                     defer = $q.defer();
                 
-                var queryPromise = date ? Floors.incrementalUpdate() : Floors.all().$promise;
+                var queryPromise = date ? Floors.incrementalUpdate(date) : Floors.all().$promise;
                 queryPromise.then(function(floors) {
                     _.each(floors, function(floor) {
                         self.insert(floor, null, function() {
@@ -291,7 +291,7 @@ angular.module('nhw.storage', ['nhw.services'])
                 var self = this,
                     error = false,
                     defer = $q.defer();
-                var queryPromise = date ? Beacons.incrementalUpdate() : Beacons.all().$promise;
+                var queryPromise = date ? Beacons.incrementalUpdate(date) : Beacons.all().$promise;
                 queryPromise.then(function(beacons) {
                     _.each(beacons, function(beacon) {
                         self.insert(beacon, null, function() {

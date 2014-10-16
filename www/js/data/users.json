@@ -4,41 +4,41 @@
         "name": "Jessie",
         "email": "junchangchen@gmail.com",
         "photo": "img/avatar.jpg", 
-        "authKey": "jessie"
+        "authKey": "1234567"
     },
     {
         "id": "2", 
         "name": "Du",
         "email": "zhiyongdu517@gmail.com",
         "photo": "img/avatar.jpg", 
-        "authKey": "du"
+        "authKey": "1234567"
     },
     {
         "id": "3", 
         "name": "Ray",
         "email": "ray.yao@hgst.com",
         "photo": "img/avatar.jpg", 
-        "authKey": "ray"
+        "authKey": "1234567"
     },
     {
         "id": "4", 
         "name": "Sander Meilink",
         "email": "sander.meilink@everlink.nl",
         "photo": "img/avatar.jpg", 
-        "authKey": "sandermeilink"
+        "authKey": "1234567"
     },
     {
         "id": "5", 
         "name": "Floor Weteringa",
         "email": "floor.weteringa@everlink.nl",
         "photo": "img/avatar.jpg", 
-        "authKey": "floorweteringa"
+        "authKey": "1234567"
     },
     {
         "id": "6",
         "name": "Ron Ten",
         "email": "ron.ten.have@everlink.nl",
         "photo": "img/avatar.jpg",
-        "authKey": "Ron"
+        "authKey": "1234567"
     }
 ]

@@ -1,0 +1,19 @@
+
+<div class="scrollable">
+    <div class="scrollable-content">
+        <div class="container" ng-controller="APITestCtrl">
+            <h4>License Server</h4>
+            <input type="text" name="licenseKey" value="" ng-model="licenseKey" />
+            <button class="btn btn-primary" ng-click="getLicenseServerUrl()">GetLicenseServerUrl</button> <br />
+            <h4>User</h4>
+            <button class="btn btn-primary" ng-click="user_all()">GetAllUser</button> <br />
+            <input type="text" name="uid" value="" ng-model="user.id" />
+            <button class="btn btn-primary" ng-click="user_by_id()">GetUserById</button> <br />
+            
+            <div ng-bind-html="result"></div>
+        </div> 
+        
+    </div>
+</div>
+
+

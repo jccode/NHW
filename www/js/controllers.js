@@ -95,7 +95,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                     
                 } else {
                     SessionStorage.set(STORAGE_KEYS.SEAT_WILLING_CHECKIN, ret);
-                    $state.go('app.index');
+                    SessionStorage.set(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN, true);
+                    $state.go('app.floor_select', {floorId: ret['floor']});
                 }
                 
             }, function(error) {
@@ -118,10 +119,13 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('FloorsCtrl', ['$scope', '$state', 'Floors', function($scope, $state, Floors) {
+    .controller('FloorsCtrl', ['$scope', '$state', 'Floors', 'SessionStorage', function($scope, $state, Floors, SessionStorage) {
         $scope.floors = Floors.all();
         $scope.select_floor = function (floorId) {
             // console.log(floor);
+            SessionStorage.set(STORAGE_KEYS.SEAT_WILLING_CHECKIN, {
+                floor: floorId
+            });
             $state.go('app.floor_select', { 'floorId': floorId });
         };
 
@@ -130,16 +134,20 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', function($scope, $stateParams, Floors, $window, User) {
         var floorId = $stateParams.floorId;
         $scope.floorId = floorId;
-        Floors.findById(floorId).then(function(floor) {
-            floor.free = floor.workspace - floor.present_people;
+        Floors.findById(floorId).$promise.then(function(floor) {
+            floor.free = floor.SeatCount - floor.NonEmptySeat;
             $scope.floor = floor;
         });
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state) {
+    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'SessionStorage', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state, SessionStorage) {
         // var floorId = $stateParams.floorId;
-        var floorId = $scope.$parent.floorId;
+        // var floorId = $scope.$parent.floorId;
+        var seatInfo = SessionStorage.get(STORAGE_KEYS.SEAT_WILLING_CHECKIN);
+        var floorId = seatInfo['floor'];
+        $scope.floor = Floors.findById(floorId);
+
 
         var svg_wrapper_size = function() {
             var el_wrapper = document.getElementById("svg-wrapper"), 
@@ -309,7 +317,6 @@ angular.module("nhw.controllers", ['nhw.services'])
             return [l, t];
         }
 
-
         $scope.confirm_checkin = function () {
             $scope.popup = false;
             var modalInstance = $modal.open({
@@ -320,7 +327,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                 resolve: {
                     data: function() {
                         return {
-                            floor: floorId,
+                            floor: $scope.floor,
                             seat: $scope.seat
                         };
                     }
@@ -331,11 +338,22 @@ angular.module("nhw.controllers", ['nhw.services'])
             modalInstance.result.then(function(ret) {
                 // success
                 // $log.info('button "' + ret + '" clicked at: ' + new Date());
+                var seat = $scope.seat;
                 var data = {
                     'floorId': floorId,
-                    'seat': $scope.seat
+                    'seat': seat
                 };
-                $state.go("app.index", data);
+                
+                Floors.checkin(floorId, seat).then(function(ret) {
+                    if(ret) {
+                        // TODO:: set to session storage
+                        
+                        $state.go("app.index", data);
+                    } else {
+                        // popup an error message
+                    }
+                });
+
                 
             }, function() {
                 // dismissed
@@ -343,7 +361,14 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         };
 
-
+        
+        // barcode scan, auto checkin
+        var auto_confirm = SessionStorage.get(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN);
+        if(auto_confirm) {
+            SessionStorage.remove(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN);
+            $scope.seat = seatInfo['seat'];
+            $scope.confirm_checkin();
+        }
     }])
 
     .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {

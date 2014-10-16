@@ -59,7 +59,8 @@ var STORAGE_KEYS = {
     USER_DATA: 'KEY_LOCAL_USER_DATA', 
     LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
     CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
-    SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN'
+    SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
+    SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN'
 };
 
 var Util = {
@@ -164,7 +165,12 @@ var Util = {
      * @param uid is optional. 
      */
     getCustomerServerURL: function(uid) {
-        return this.getUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, uid);
+        var url = this.getUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, uid);
+        if(url && url.endsWith('/')) {
+            return url.substring(0, url.length-1);
+        } else {
+            return url;
+        }
     }, 
 
     /**
@@ -198,6 +204,46 @@ var Util = {
     }
 
 };
+
+
+// DataTransform
+
+var DataTransform = (function() {
+
+    var mapping = {
+        user: [
+            ['id', 'UserId'],
+            ['name', function(data) {
+                return data['FirstName'] + data['MiddleName'] + data['LastName'];
+            }],
+            ['email', 'Email'],
+            ['photo', 'UserPic']
+        ]
+    };
+
+    var transform = function(type, data) {
+        var ret = {},
+            m = mapping[type];
+        _.each(m, function(tuple) {
+            var destKey = tuple[1];
+            var val = _.isFunction(destKey)? destKey(data): data[destKey];
+            if(val != undefined) {
+                ret[tuple[0]] = data[destKey];
+            }
+        });
+        return ret;
+    };
+
+    
+    var export_ = {};
+    _.each(_.keys(mapping), function(key) {
+        export_[key] = function(data) {
+            return transform(key, data);
+        }
+    });
+
+    return export_;
+})();
 
 
 
@@ -291,12 +337,43 @@ SingleBeacon.prototype = {
 
 var nhwUtils = angular.module("nhw.utils", []);
 
-nhwUtils.factory('Util', function() {
-    return Util;
-}).factory('Log', function() {
+nhwUtils.factory('Log', function() {
     return Log;
-}).factory('SingleBeacon', function() {
+    
+}).factory('Util', ['$http', '$q', 'Log', function($http, $q, Log) {
+    
+    function httpget(url, resultTransform) {
+        var deferred = $q.defer();
+        $http.get(url).success(function(data, status, headers, config) {
+            if(data) {
+                if(resultTransform) {
+                    data = resultTransform(data);
+                }
+                deferred.resolve(data);
+            } else {
+                deferred.resolve(null);
+            }
+        })
+            .error(function(data, status, headers, config) {
+                Log.log('httpget error.');
+                Log.log(data);
+                deferred.reject(data);
+            });
+        return deferred.promise;
+    }
+
+
+    var util = _.extend({
+        httpget: httpget
+    }, Util);
+    
+    return util;
+    
+}]).factory('SingleBeacon', function() {
     return SingleBeacon;
+    
+}).factory('DataTransform', function() {
+    return DataTransform;
 });
 
 _.each(['LocalStorage', 'SessionStorage'], function(storageType) {    

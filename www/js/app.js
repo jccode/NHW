@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
@@ -61,7 +61,7 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
 
         function deviceready() {
             checkAndEnableBluetooth();
-            syncDataFromServer();
+            // syncDataFromServer();
         }
 
         
@@ -105,16 +105,20 @@ angular.module('nhw', ['ui.router', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.di
                 resolve: {
                     authenticated: ['User', function(User) {
                         return User.isAuthenticated();
+                    }],
+
+                    isCheckin: ['User', function(User) {
+                        return User.hasCheckIn();
                     }]
                 }, 
-                controller: ['$scope', '$state', 'authenticated', 'User', 'Util', function($scope, $state, authenticated, User, Util) {
+                controller: ['$scope', '$state', 'authenticated', 'isCheckin', 'User', 'Util', function($scope, $state, authenticated, isCheckin, User, Util) {
 
                     // do automatically state transition here according to user status
                     if( !authenticated ){
                         $state.go('welcome', {}, {location: false});
                         return;
                     }
-                    if( User.hasCheckIn() ){
+                    if( isCheckin ){
                         $state.go('app.index', {}, {location: false});
                     } else {
                         $state.go('app.checkin', {}, {location: false});

@@ -46,6 +46,15 @@ angular.module("nhw.test", ["nhw.services"])
                     }
                 }
             })
+
+            .state("test.apitest", {
+                url: "/apitest",
+                views: {
+                    "testContent": {
+                        templateUrl: "partials/test/apitest.html"
+                    }
+                }
+            })
     }])
 
 
@@ -59,6 +68,7 @@ angular.module("nhw.test", ["nhw.services"])
             {name: "Checkin page", sref: "app.checkin"}, 
             {name: "After checkin", sref: "app.index"}, 
             {name: "Plugin Test", sref: "test.plugintest"}, 
+            {name: "API Test", sref: "test.apitest"}, 
         ];
         
     }])
@@ -281,6 +291,34 @@ angular.module("nhw.test", ["nhw.services"])
                 }
             }, leErrorCallback);
         }
+    }])
+
+    .controller('APITestCtrl', ['$scope', '$log', '$sce', 'LicenseServer', 'User', function($scope, $log, $sce, LicenseServer, User) {
+        $scope.licenseKey = '1234567';
+        $scope.getLicenseServerUrl = function () {
+            LicenseServer.getCustomerServerURL($scope.licenseKey).then(function(data) {
+                $log.log(data);
+                if(data) {
+                    $scope.result = data.ServerUrl;
+                }
+            });
+        };
+
+        $scope.user_all = function () {
+            User.all().then(function(data) {
+                $log.log(data);
+                $scope.result = data;
+            });
+        };
+
+        $scope.user_by_id = function () {
+            User.findById($scope.user.id).then(function(data) {
+                $log.log(data);
+                $scope.result = data;
+            });
+        };
+
+
     }])
 
 ;
