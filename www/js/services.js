@@ -34,12 +34,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             hasCheckIn: function() {
-                return false;
+                // return false;
 
-                // var currUser = Util.currUser();
-                // if(!currUser) return false;
-                // var url = baseurl + '/ischeckin/' + currUser.id;
-                // return Util.httpget(url);
+                var currUser = Util.currUser();
+                if(!currUser) return false;
+                var url = baseurl + '/ischeckin/' + currUser.id;
+                return Util.httpget(url);
             },
 
             all: function() {

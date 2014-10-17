@@ -118,8 +118,12 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                         $state.go('welcome', {}, {location: false});
                         return;
                     }
+                    console.log(isCheckin);
                     if( isCheckin ){
-                        $state.go('app.index', {}, {location: false});
+                        var seatInfo = isCheckin;
+                        var floorId = seatInfo["FloorId"],
+                            seat = parseInt(seatInfo["SeatCode"]);
+                        $state.go('app.index', {f:floorId, s:seat}, {location: false});
                     } else {
                         $state.go('app.checkin', {}, {location: false});
                     }

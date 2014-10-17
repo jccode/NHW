@@ -222,9 +222,7 @@ var DataTransform = (function() {
         user: [
             ['id', 'UserId'],
             ['name', function(data) {
-                console.log(data);
                 var ret = [data['FirstName'], data['MiddleName'], data['LastName']].join(' ');
-                console.log(ret);
                 return ret;
             }],
             ['email', 'Email'],

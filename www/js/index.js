@@ -48,10 +48,10 @@ var app = {
         console.log('Received Event: ' + id);
          */
 
-        // console.log('------ receive event -----');
-        // console.log(document.body);
-        // console.log(angular.element(document.body));
-        // console.log(angular.element(document.body).scope());
+        console.log('------ receive event -----');
+        console.log(document.body);
+        console.log(angular.element(document.body));
+        console.log(angular.element(document.body).scope());
         
         angular.element(document.body).scope().$emit('deviceready'); // not work on android 4.1.2. why?
     }
