@@ -79,4 +79,15 @@
 * url
 http://10.81.231.198/hnwapi/help
 license api:http://10.81.231.198/license/help
+* Need du update
+1. 所有的请求返回统一的 json 格式. 
+   {data: ret}
+2. Seat, checkin api. Need to change: 
+   Need to add an additional args, floorId. 
+3. User.hasCheckIn  Change:
+   Return false if user haven't checkin;
+   return seat information if user have checkin. 
+   seat information = {floor: floorId, seat: seatNo}
+4. Add a new api to return the amount of all checkins(for all floors).
+   allCheckinCount()?
    

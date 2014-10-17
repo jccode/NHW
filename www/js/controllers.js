@@ -124,16 +124,27 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('FloorsCtrl', ['$scope', '$state', 'Floors', 'SessionStorage', function($scope, $state, Floors, SessionStorage) {
+    .controller('FloorsCtrl', ['$scope', '$state', 'Floors', function($scope, $state, Floors) {
         $scope.floors = Floors.all();
         $scope.select_floor = function (floorId) {
             // console.log(floor);
             $state.go('app.floor_select', { 'f': floorId });
         };
+        $scope.auto_reserve = function (floorId, seatRemain) {
+            // console.log(floorId + '; ' + seatRemain);
+            if(seatRemain <= 0) {
+                // popup a notification to user that not any seat available
+                return ;
+            }
+            Floors.reserveseat(floorId).then(function(data) {
+                var seat = parseInt(data);
+                $state.go('app.floor_select', {'f': floorId, 's': seat});
+            });
+        };
 
     }])
 
-    .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', function($scope, $stateParams, Floors, $window, User) {
+    .controller('FloorSelectCtrl', ['$scope', '$state', '$stateParams', 'Floors', '$window', 'User', function($scope, $state, $stateParams, Floors, $window, User) {
         var floorId = $stateParams.f,
             seat = $stateParams.s;
         if(seat) {
@@ -144,6 +155,15 @@ angular.module("nhw.controllers", ['nhw.services'])
             floor.free = floor.SeatCount - floor.NonEmptySeat;
             $scope.floor = floor;
         });
+
+        $scope.auto_reserve = function (floorId) {
+            Floors.reserveseat(floorId).then(function(data) {
+                if(data) {
+                    var seat = parseInt(data);
+                    $state.go('app.floor_select', {'f': floorId, 's': seat});
+                }
+            });
+        };
 
     }])
 

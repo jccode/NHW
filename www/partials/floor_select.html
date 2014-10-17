@@ -3,7 +3,7 @@
     
     <div content-for="info-bar-title">
         Verdieping {{floor.FloorNum}}
-        <button type="button" class="btn btn-primary btn-sm info-bar-btn">Automatisch inchecken</button>
+        <button type="button" class="btn btn-primary btn-sm info-bar-btn" ng-click="auto_reserve(floor.FloorId)">Automatisch inchecken</button>
     </div>
 
     <ng-include src="'partials/svg.html'" style="position:absolute;left:0;top:0;bottom:65px;width:100%;"></ng-include>
