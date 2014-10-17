@@ -44,7 +44,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
             all: function() {
                 // return users.query();
-                return User.query().$promise;
+                return User.query();
             },
 
             findById: function(id) {
@@ -55,7 +55,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     });
                 });
                  */
-                return User.get({id: id}).$promise;
+                return User.get({id: id});
             },
 
             incrementalUpdate: function(date) {
@@ -137,10 +137,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             },
 
             checkin: function(floorId, seat) {
-                // var cuser = Util.currUser();
-                // var url = seaturl + '/checkin/' + seatId + '/' + cuser.id;
-                // return $http.put(url, null);
-                return $q.when(true);
+                var cuser = Util.currUser();
+                var url = seaturl + '/checkin/' + floorId + '/' + seat + '/' + cuser.id;
+                return $http.put(url);
+                // return $q.when(true);
             },
 
             reserveseat: function(floorId) {

@@ -411,7 +411,9 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.curr_user = Util.currUser();
     }])
 
-    .controller('EmployeesCtrl', ['$scope', 'User', function($scope, User) {
+    .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
+        var customer_url = Util.getCustomerServerURL();
+        $scope.baseurl = customer_url.substring(0, customer_url.length - 3);
         $scope.employees = User.all();
     }])
 

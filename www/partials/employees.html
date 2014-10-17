@@ -1,25 +1,27 @@
 
+<div ng-controller="EmployeesCtrl">
 <div content-for="info-bar-title">
     Zoeken 
     <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-default">Iedereen</button>
-        <button type="button" class="btn btn-default">Favorieten</button>
-        <button type="button" class="btn btn-default">Ingechecked</button>
-        <button type="button" class="btn btn-default">Niet ingechecked</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="all">Iedereen</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="favourite">Favorieten</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="checkin">Ingechecked</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="notcheckin">Niet ingechecked</button>
     </div>
 </div>
 
-<div ng-controller="EmployeesCtrl">
+<div >
     <input type="search" class="form-control app-search awesome" ng-model="q" placeholder="&#xF002;"/>
     <div class="scrollable">
         <div class="scrollable-content">
             <ul class="list-group employee-list">
                 <li ng-repeat="employee in employees | filter:q " class="list-group-item">
-                    <img src="img/avatar.jpg" alt="Avatar" class="img-circle" width="25px"/>
-                    <b>{{employee.name}}</b>
-                    <a class="star" ng-class="{'active': $first}"><i class="fa fa-star"></i></a>
+                    <img ng-src="{{baseurl}}{{employee.UserPic}}" alt="Avatar" class="img-circle" width="25px" height="25px"/>
+                    <b>{{employee.FirstName}} {{employee.MiddleName}} {{employee.LastName}}</b>
+                    <a class="star" ng-class="{'active': employee.Favorited}"><i class="fa fa-star"></i></a>
                 </li>
             </ul>
         </div>
     </div>
+</div>
 </div>
