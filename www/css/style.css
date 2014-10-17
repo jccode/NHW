@@ -137,6 +137,9 @@
 .seat-unavailable {
   fill: red;
 }
+.seat-me {
+  fill: blue;
+}
 .popup {
   position: absolute;
   background-color: #F0F0F0;
@@ -333,6 +336,7 @@
 }
 .employee-list .list-group-item img {
   width: 28px;
+  height: 28px;
   margin: -7px 7px -7px;
 }
 .employee-list .list-group-item .star {
@@ -341,6 +345,19 @@
 }
 .employee-list .list-group-item .star.active {
   color: #FF6600;
+}
+.employee-list .list-group-item:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.btn-group.gray .active {
+  background-color: #ebebeb;
+  border-color: #adadad;
+  color: #333;
+}
+.btn-group.gray .active:focus {
+  background-color: #ebebeb;
+  border-color: #adadad;
+  color: #333;
 }
 input.awesome {
   font-family: FontAwesome;

@@ -58,6 +58,21 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return User.get({id: id});
             },
 
+            favourites: function() {
+                var user = Util.currUser();
+                return $resource(baseurl + '/favorite/:id', {id: '@id'}).query({id: user.id});
+            },
+
+            checkins: function() {
+                var user = Util.currUser();                
+                return $resource(baseurl + '/online/:id', {id: '@id'}).query({id: user.id});
+            }, 
+
+            notCheckins: function() {
+                var user = Util.currUser();                
+                return $resource(baseurl + '/offline/:id', {id: '@id'}).query({id: user.id});
+            }, 
+
             incrementalUpdate: function(date) {
                 // return $q.when([]);
                 return Util.httpget(baseurl + '/incremental/' + date);
@@ -128,7 +143,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     var unavailables = data['FloorSeats'];
                     var ret = _.map(unavailables, function(obj) {
                         return {
-                            'seat': obj['SeatCode'],
+                            'seat': parseInt(obj['SeatCode']),
                             'userId': obj['UserId']
                         };
                     });

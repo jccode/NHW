@@ -167,10 +167,11 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'SessionStorage', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state, SessionStorage) {
+    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state, Util) {
         var floorId = $stateParams.f,
             seat = $stateParams.s, 
             confirm_checkin = $scope.$parent.confirm_checkin;
+        var cuser = Util.currUser();
         $scope.floor = Floors.findById(floorId);
 
 
@@ -239,12 +240,29 @@ angular.module("nhw.controllers", ['nhw.services'])
         function innersvgLoaded() {
 
             function init_state() {
+                /*
                 var unavailable_seats = Floors.getUnAvailableSeatsByFloor(floorId);
                 innersvg.selectAll("[id^='circle']").classed('seat-available', true);
                 _.each(unavailable_seats, function(item) {
                     innersvg.select("#circle" + item.seat)
                         .classed({"seat-available": false, "seat-unavailable": true})
                         .attr("data-user", item.userId);
+                });
+                 */
+                
+                innersvg.selectAll("[id^='circle']").classed('seat-available', true);
+                Floors.getUnAvailableSeatsByFloor(floorId).then(function(unavailable_seats) {
+                    // console.log(unavailable_seats);
+                    _.each(unavailable_seats, function(item) {
+                        var isme = cuser && cuser.id && cuser.id == item.userId;
+                        var classes = {"seat-available": false};
+                        classes["seat-me"] = isme;
+                        classes["seat-unavailable"] = !isme;
+                        
+                        innersvg.select("#circle" + item.seat)
+                            .classed(classes)
+                            .attr("data-user", item.userId);
+                    });
                 });
             }
 
@@ -414,7 +432,17 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
         var customer_url = Util.getCustomerServerURL();
         $scope.baseurl = customer_url.substring(0, customer_url.length - 3);
-        $scope.employees = User.all();
+        $scope.type = 'all';
+        var fn = {
+            'all': User.all,
+            'favourite': User.favourites,
+            'checkin': User.checkins,
+            'notcheckin': User.notCheckins
+        };
+
+        $scope.$watch('type', function() {
+            $scope.employees = fn[$scope.type]();            
+        });
     }])
 
 ;

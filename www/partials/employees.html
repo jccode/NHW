@@ -2,11 +2,11 @@
 <div ng-controller="EmployeesCtrl">
 <div content-for="info-bar-title">
     Zoeken 
-    <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-default" ng-model="type" btn-radio="all">Iedereen</button>
-        <button type="button" class="btn btn-default" ng-model="type" btn-radio="favourite">Favorieten</button>
-        <button type="button" class="btn btn-default" ng-model="type" btn-radio="checkin">Ingechecked</button>
-        <button type="button" class="btn btn-default" ng-model="type" btn-radio="notcheckin">Niet ingechecked</button>
+    <div class="btn-group btn-group-sm gray">
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="'all'">Iedereen</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="'favourite'">Favorieten</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="'checkin'">Ingechecked</button>
+        <button type="button" class="btn btn-default" ng-model="type" btn-radio="'notcheckin'">Niet ingechecked</button>
     </div>
 </div>
 
@@ -16,10 +16,11 @@
         <div class="scrollable-content">
             <ul class="list-group employee-list">
                 <li ng-repeat="employee in employees | filter:q " class="list-group-item">
-                    <img ng-src="{{baseurl}}{{employee.UserPic}}" alt="Avatar" class="img-circle" width="25px" height="25px"/>
+                    <img ng-src="{{baseurl}}{{employee.UserPic}}" alt="Avatar" class="img-circle" width="28px" height="28px"/>
                     <b>{{employee.FirstName}} {{employee.MiddleName}} {{employee.LastName}}</b>
                     <a class="star" ng-class="{'active': employee.Favorited}"><i class="fa fa-star"></i></a>
                 </li>
+                <li ng-hide="employees.length" class="list-group-item" style="text-align: center;">No items</li>
             </ul>
         </div>
     </div>
