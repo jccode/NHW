@@ -69,14 +69,22 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('CheckInCtrl', ['$scope', '$state', 'Util', 'SessionStorage', function($scope, $state, Util, SessionStorage) {
+    .controller('CheckInCtrl', ['$scope', '$state', 'Util', 'Floors', function($scope, $state, Util, Floors) {
 
         $scope.scanBarcode = function () {
-            
-            if(!cordova) {      // For desktop browser
-                $state.go('app.index');
+
+            if(Util.isCordovaNotSupport()) {      // For desktop, skip scanning barcode
+                // auto checkin.
+                Floors.all().$promise.then(function(data) {
+                    var floorId = data[0]['FloorId'];
+                    Floors.reserveseat(floorId).then(function(data) {
+                        var seat = parseInt(data);
+                        var param = {f: floorId, s:seat};
+                        $state.go('app.floor_select', param);
+                    });
+                });
                 return ;
-            }
+            }     
 
             cordova.plugins.barcodeScanner.scan(function(result) {
 
@@ -94,9 +102,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                     
                 } else {
-                    SessionStorage.set(STORAGE_KEYS.SEAT_WILLING_CHECKIN, ret);
-                    SessionStorage.set(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN, true);
-                    $state.go('app.floor_select', {floorId: ret['floor']});
+                    $state.go('app.floor_select', {f: ret['floor'], s: ret['seat']});
                 }
                 
             }, function(error) {
@@ -109,13 +115,12 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'Util', function($scope, $stateParams, Util) {
+    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'Util', 'Floors', function($scope, $stateParams, Util, Floors) {
+        var floorId = $stateParams.f,
+            seat = $stateParams.s;
         $scope.user = Util.currUser();
-
-        // data cannot be passed. if we want to achieve this purpose. we need to redefine the url to
-        // include the parameters.
-        $scope.floor = $stateParams.floorId;
-        $scope.seat = $stateParams.seat;
+        $scope.floor = Floors.findById(floorId);
+        $scope.seat = seat;
         
     }])
 
@@ -123,17 +128,18 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.floors = Floors.all();
         $scope.select_floor = function (floorId) {
             // console.log(floor);
-            SessionStorage.set(STORAGE_KEYS.SEAT_WILLING_CHECKIN, {
-                floor: floorId
-            });
-            $state.go('app.floor_select', { 'floorId': floorId });
+            $state.go('app.floor_select', { 'f': floorId });
         };
 
     }])
 
     .controller('FloorSelectCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', function($scope, $stateParams, Floors, $window, User) {
-        var floorId = $stateParams.floorId;
-        $scope.floorId = floorId;
+        var floorId = $stateParams.f,
+            seat = $stateParams.s;
+        if(seat) {
+            $scope.confirm_checkin = true;
+        }
+
         Floors.findById(floorId).$promise.then(function(floor) {
             floor.free = floor.SeatCount - floor.NonEmptySeat;
             $scope.floor = floor;
@@ -142,10 +148,9 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
     .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'SessionStorage', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state, SessionStorage) {
-        // var floorId = $stateParams.floorId;
-        // var floorId = $scope.$parent.floorId;
-        var seatInfo = SessionStorage.get(STORAGE_KEYS.SEAT_WILLING_CHECKIN);
-        var floorId = seatInfo['floor'];
+        var floorId = $stateParams.f,
+            seat = $stateParams.s, 
+            confirm_checkin = $scope.$parent.confirm_checkin;
         $scope.floor = Floors.findById(floorId);
 
 
@@ -339,16 +344,15 @@ angular.module("nhw.controllers", ['nhw.services'])
                 // success
                 // $log.info('button "' + ret + '" clicked at: ' + new Date());
                 var seat = $scope.seat;
-                var data = {
-                    'floorId': floorId,
-                    'seat': seat
+                var param = {
+                    'f': floorId,
+                    's': seat
                 };
                 
                 Floors.checkin(floorId, seat).then(function(ret) {
                     if(ret) {
-                        // TODO:: set to session storage
                         
-                        $state.go("app.index", data);
+                        $state.go("app.index", param);
                     } else {
                         // popup an error message
                     }
@@ -363,12 +367,11 @@ angular.module("nhw.controllers", ['nhw.services'])
 
         
         // barcode scan, auto checkin
-        var auto_confirm = SessionStorage.get(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN);
-        if(auto_confirm) {
-            SessionStorage.remove(STORAGE_KEYS.SCAN_CONFIRM_CHECKIN);
-            $scope.seat = seatInfo['seat'];
+        if(confirm_checkin) {
+            $scope.seat = seat;
             $scope.confirm_checkin();
         }
+        
     }])
 
     .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {

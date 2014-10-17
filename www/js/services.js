@@ -141,6 +141,11 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 // var url = seaturl + '/checkin/' + seatId + '/' + cuser.id;
                 // return $http.put(url, null);
                 return $q.when(true);
+            },
+
+            reserveseat: function(floorId) {
+                var url = seaturl + '/reserveraseat/' + floorId;
+                return Util.httpget(url);
             }, 
 
             incrementalUpdate: function(date) {

@@ -72,6 +72,14 @@ var Util = {
 
     isRunningOnPhonegap: function() {
         return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/);
+    },
+
+    isCordovaNotSupport: function() {
+        try {
+            return !cordova;
+        } catch (e) {
+            return true;
+        }
     }, 
 
     createLocalNotification: function(msg) {
@@ -214,7 +222,10 @@ var DataTransform = (function() {
         user: [
             ['id', 'UserId'],
             ['name', function(data) {
-                return data['FirstName'] + data['MiddleName'] + data['LastName'];
+                console.log(data);
+                var ret = [data['FirstName'], data['MiddleName'], data['LastName']].join(' ');
+                console.log(ret);
+                return ret;
             }],
             ['email', 'Email'],
             ['photo', 'UserPic']
@@ -228,7 +239,7 @@ var DataTransform = (function() {
             var destKey = tuple[1];
             var val = _.isFunction(destKey)? destKey(data): data[destKey];
             if(val != undefined) {
-                ret[tuple[0]] = data[destKey];
+                ret[tuple[0]] = val;
             }
         });
         return ret;

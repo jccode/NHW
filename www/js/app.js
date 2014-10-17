@@ -149,7 +149,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             })
 
             .state("app.index", {
-                url: "/index",
+                url: "/index?f&s", // floorId&seatNo
                 views: {
                     "mainContent": {
                         templateUrl: "partials/app-index.html"
@@ -167,7 +167,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             })
 
             .state("app.floor_select", {
-                url: "/floor/:floorId",
+                url: "/floor/:f?s", // :floorId?seat ; seat is optional
                 views: {
                     "subContent": {
                         templateUrl: "partials/floor_select.html"
