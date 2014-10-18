@@ -77,8 +77,14 @@
 6. show a message if a phone does not support iBeacons?
 
 * url
+** server in hgst  
 http://10.81.231.198/hnwapi/help
 license api:http://10.81.231.198/license/help
+
+** server in ns
+Licence api: http://www.hongding.nl/api/customer/CheckLicense/1234567
+https://www.nweapp.nl/hnwapi/help
+
 * Need du update
 1. 所有的请求返回统一的 json 格式. 
    {data: ret}
@@ -91,3 +97,13 @@ license api:http://10.81.231.198/license/help
 4. Add a new api to return the amount of all checkins(for all floors).
    allCheckinCount()?
    
+* issues
+1. Locatie wijzigen: checkout, then send user to the checkin page.
+2. user list 列表. bugs.
+3. add favourite.
+4. click on user item, show user profile.(popup? goto a new page?)
+5. top navgation bar. add checkout button
+6. app-index page. (user have checkin page), 'ok' button change to 'uncheckin' button;
+7. user list: checkin, notcheckin, have bugs. if no anyone checkin. empty list.
+8. 
+

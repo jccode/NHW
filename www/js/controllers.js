@@ -121,7 +121,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.user = Util.currUser();
         $scope.floor = Floors.findById(floorId);
         $scope.seat = seat;
-        
+        $scope.baseurl = Util.getPictureRootUrl();
     }])
 
     .controller('FloorsCtrl', ['$scope', '$state', 'Floors', function($scope, $state, Floors) {
@@ -430,11 +430,11 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     .controller('ProfileCtrl', ['$scope', 'Util', function($scope, Util) {
         $scope.curr_user = Util.currUser();
+        $scope.baseurl = Util.getPictureRootUrl();
     }])
 
     .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
-        var customer_url = Util.getCustomerServerURL();
-        $scope.baseurl = customer_url.substring(0, customer_url.length - 3);
+        $scope.baseurl = Util.getPictureRootUrl();
         $scope.type = 'all';
         var fn = {
             'all': User.all,
@@ -444,7 +444,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
 
         $scope.$watch('type', function() {
-            $scope.employees = fn[$scope.type]();            
+            $scope.employees = fn[$scope.type].call(User);
         });
     }])
 

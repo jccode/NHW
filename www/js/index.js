@@ -48,13 +48,33 @@ var app = {
         console.log('Received Event: ' + id);
          */
 
+        var tryGetRootScope = function() {
+            try {
+                return angular.element(document.body).scope();
+            } catch(e) {
+                console.log('Get root scope failed');
+                return null;
+            }
+        };
+
+
         console.log('------ receive event -----');
         console.log(document.body);
         console.log(angular.element(document.body));
-        console.log(angular.element(document.body).scope());
+        console.log(tryGetRootScope());
+
+        var $scope = tryGetRootScope(),
+            i = 0;
+        while(!$scope && i<100) {
+            setTimeout(function() {
+                console.log('trying .. ' + i);
+                $scope = tryGetRootScope();
+                i++;
+            },100);
+        }
         
-        angular.element(document.body).scope().$emit('deviceready'); // not work on android 4.1.2. why?
-    }
+        $scope.$emit('deviceready'); // not work on android 4.1.2. why?
+      }
 };
 
 

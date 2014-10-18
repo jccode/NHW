@@ -330,12 +330,15 @@ angular.module('nhw.storage', ['nhw.services'])
 
             syncData: function(date, callback) {
                 Log.log('syncData ' + date);
+                /*
                 var promise_arr = [];
                 promise_arr.push( sUser.fetch(date) );
                 promise_arr.push( sBuilding.fetch(date) );
                 promise_arr.push( sFloors.fetch(date) );
                 promise_arr.push( sBeacons.fetch(date) );
                 return $q.all(promise_arr);
+                 */
+                return $q.when('true');
             }, 
 
             User: sUser,

@@ -4,7 +4,7 @@
         <div class="col-xs-6 user">
             <b>{{curr_user.name}}</b> <br />
             <small>{{curr_user.email}}</small> <br />
-            <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+            <img ng-src="{{baseurl}}{{curr_user.photo}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
         </div>
         <div class="col-xs-6">
             <div class="row">

@@ -118,7 +118,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                         $state.go('welcome', {}, {location: false});
                         return;
                     }
-                    console.log(isCheckin);
+
                     if( isCheckin ){
                         var seatInfo = isCheckin;
                         var floorId = seatInfo["FloorId"],

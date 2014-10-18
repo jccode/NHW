@@ -5,10 +5,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     .factory('User', ['$resource', '$http', '$q', '_', 'Util', function($resource, $http, $q, _, Util) {
 
         // var users = $resource('js/data/users.json');
-        var baseurl = Util.getCustomerServerURL() + '/api/user';
-        var User = $resource(baseurl+"/:id");
 
         return {
+            baseurl: function() {
+                return Util.getCustomerServerURL() + '/api/user';
+            }, 
+
             isAuthenticated: function(user) { // TODO: only need to verify email
                 var cUser = Util.currUser();
                 
@@ -38,13 +40,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
                 var currUser = Util.currUser();
                 if(!currUser) return false;
-                var url = baseurl + '/ischeckin/' + currUser.id;
+                var url = this.baseurl() + '/ischeckin/' + currUser.id;
                 return Util.httpget(url);
             },
 
             all: function() {
                 // return users.query();
-                return User.query();
+                return $resource(this.baseurl()+"/:id").query();
             },
 
             findById: function(id) {
@@ -55,56 +57,63 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     });
                 });
                  */
-                return User.get({id: id});
+                return $resource(this.baseurl()+"/:id").get({id: id});
             },
 
             favourites: function() {
                 var user = Util.currUser();
-                return $resource(baseurl + '/favorite/:id', {id: '@id'}).query({id: user.id});
+                return $resource(this.baseurl() + '/favorite/:id', {id: '@id'}).query({id: user.id});
             },
 
             checkins: function() {
                 var user = Util.currUser();                
-                return $resource(baseurl + '/online/:id', {id: '@id'}).query({id: user.id});
+                return $resource(this.baseurl() + '/online/:id', {id: '@id'}).query({id: user.id});
             }, 
 
             notCheckins: function() {
                 var user = Util.currUser();                
-                return $resource(baseurl + '/offline/:id', {id: '@id'}).query({id: user.id});
+                return $resource(this.baseurl() + '/offline/:id', {id: '@id'}).query({id: user.id});
             }, 
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);
-                return Util.httpget(baseurl + '/incremental/' + date);
+                return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])
 
     .factory('Building', ['$resource', '$q', '_', function($resource, $q, _) {
         // var buildings = $resource('js/data/buildings.json');
-        var baseurl = Util.getCustomerServerURL() + '/api/building';
-        var Building = $resource(baseurl + '/:id');
 
         return {
+            baseurl: function() {
+                return Util.getCustomerServerURL() + '/api/building';
+            }, 
+
             all: function() {
                 // return buildings.query();
-                return Building.query().$promise;
+                return $resource(this.baseurl() + '/:id').query();
             },
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);
-                return Util.httpget(baseurl + '/incremental/' + date);
+                return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])
 
     .factory('Floors', ['$resource', '$http', '$q', '_', 'Util', function($resource, $http, $q, _, Util) {
         // var floors = $resource('js/data/floors.json');
-        var baseurl = Util.getCustomerServerURL() + '/api/floor';
-        var seaturl = Util.getCustomerServerURL() + '/api/seat';
-        var Floor = $resource(baseurl + '/:id');
 
         return {
+            baseurl: function() {
+                return Util.getCustomerServerURL() + '/api/floor';
+            },
+
+            seaturl: function() {
+                return Util.getCustomerServerURL() + '/api/seat';
+            }, 
+
             all: function() {
                 // return floors.query(function(data) {
                 //     var floors = _.each(data, function(floor) {
@@ -113,7 +122,9 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 //     });
                 //     return floors;
                 // });
-                return Floor.query();
+                // console.log('Floors service, all: ' + baseurl + "; getCustomerServerURL:" + Util.getCustomerServerURL());
+                // console.log(Floor);
+                return $resource(this.baseurl() + '/:id').query();
             }, 
 
             findById: function(id) {
@@ -123,7 +134,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 //     });
                 // });
                 
-                return Floor.get({id: id});
+                return $resource(this.baseurl() + '/:id').get({id: id});
             },
 
             getUnAvailableSeatsByFloor: function(floorId) {
@@ -138,7 +149,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 //     {"seat": 137, "userId": 4}, 
                 //     {"seat": 139, "userId": 5}, 
                 // ];
-                var url = baseurl + '/unavailableseat/' + floorId;
+                var url = this.baseurl() + '/unavailableseat/' + floorId;
                 return Util.httpget(url, function(data) {
                     var unavailables = data['FloorSeats'];
                     var ret = _.map(unavailables, function(obj) {
@@ -153,19 +164,19 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
             checkin: function(floorId, seat) {
                 var cuser = Util.currUser();
-                var url = seaturl + '/checkin/' + floorId + '/' + seat + '/' + cuser.id;
+                var url = this.seaturl() + '/checkin/' + floorId + '/' + seat + '/' + cuser.id;
                 return $http.put(url);
                 // return $q.when(true);
             },
 
             reserveseat: function(floorId) {
-                var url = seaturl + '/reserveraseat/' + floorId;
+                var url = this.seaturl() + '/reserveraseat/' + floorId;
                 return Util.httpget(url);
             }, 
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);
-                return Util.httpget(baseurl + '/incremental/' + date);
+                return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])
@@ -173,24 +184,27 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     .factory('Beacons', ['$resource', '$q', '_', function($resource, $q, _) {
         // var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
         // var beacons = $resource('js/data/beacons.json');
-        var baseurl = Util.getCustomerServerURL() + '/api/Ibeacon';
-        var Beacon = $resource(baseurl + '/:id');
 
         return {
+            baseurl: function() {
+                return Util.getCustomerServerURL() + '/api/Ibeacon';
+            }, 
+
             all: function() {
                 // return beacons.query();
-                Beacon.query();
+                $resource(this.baseurl() + '/:id').query();
             }, 
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);
-                return Util.httpget(baseurl + '/incremental/' + date);
+                return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])
 
     .factory('LicenseServer', ['$resource', '$http', '$q', 'Util', function($resource, $http, $q, Util) {
-        var LICENSE_SERVER_URL = "http://10.81.231.198/license";
+        // var LICENSE_SERVER_URL = "http://10.81.231.198/license";
+        var LICENSE_SERVER_URL = "http://www.hongding.nl";
         
         return {
             getCustomerServerURL: function(key) {

@@ -3,7 +3,9 @@
 
 var Log = {
     log: function(msg) {
-        console.log("["+new Date()+"] "+msg);
+        if(console.log) {
+            console.log("["+new Date()+"] "+msg);
+        }
     }
 };
 
@@ -51,6 +53,15 @@ var WebStorage = function(type) {
 
 };
 
+
+// Functions enhancement
+(function() {
+    if(!String.prototype.endsWith) {
+        String.prototype.endsWith = function(suffix) {
+            return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
+    }
+})();
 
 
 
@@ -187,6 +198,12 @@ var Util = {
     setCustomerServerURL: function(url, uid) {
         this.setUserData(STORAGE_KEYS.CUSTOMER_SERVER_URL, url, uid);
     },
+
+    getPictureRootUrl: function() {
+        var customer_url = this.getCustomerServerURL();
+        return customer_url.substring(0, customer_url.length - 3);
+    }, 
+
 
     // trim: function(x) {
     //     return x.replace(/^\s+|\s+$/gm,'');
