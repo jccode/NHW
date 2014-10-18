@@ -1,4 +1,20 @@
 
+// Constants
+
+var STORAGE_KEYS = {
+    CURR_USER: 'KEY_LOCAL_CURR_USER',
+    USER_DATA: 'KEY_LOCAL_USER_DATA', 
+    LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
+    CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
+    SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
+    SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN'
+};
+
+var EVENTS = {
+    DEVICE_READY: 'deviceready',
+    CHECKIN_STATE_CHANGE: 'checkin_state_change'
+};
+
 // Utilities
 
 var Log = {
@@ -64,15 +80,6 @@ var WebStorage = function(type) {
 
 
 
-var STORAGE_KEYS = {
-    CURR_USER: 'KEY_LOCAL_CURR_USER',
-    USER_DATA: 'KEY_LOCAL_USER_DATA', 
-    LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
-    CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
-    SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
-    SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN'
-};
-
 var Util = {
     localStorage: WebStorage('LocalStorage')(window), 
 
@@ -102,6 +109,22 @@ var Util = {
         obj = _.extend(defaultOpts, obj);
         window.plugin.notification.local.add(obj);
     },
+
+    toast: function(msg, opts) {
+        if(!window.plugins) {   // toast not support(desktop)
+            return window.alert(msg);
+        }
+        var def = {
+            'duration': 'short',
+            'position': 'bottom'
+        };
+        var opts = _.extend(def, opts);
+        window.plugins.toast.show(msg, opts['duration'], opts['position'], function(a) {
+            console.log('Toast success:' + a);
+        }, function(b) {
+            console.log('Toast error:' + a);
+        });
+    }, 
 
     currUser: function(user) {
         var key = STORAGE_KEYS.CURR_USER;
@@ -380,6 +403,7 @@ nhwUtils.factory('Log', function() {
             }
         })
             .error(function(data, status, headers, config) {
+                this.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
                 Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
                 Log.log(data);
                 // TODO:: when connection error. popup message to inform user to check network.

@@ -34,7 +34,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     return ret.length > 0 ? ret[0]: false;
                 });
                  */
-                
+
                 var checkurl = Util.getCustomerServerURL(user.email) + '/api/user/checkuser/' + user.email;
                 return Util.httpget(checkurl, DataTransform.user);
             }, 
@@ -227,8 +227,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('LicenseServer', ['$resource', '$http', '$q', 'Util', function($resource, $http, $q, Util) {
-        var LICENSE_SERVER_URL = "http://10.81.231.198/license";
-        // var LICENSE_SERVER_URL = "http://www.hongding.nl";
+        // var LICENSE_SERVER_URL = "http://10.81.231.198/license";
+        var LICENSE_SERVER_URL = "http://www.hongding.nl";
         
         return {
             getCustomerServerURL: function(key) {

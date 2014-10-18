@@ -5,6 +5,17 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
 
     // bootstrap etc
     .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', function($log, Util, Beacons, SingleBeacon, Storage) {
+        // legacy. for upgrade check
+        // That's because the localStorage value: current_user.
+        // The current user stored in localStorage, should be {id:xx, email:xx},
+        // but not {UserId:xx, Email:xxx} 
+        (function() {
+            var cuser = Util.currUser();
+            if(cuser && cuser['Email']) { // upgrade issues.
+                Util.clearCurrUser();
+            }
+        })();
+        
 
         function startIbeacon() {
             if(!Util.getCustomerServerURL()) { // if url not exist, skip

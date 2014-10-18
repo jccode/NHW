@@ -9,4 +9,4 @@ cordova plugin add de.appplant.cordova.plugin.local-notification
 cordova plugin add https://github.com/randdusing/BluetoothLE
 cordova plugin add https://github.com/wildabeast/BarcodeScanner
 cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin
-
+cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git

@@ -68,16 +68,21 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
     .controller('NavCtrl', ['$scope', '$state', 'User', function($scope, $state, User) {
-        // $scope.hascheckin = User.hasCheckIn();
-        User.hasCheckIn().then(function(ret) {
-            $scope.hascheckin = !!ret;
 
-            // need to watch this variable
-        });
+        var checkinState = function() {
+            User.hasCheckIn().then(function(ret) {
+                $scope.hascheckin = !!ret;
+            });
+        };
+
+        checkinState();
+        $scope.$on(EVENTS.CHECKIN_STATE_CHANGE, checkinState);
+        
         $scope.checkout = function () {
             User.checkout().then(function(ret) {
                 if(ret) {
                     $state.go("app.checkin");
+                    $scope.$emit(EVENTS.CHECKIN_STATE_CHANGE);
                 } else {
                     // notify user that checkout failed
                     console.log("user checkout failed");
@@ -132,7 +137,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', '$state', '$stateParams', 'Util', 'Floors', 'User', function($scope, $state, $stateParams, Util, Floors, User) {
+    .controller('AppIndexCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'Util', 'Floors', 'User', function($scope, $rootScope, $state, $stateParams, Util, Floors, User) {
         var floorId = $stateParams.f,
             seat = $stateParams.s;
         $scope.user = Util.currUser();
@@ -144,6 +149,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             User.checkout().then(function(ret) {
                 if(ret) {
                     $state.go("app.checkin");
+                    $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
                 } else {
                     // notify user that checkout failed
                     console.log("user checkout failed");
@@ -196,7 +202,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', function($scope, $stateParams, Floors, $window, User, $modal, $log, $state, Util) {
+    .controller('SvgCtrl', ['$scope', '$rootScope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', function($scope, $rootScope, $stateParams, Floors, $window, User, $modal, $log, $state, Util) {
         var floorId = $stateParams.f,
             seat = $stateParams.s, 
             confirm_checkin = $scope.$parent.confirm_checkin;
@@ -419,8 +425,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                 
                 Floors.checkin(floorId, seat).then(function(ret) {
                     if(ret) {
-                        
                         $state.go("app.index", param);
+                        $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
                     } else {
                         // popup an error message
                     }
