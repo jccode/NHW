@@ -35,13 +35,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 }
 
                 return users.query().$promise.then(function(data) {
-                    var ret =  _.where(data, user);
+                    var ret =  _.where(data, {'Email': user.email});
                     return ret.length > 0 ? ret[0]: false;
                 });
             }, 
 
             hasCheckIn: function() {
-                return false;
+                return $q.when(false);
             },
 
             all: function() {
@@ -82,13 +82,16 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         return {
             all: function() {
                 // return floors.query();
-                return floors.query(function(data) {
-                    var floors = _.each(data, function(floor) {
-                        floor['available'] = (floor.workspace > 0)
-                            && (floor.workspace - floor.present_people > 0);
-                    });
-                    return floors;
-                });
+
+                // return floors.query(function(data) {
+                //     var floors = _.each(data, function(floor) {
+                //         floor['available'] = (floor.workspace > 0)
+                //             && (floor.workspace - floor.present_people > 0);
+                //     });
+                //     return floors;
+                // });
+
+                return floors.query();
             }, 
 
             findById: function(id) {
@@ -97,17 +100,25 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 //     return floor.id == id;
                 // });
 
-                return this.all().$promise.then(function(floors) {
-                    return _.find(floors, function(floor) {
-                        return floor.id == id;
-                    });
+                // var ret = {};
+                // ret.$promise = this.all().$promise.then(function(floors) {
+                //     return _.find(floors, function(floor) {
+                //         return floor.id == id;
+                //     });
+                // });
+                // return ret;
+                console.log('query: ' + id);
+                return floors.query(function(floors) {
+                    // return _.find(floors, function(floor) {
+                    //     return floor.FloorId == id;
+                    // });
+                    return _.findWhere(floors, {FloorId: id});
                 });
-                
             },
 
             getUnAvailableSeatsByFloor: function(floorId) {
                 // return [73, 75, 77, 79, 133, 135, 137, 139];
-                return [
+                return $q.when([
                     {"seat": 73, "userId": 2}, 
                     {"seat": 75, "userId": 2}, 
                     {"seat": 77, "userId": 2}, 
@@ -116,7 +127,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     {"seat": 135, "userId": 4}, 
                     {"seat": 137, "userId": 4}, 
                     {"seat": 139, "userId": 5}, 
-                ];
+                ]);
             }, 
 
             incrementalUpdate: function(date) {
@@ -144,7 +155,11 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         
         return {
             getCustomerServerURL: function(key) {
-                return $q.when('http://customer_url_here');
+                if(key == '1234567') {
+                    return $q.when('http://127.0.0.1/api');
+                } else {
+                    return $q.when(null);
+                }
             }
         };
     }])

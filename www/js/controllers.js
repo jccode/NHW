@@ -152,6 +152,9 @@ angular.module("nhw.controllers", ['nhw.services'])
         }
 
         Floors.findById(floorId).$promise.then(function(floor) {
+
+            console.log('findById return');
+            console.log(floor);
             floor.free = floor.SeatCount - floor.NonEmptySeat;
             $scope.floor = floor;
         });
