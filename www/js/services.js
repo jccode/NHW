@@ -9,6 +9,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         return {
             baseurl: function() {
                 return Util.getCustomerServerURL() + '/api/user';
+            },
+
+            favouriteurl: function() {
+                return Util.getCustomerServerURL() + '/api/favorite';
             }, 
 
             isAuthenticated: function(user) { // TODO: only need to verify email
@@ -60,14 +64,34 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return $resource(this.baseurl()+"/:id").get({id: id});
             },
 
+            checkout: function() {
+                var user = Util.currUser();
+                return $http.put(this.baseurl() + '/checkout/' + user.id);
+            }, 
+
             favourites: function() {
                 var user = Util.currUser();
                 return $resource(this.baseurl() + '/favorite/:id', {id: '@id'}).query({id: user.id});
             },
 
+            allWithFavourites: function() {
+                var user = Util.currUser();
+                return $resource(this.baseurl() + '/withfavorite/:id', {id: '@id'}).query({id: user.id});
+            }, 
+
             checkins: function() {
                 var user = Util.currUser();                
                 return $resource(this.baseurl() + '/online/:id', {id: '@id'}).query({id: user.id});
+            },
+
+            addFavourite: function(uid) {
+                var user = Util.currUser();
+                $http.post(this.favouriteurl() + '/add/' + user.id + '/' + uid);
+            },
+
+            cancelFavourite: function(uid) {
+                var user = Util.currUser();
+                $http.delete(this.favouriteurl() + '/cancel/' + user.id + '/' + uid);
             }, 
 
             notCheckins: function() {
@@ -187,12 +211,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
         return {
             baseurl: function() {
-                return Util.getCustomerServerURL() + '/api/Ibeacon';
+                return Util.getCustomerServerURL() + '/api/ibeacon';
             }, 
 
             all: function() {
                 // return beacons.query();
-                $resource(this.baseurl() + '/:id').query();
+                return $resource(this.baseurl() + '/:id').query();
             }, 
 
             incrementalUpdate: function(date) {
@@ -203,8 +227,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('LicenseServer', ['$resource', '$http', '$q', 'Util', function($resource, $http, $q, Util) {
-        // var LICENSE_SERVER_URL = "http://10.81.231.198/license";
-        var LICENSE_SERVER_URL = "http://www.hongding.nl";
+        var LICENSE_SERVER_URL = "http://10.81.231.198/license";
+        // var LICENSE_SERVER_URL = "http://www.hongding.nl";
         
         return {
             getCustomerServerURL: function(key) {

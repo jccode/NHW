@@ -36,6 +36,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                             // $state.go('app.checkin');
                             // $state.go('home');
 
+                            console.log('when login, start check and enable bluetooth');
+                            Bootstrap.checkAndEnableBluetooth();
                             $scope.loading = true;
                             Bootstrap.syncData(function(ret) {
                                 $scope.loading = false;
@@ -115,13 +117,25 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', '$stateParams', 'Util', 'Floors', function($scope, $stateParams, Util, Floors) {
+    .controller('AppIndexCtrl', ['$scope', '$state', '$stateParams', 'Util', 'Floors', 'User', function($scope, $state, $stateParams, Util, Floors, User) {
         var floorId = $stateParams.f,
             seat = $stateParams.s;
         $scope.user = Util.currUser();
         $scope.floor = Floors.findById(floorId);
         $scope.seat = seat;
         $scope.baseurl = Util.getPictureRootUrl();
+
+        $scope.checkout = function () {
+            User.checkout().then(function(ret) {
+                if(ret) {
+                    $state.go("app.checkin");
+                } else {
+                    // notify user that checkout failed
+                    console.log("user checkout failed");
+                }
+            });
+        };
+
     }])
 
     .controller('FloorsCtrl', ['$scope', '$state', 'Floors', function($scope, $state, Floors) {
@@ -152,9 +166,6 @@ angular.module("nhw.controllers", ['nhw.services'])
         }
 
         Floors.findById(floorId).$promise.then(function(floor) {
-
-            console.log('findById return');
-            console.log(floor);
             floor.free = floor.SeatCount - floor.NonEmptySeat;
             $scope.floor = floor;
         });
@@ -176,6 +187,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             confirm_checkin = $scope.$parent.confirm_checkin;
         var cuser = Util.currUser();
         $scope.floor = Floors.findById(floorId);
+        $scope.baseurl = Util.getPictureRootUrl();
 
 
         var svg_wrapper_size = function() {
@@ -293,7 +305,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
                     var userId = el.attr("data-user");
                     if (userId) {
-                        User.findById(userId).then(function(user) {
+                        User.findById(userId).$promise.then(function(user) {
                             $scope.user = user;
                         });
                     }
@@ -418,6 +430,7 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {
         $scope.data = data;
         $scope.curr_user = Util.currUser();
+        $scope.baseurl = Util.getPictureRootUrl();
 
         $scope.ok = function (n) {
             $modalInstance.close(n);
@@ -437,7 +450,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.baseurl = Util.getPictureRootUrl();
         $scope.type = 'all';
         var fn = {
-            'all': User.all,
+            'all': User.allWithFavourites, 
             'favourite': User.favourites,
             'checkin': User.checkins,
             'notcheckin': User.notCheckins
@@ -446,6 +459,14 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.$watch('type', function() {
             $scope.employees = fn[$scope.type].call(User);
         });
+
+        $scope.toggle_favourite = function (uid, favouried) {
+            if(favouried) {
+                User.cancelFavourite(uid);
+            } else {
+                User.addFavourite(uid);
+            }
+        };
     }])
 
 ;

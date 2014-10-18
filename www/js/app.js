@@ -4,26 +4,41 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['Util', 'Beacons', 'SingleBeacon', 'Storage', function(Util, Beacons, SingleBeacon, Storage) {
+    .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', function($log, Util, Beacons, SingleBeacon, Storage) {
 
         function startIbeacon() {
+            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+                return;
+            }
             Beacons.all().$promise.then(function(beacons) {
+                console.log(angular.toJson(beacons));
                 _.each(beacons, function(beacon) {
-                    var singleBeacon = new SingleBeacon(beacon.uuid, beacon.identifier, beacon.major, beacon.minor);
-                    singleBeacon.addEventListener('enter', function(result) {
-                        Util.createLocalNotification(beacon.message);
-                    });
-                    singleBeacon.startMonitoring();
+                    $log.log(beacon);
+                    if(beacon.Active) {
+                        var singleBeacon = new SingleBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
+                        singleBeacon.addEventListener('enter', function(result) {
+                            Util.createLocalNotification(beacon.Message);
+                        });
+                        console.log('start monitoring');
+                        singleBeacon.startMonitoring();
+                    }
                 });
             });
         }
 
         function checkAndEnableBluetooth() {
-            if(!bluetoothle) {  // bluetoothle is not support
-                Log.log('Bluetooth LE is not supported.');
-                return; 
+            // console.log('check and enable bluetooth');
+            try {
+                if(!bluetoothle) {  // bluetoothle is not support
+                    Log.log('Bluetooth LE is not supported.');
+                    return; 
+                }
+            } catch(e) {
+                // bluetooth is not supported
+                return;
             }
             bluetoothle.isEnabled(function(ret) {
+                // console.log(' bluetooth: ' + ret['isEnabled']);
                 if(!ret['isEnabled']) {
                     bluetoothle.initialize(function(data) {
                         var status = data['status'];
@@ -67,7 +82,8 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         
         return {
             deviceready: deviceready,
-            syncData: syncDataFromServer
+            syncData: syncDataFromServer, 
+            checkAndEnableBluetooth: checkAndEnableBluetooth
         };
     }])
 

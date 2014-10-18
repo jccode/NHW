@@ -16,7 +16,6 @@
    - 显示check-in information page.
      这里显示了用户的登陆信息,楼层平面图,并且提供manual check-out button.
 
-
 * question
 1. nhw.service.json, nhw.service.sqlite, 可以手动切换到两种存储引擎. 前者是demo. 后者是
    应用.
@@ -65,9 +64,9 @@
 * Q
 1. 就是把地图缩小整个显示出来这个，我叫SANDER再和用户确认下，如果他们还坚持我们就要缩小
    显示整个地图给他们。(这个等确认后再做);
-2. 当用户点击了位置，显示用户信息的那个POPUP的DETAILS这个LABLE他它隐藏先，暂时没有
+2. [DONE] 当用户点击了位置，显示用户信息的那个POPUP的DETAILS这个LABLE他它隐藏先，暂时没有
    DETAILS信息可以看
-3. 当前用户CHECK IN 座位后，把他自己的座位标记成蓝色
+3. [DONE] 当前用户CHECK IN 座位后，把他自己的座位标记成蓝色
 4. [DONE] the text ‘handmatig inchecken’ and ‘barcode scannen’; request to change the text
    ‘barcode scannen’ (suggestion? eg ‘Inchecken via scan’).
    把BARDCODE SCANNEN 改成INCHEKEN VIA SCAN
@@ -96,7 +95,8 @@ https://www.nweapp.nl/hnwapi/help
    seat information = {floor: floorId, seat: seatNo}
 4. Add a new api to return the amount of all checkins(for all floors).
    allCheckinCount()?
-   
+5. offline users api have issues. if no one have checkin. the list should return all
+   users. however, current behavour is return [];
 * issues
 1. Locatie wijzigen: checkout, then send user to the checkin page.
 2. user list 列表. bugs.
@@ -105,5 +105,5 @@ https://www.nweapp.nl/hnwapi/help
 5. top navgation bar. add checkout button
 6. app-index page. (user have checkin page), 'ok' button change to 'uncheckin' button;
 7. user list: checkin, notcheckin, have bugs. if no anyone checkin. empty list.
-8. 
-
+8. svg blue cicle, change color as the same as the color of blue button.
+9. if network connection failed. popup a message to user.

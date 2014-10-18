@@ -10,11 +10,11 @@
             <div class="container-fluid no-gutter">
                 <div class="row">
                     <div class="col-xs-3 avatar">
-                        <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                        <img ng-src="{{baseurl}}{{user.UserPic}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
                     </div>
                     <div class="col-xs-9 user">
-                        <b class="uname">{{user.name}}</b><br />
-                        <small>{{user.email}}</small>
+                        <b class="uname">{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b><br />
+                        <small>{{user.Email}}</small>
                     </div>
                 </div>
                 <div class="row">
@@ -23,9 +23,10 @@
                     </div>
                 </div>
                 <div class="row footer-row">
+                    <!-- 
                     <div class="col-xs-3 details">
                         <a href="javascript:;">Details</a>
-                    </div>
+                    </div>  -->
                     <div class="col-xs-9">
                         <i class="fa fa-star golden">&nbsp;&nbsp;</i>
                         <a href="javascript:;">Toevoegen favorieten</a>
@@ -80,7 +81,7 @@
                         <div class="col-xs-6 user">
                             <b>{{curr_user.name}}</b> <br />
                             <small>{{curr_user.email}}</small> <br />
-                            <img src="img/avatar.jpg" alt="Avatar" class="img-circle" />
+                            <img ng-src="{{baseurl}}{{curr_user.photo}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
                         </div>
                         <div class="col-xs-6 workspace">
                             <p>U bent ingechecked op:</p>

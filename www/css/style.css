@@ -52,14 +52,14 @@
 }
 @media (max-width: 767px) {
   .info-section {
-    font-size: 10px;
+    font-size: 12px;
   }
   .info-section .btn-group {
     margin-left: 3px;
     margin-right: -13px;
   }
   .info-section .btn-group > .btn {
-    font-size: 10px;
+    font-size: 12px;
     padding: 5px 5px;
   }
 }

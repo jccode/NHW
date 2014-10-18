@@ -1,10 +1,18 @@
 [
     {
-        "uuid":"b9407f30-f5f8-466e-aff9-25556b57fe6d",
-        "identifier":"Estimote Beacon",
-        "major":"58877",
-        "minor":"52730",
-        "message":"Welcome to NS.", 
-        "active": true
+        "UUID":"b9407f30-f5f8-466e-aff9-25556b57fe6d",
+        "Name":"Estimote Beacon",
+        "Major":"58877",
+        "Minor":"52730",
+        "Message":"Welcome to NS.", 
+        "Active": true
+    },
+    {
+        "UUID":"b9407f30-f5f8-466e-aff9-25556b57fe6d",
+        "Name":"Estimote Beacon",
+        "Major":"55445",
+        "Minor":"53655",
+        "Message":"Welcome to NS2.", 
+        "Active": true
     }
 ]

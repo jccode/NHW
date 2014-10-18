@@ -3,9 +3,8 @@
 
 var Log = {
     log: function(msg) {
-        if(console.log) {
-            console.log("["+new Date()+"] "+msg);
-        }
+        if(msg == null) msg = 'null';
+        console.log("["+new Date()+"] "+msg);
     }
 };
 
@@ -302,7 +301,7 @@ SingleBeacon.prototype = {
         var self = this;
         var delegate = new cordova.plugins.locationManager.Delegate().implement({
             didDetermineStateForRegion: function (pluginResult) {
-                console.log('[ibeacon:'+this.uuid+']didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+                console.log('[ibeacon:'+self.uuid+']didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
 
                 if(pluginResult['state'] == 'CLRegionStateInside') {
                     _.each(self.events['enter'], function(fn) {
@@ -381,8 +380,9 @@ nhwUtils.factory('Log', function() {
             }
         })
             .error(function(data, status, headers, config) {
-                Log.log('httpget error.');
+                Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
                 Log.log(data);
+                // TODO:: when connection error. popup message to inform user to check network.
                 deferred.reject(data);
             });
         return deferred.promise;
