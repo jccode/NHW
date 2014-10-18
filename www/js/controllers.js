@@ -67,8 +67,23 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('NavCtrl', ['$scope', function($scope) {
-        
+    .controller('NavCtrl', ['$scope', '$state', 'User', function($scope, $state, User) {
+        // $scope.hascheckin = User.hasCheckIn();
+        User.hasCheckIn().then(function(ret) {
+            $scope.hascheckin = !!ret;
+
+            // need to watch this variable
+        });
+        $scope.checkout = function () {
+            User.checkout().then(function(ret) {
+                if(ret) {
+                    $state.go("app.checkin");
+                } else {
+                    // notify user that checkout failed
+                    console.log("user checkout failed");
+                }
+            });
+        };
     }])
 
     .controller('CheckInCtrl', ['$scope', '$state', 'Util', 'Floors', function($scope, $state, Util, Floors) {

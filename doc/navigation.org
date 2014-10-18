@@ -107,3 +107,12 @@ https://www.nweapp.nl/hnwapi/help
 7. user list: checkin, notcheckin, have bugs. if no anyone checkin. empty list.
 8. svg blue cicle, change color as the same as the color of blue button.
 9. if network connection failed. popup a message to user.
+
+* Email to Sander
+1. iBeacon issues. not sure that is the issue that iBeacon itself or the iBeacon
+  plugin. currently, only recornize one iBeacon with the same uuid.
+2. After the app install. First time openning the app, if the bluetooth is enabled, the
+   performance is so poor. The image to loaded slowly. However, if the bluetooth is off,
+   the images can be download so quick. After that, next time you open the app, even if
+   the bluetooth is on, the user list can be shown smoothly.
+  

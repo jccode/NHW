@@ -10,6 +10,7 @@
 }
 .navbar-app .btn-navbar {
   text-transform: none;
+  padding: 0 5px;
 }
 .navbar-absolute-top {
   border-bottom-width: 0px;
@@ -138,7 +139,7 @@
   fill: red;
 }
 .seat-me {
-  fill: blue;
+  fill: #007aff;
 }
 .popup {
   position: absolute;
