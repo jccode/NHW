@@ -161,6 +161,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return $resource(this.baseurl() + '/:id').get({id: id});
             },
 
+            findByBuildingNoAndFloorNo: function(buildingNo, floorNo) {
+                return $resource(this.baseurl() + '/:buildno/:floorno').get({
+                    buildno: buildingNo,
+                    floorno: floorNo
+                });
+            }, 
+
             getUnAvailableSeatsByFloor: function(floorId) {
                 // return [73, 75, 77, 79, 133, 135, 137, 139];
                 // return [

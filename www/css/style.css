@@ -336,7 +336,8 @@
   height: 20px;
 }
 .switch.switch-sm.active .switch-handle {
-  transform: translate3d(20px, 0px, 0px);
+  -webkit-transform: translate3d(20px, 0px, 0px) !important;
+  transform: translate3d(20px, 0px, 0px) !important;
 }
 .employee-list .list-group-item img {
   width: 28px;

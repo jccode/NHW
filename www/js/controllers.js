@@ -124,7 +124,9 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                     
                 } else {
-                    $state.go('app.floor_select', {f: ret['floor'], s: ret['seat']});
+                    Floors.findByBuildingNoAndFloorNo(ret['building'], ret['floor']).$promise.then(function(floor) {
+                        $state.go('app.floor_select', {f: floor['FloorId'], s: ret['seat']});
+                    });
                 }
                 
             }, function(error) {

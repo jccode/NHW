@@ -403,7 +403,7 @@ nhwUtils.factory('Log', function() {
             }
         })
             .error(function(data, status, headers, config) {
-                this.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
+                Util.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
                 Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
                 Log.log(data);
                 // TODO:: when connection error. popup message to inform user to check network.

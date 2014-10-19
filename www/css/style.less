@@ -481,7 +481,8 @@
 
     &.active {
         .switch-handle {
-            transform: translate3d(@switch-sm-height, 0px, 0px);
+            -webkit-transform: translate3d(@switch-sm-height, 0px, 0px) !important;
+            transform: translate3d(@switch-sm-height, 0px, 0px) !important;
         }
     }
 }
