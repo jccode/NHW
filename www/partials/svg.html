@@ -28,8 +28,9 @@
                         <a href="javascript:;">Details</a>
                     </div>  -->
                     <div class="col-xs-9">
-                        <i class="fa fa-star golden">&nbsp;&nbsp;</i>
-                        <a href="javascript:;">Toevoegen favorieten</a>
+                        <a href="javascript:;" ng-click="toggle_favourite(user.UserId, user.Favorited); user.Favorited=!user.Favorited">
+                            <i class="fa fa-star" ng-class="{'golden': user.Favorited, 'text-muted': !user.Favorited}">&nbsp;&nbsp;</i>Toevoegen favorieten
+                        </a>
                     </div>
                 </div>
             </div>
@@ -59,6 +60,30 @@
                     </div>
                     <div class="col-xs-8">
                         {{seat}}
+                    </div>
+                </div>
+                <div class="row footer-row top-line">
+                    <div class="col-xs-12">
+                        <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
+                        <a ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="seat_change_popup" class="popup" ng-show="popup == 'seat_change'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <b>Locatie wijzigen</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-11">
+                        Weet u zeker dat u uw locatie wilt wijzigen naar Werkplek {{seat}}?
                     </div>
                 </div>
                 <div class="row footer-row top-line">

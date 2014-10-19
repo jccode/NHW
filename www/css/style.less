@@ -220,7 +220,6 @@
     background-color: #F0F0F0;
     padding: 10px;
 
-
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
@@ -263,14 +262,7 @@
     }
 }
 
-#user_popup {
-    width: 250px;
-    // height: 200px;
-    left: 50px;
-    top: 50px;
-}
-
-#workspace_popup {
+#user_popup, #workspace_popup, #seat_change_popup {
     width: 250px;
     // height: 200px;
     left: 50px;
@@ -361,6 +353,13 @@
                 width: 80px;
                 margin: 0px 0px 0px 10px;
             }
+        }
+    }
+
+    .current-checkin {
+        margin-top: 10px;
+        .fa {
+            color: @profile-btn-text-color;
         }
     }
 }

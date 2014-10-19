@@ -178,12 +178,9 @@
     font-size: 12px;
   }
 }
-#user_popup {
-  width: 250px;
-  left: 50px;
-  top: 50px;
-}
-#workspace_popup {
+#user_popup,
+#workspace_popup,
+#seat_change_popup {
   width: 250px;
   left: 50px;
   top: 50px;
@@ -249,6 +246,12 @@
 #info-section-profile.profile .user img {
   width: 80px;
   margin: 0px 0px 0px 10px;
+}
+#info-section-profile .current-checkin {
+  margin-top: 10px;
+}
+#info-section-profile .current-checkin .fa {
+  color: #007aff;
 }
 @media (max-width: 767px) {
   #info-section-profile.profile .user {

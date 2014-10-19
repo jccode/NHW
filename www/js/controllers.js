@@ -209,6 +209,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         var cuser = Util.currUser();
         $scope.floor = Floors.findById(floorId);
         $scope.baseurl = Util.getPictureRootUrl();
+        var hascheckin = false;
 
 
         var svg_wrapper_size = function() {
@@ -294,6 +295,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                         var classes = {"seat-available": false};
                         classes["seat-me"] = isme;
                         classes["seat-unavailable"] = !isme;
+                        if(isme) hascheckin = true;
                         
                         innersvg.select("#circle" + item.seat)
                             .classed(classes)
@@ -331,7 +333,9 @@ angular.module("nhw.controllers", ['nhw.services'])
                         });
                     }
 
-                    var t = userId? "user": "workspace";
+                    var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
+                            ? "user"
+                            : (hascheckin ? "seat_change" : "workspace");
                     $scope.$apply(function() {
                         $scope.popup = t;
                     });
@@ -439,6 +443,14 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         };
 
+        $scope.toggle_favourite = function (uid, favouried) {
+            if(favouried) {
+                User.cancelFavourite(uid);
+            } else {
+                User.addFavourite(uid);
+            }
+        };
+        
         
         // barcode scan, auto checkin
         if(confirm_checkin) {
