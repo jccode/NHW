@@ -11,8 +11,11 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         // but not {UserId:xx, Email:xxx} 
         (function() {
             var cuser = Util.currUser();
-            if(cuser && cuser['Email']) { // upgrade issues.
-                Util.clearCurrUser();
+            if(cuser) { // upgrade issues.
+                if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase())) {
+                    Util.clearCurrUser();
+                    Util.localStorage.remove(STORAGE_KEYS.USER_DATA);
+                }
             }
         })();
         
@@ -128,7 +131,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         
             .state("home", {
                 url: "/",
-                templateUrl: "partials/phonegap.html", // "partials/phonegap.html"
+                templateUrl: "partials/loading.html", // "partials/phonegap.html"
                 resolve: {
                     authenticated: ['User', function(User) {
                         return User.isAuthenticated();
@@ -207,7 +210,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             })
 
             .state("app.profile", {
-                url: "/profile",
+                url: "/profile/:uid",
                 views: {
                     "mainContent": {
                         templateUrl: "partials/profile.html"

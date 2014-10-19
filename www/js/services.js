@@ -92,6 +92,15 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             cancelFavourite: function(uid) {
                 var user = Util.currUser();
                 $http.delete(this.favouriteurl() + '/cancel/' + user.id + '/' + uid);
+            },
+
+            favoriteCount: function(uid) {
+                return Util.httpget(this.favouriteurl() + '/count/' + uid );
+            },
+
+            isFavourite: function(uid) {
+                var user = Util.currUser();
+                return Util.httpget(this.favouriteurl() + '/isfavorite/' + user.id + '/' + uid);
             }, 
 
             notCheckins: function() {

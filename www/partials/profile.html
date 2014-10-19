@@ -2,27 +2,28 @@
 <div id="user-profile" class="container-fluid profile" ng-controller="ProfileCtrl">
     <div class="row">
         <div class="col-xs-6 user">
-            <b>{{curr_user.name}}</b> <br />
-            <small>{{curr_user.email}}</small> <br />
-            <img ng-src="{{baseurl}}{{curr_user.photo}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+            <b>{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b> <br />
+            <small>{{user.Email}}</small> <br />
+            <img ng-src="{{baseurl}}{{user.UserPic}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
         </div>
         <div class="col-xs-6">
             <div class="row">
                 <div class="col-xs-12 workspace text-center">
                     <div class="row row-padding">
                         <div class="col-xs-6">
-                            <b>22</b> <br />
+                            <b>{{user.CheckinCount}}</b> <br />
                             ingecheckt
                         </div>
                         <div class="col-xs-6">
-                            <b>8</b> <br />
+                            <b>{{favourite_count}}</b> <br />
                             Favorieten
                         </div>
                     </div>
                     <div class="row row-padding top-line">
                         <div class="col-xs-12">
-                            <i class="fa fa-star golden">&nbsp;&nbsp;</i>
-                            <a href="javascript:;">Favorieten bekijken</a>
+                            <a href="javascript:;" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
+                                <i class="fa fa-star" ng-class="{'golden': isFavourited, 'text-muted': !isFavourited}">&nbsp;&nbsp;</i>Favorieten bekijken
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +35,7 @@
                             <b>Status</b>
                         </div>
                     </div>
-                    <div class="row form-group row-padding top-line" ng-init="busy=false">
+                    <div class="row form-group row-padding top-line" ng-init="busy=user.IsAvailable">
                         <label class="control-label col-xs-3 col-sm-2 col-lg-1">
                             <switch ng-model="busy" class="inline switch-sm green"></switch>
                         </label>
@@ -45,6 +46,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 footer top-line">
+            <button class="btn" ng-click='back();'>&nbsp;&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;&nbsp;</button>
         </div>
     </div>
 </div>

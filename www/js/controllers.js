@@ -31,6 +31,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                         if( ret ){
                             $scope.error = "";
                             $rootScope.curr_user = ret;
+                            ret.email = ret.email.toLowerCase();
                             Util.currUser(ret);
                             
                             // $state.go('app.checkin');
@@ -67,8 +68,9 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('NavCtrl', ['$scope', '$state', 'User', function($scope, $state, User) {
-
+    .controller('NavCtrl', ['$scope', '$state', 'User', 'Util', function($scope, $state, User, Util) {
+        $scope.cuser = Util.currUser();
+        
         var checkinState = function() {
             User.hasCheckIn().then(function(ret) {
                 $scope.hascheckin = !!ret;
@@ -476,9 +478,28 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('ProfileCtrl', ['$scope', 'Util', function($scope, Util) {
-        $scope.curr_user = Util.currUser();
+    .controller('ProfileCtrl', ['$scope', '$stateParams', '$window', 'User', 'Util', function($scope, $stateParams, $window, User, Util) {
+        var uid = $stateParams.uid;
+        $scope.user = User.findById(uid);
         $scope.baseurl = Util.getPictureRootUrl();
+        User.favoriteCount(uid).then(function(ret) {
+            $scope.favourite_count = ret;
+        });
+        User.isFavourite(uid).then(function(ret) {
+            $scope.isFavourited = ret;
+        });
+
+        $scope.toggle_favourite = function (uid, favouried) {
+            if(favouried) {
+                User.cancelFavourite(uid);
+            } else {
+                User.addFavourite(uid);
+            }
+        };
+
+        $scope.back = function() {
+            $window.history.back();
+        }
     }])
 
     .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {

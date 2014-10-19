@@ -153,6 +153,7 @@ var Util = {
             }
             uid = user.email;
         }
+        uid = uid.toLowerCase();
         var dataKey = STORAGE_KEYS.USER_DATA;
         var userdata = this.localStorage.get(dataKey);
         if(!userdata) {
@@ -171,6 +172,7 @@ var Util = {
             }
             uid = user.email;
         }
+        uid = uid.toLowerCase();
 
         var dataKey = STORAGE_KEYS.USER_DATA;
         var userdata = this.localStorage.get(dataKey);
