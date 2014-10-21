@@ -225,7 +225,11 @@ var Util = {
 
     getPictureRootUrl: function() {
         var customer_url = this.getCustomerServerURL();
-        return customer_url.substring(0, customer_url.length - 3);
+        if(customer_url) {
+            return customer_url.substring(0, customer_url.length - 3);
+        } else {
+            return null;
+        }
     }, 
 
 

@@ -27,10 +27,12 @@ angular.module("nhw.controllers", ['nhw.services'])
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
                 if(ret) {       // authenticated by license server
                     Util.setCustomerServerURL(ret, user.email);
+                    $rootScope.baseurl = Util.getPictureRootUrl();
+                    
                     User.isAuthenticated(user).then(function(ret) {
                         if( ret ){
                             $scope.error = "";
-                            $rootScope.curr_user = ret;
+                            $rootScope.cuser = ret;
                             ret.email = ret.email.toLowerCase();
                             Util.currUser(ret);
                             
@@ -43,7 +45,15 @@ angular.module("nhw.controllers", ['nhw.services'])
                             Bootstrap.syncData(function(ret) {
                                 $scope.loading = false;
                                 if(ret) {
-                                    $state.go('app.checkin');
+                                    User.hasCheckIn().then(function(info) {
+                                        if(info) {
+                                            var floorId = info["FloorId"],
+                                                seat = parseInt(info["SeatCode"]);
+                                            $state.go('app.index', {f:floorId, s:seat}, {location: false});
+                                        } else {
+                                            $state.go('app.checkin');
+                                        }
+                                    }, errorHandler);
                                 } else {
                                     $scope.error = "Sorry, some error occured when loading data from server";
                                 }
@@ -69,7 +79,7 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
     .controller('NavCtrl', ['$scope', '$state', 'User', 'Util', function($scope, $state, User, Util) {
-        $scope.cuser = Util.currUser();
+        // $scope.cuser = Util.currUser();
         
         var checkinState = function() {
             User.hasCheckIn().then(function(ret) {
@@ -144,10 +154,10 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('AppIndexCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'Util', 'Floors', 'User', function($scope, $rootScope, $state, $stateParams, Util, Floors, User) {
         var floorId = $stateParams.f,
             seat = $stateParams.s;
-        $scope.user = Util.currUser();
+        // $scope.user = Util.currUser();
         $scope.floor = Floors.findById(floorId);
         $scope.seat = seat;
-        $scope.baseurl = Util.getPictureRootUrl();
+        // $scope.baseurl = Util.getPictureRootUrl();
 
         $scope.checkout = function () {
             User.checkout().then(function(ret) {
@@ -216,10 +226,11 @@ angular.module("nhw.controllers", ['nhw.services'])
         var floorId = $stateParams.f,
             seat = $stateParams.s, 
             confirm_checkin = $scope.$parent.confirm_checkin;
-        var cuser = Util.currUser();
+        // var cuser = Util.currUser();
+        var cuser = $rootScope.cuser;
         $scope.floor = Floors.findById(floorId);
-        $scope.baseurl = Util.getPictureRootUrl();
-        $scope.cuser = cuser;
+        // $scope.baseurl = Util.getPictureRootUrl();
+        // $scope.cuser = cuser;
         var hascheckin = false;
 
 
@@ -473,8 +484,8 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {
         $scope.data = data;
-        $scope.curr_user = Util.currUser();
-        $scope.baseurl = Util.getPictureRootUrl();
+        // $scope.curr_user = Util.currUser();
+        // $scope.baseurl = Util.getPictureRootUrl();
 
         $scope.ok = function (n) {
             $modalInstance.close(n);
@@ -514,8 +525,8 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
     .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
-        $scope.baseurl = Util.getPictureRootUrl();
-        $scope.cuser = Util.currUser();
+        // $scope.baseurl = Util.getPictureRootUrl();
+        // $scope.cuser = Util.currUser();
         $scope.type = 'all';
         var fn = {
             'all': User.allWithFavourites, 
