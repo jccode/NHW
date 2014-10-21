@@ -2,7 +2,7 @@
 
 angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
-    .factory('User', ['$resource', '$http', '$q', '_', 'Util', function($resource, $http, $q, _, Util) {
+    .factory('User', ['$resource', '$http', '$q', '_', '$rootScope', 'Util', function($resource, $http, $q, _, $rootScope, Util) {
 
         // var users = $resource('js/data/users.json');
 

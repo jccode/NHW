@@ -10,7 +10,7 @@
             <div class="container-fluid no-gutter">
                 <div class="row">
                     <div class="col-xs-3 avatar">
-                        <img ng-src="{{baseurl}}{{user.UserPic}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+                        <img ng-src="{{picurl}}{{user.UserPic}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
                     </div>
                     <div class="col-xs-9 user">
                         <b class="uname">{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b><br />
@@ -107,7 +107,7 @@
                         <div class="col-xs-6 user">
                             <b>{{cuser.name}}</b> <br />
                             <small>{{cuser.email}}</small> <br />
-                            <img ng-src="{{baseurl}}{{cuser.photo}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+                            <img ng-src="{{picurl}}{{cuser.photo}}" alt="Avatar" class="img-circle" /> <!-- src="img/avatar.jpg" -->
                         </div>
                         <div class="col-xs-6 workspace">
                             <p>U bent ingechecked op:</p>

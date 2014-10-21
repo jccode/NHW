@@ -107,7 +107,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
         $rootScope._ = window._;
         $rootScope.cuser = Util.currUser();
-        $rootScope.baseurl = Util.getPictureRootUrl();
+        $rootScope.picurl = Util.getPictureRootUrl();
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications

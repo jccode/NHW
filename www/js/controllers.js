@@ -27,7 +27,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
                 if(ret) {       // authenticated by license server
                     Util.setCustomerServerURL(ret, user.email);
-                    $rootScope.baseurl = Util.getPictureRootUrl();
+                    $rootScope.picurl = Util.getPictureRootUrl();
                     
                     User.isAuthenticated(user).then(function(ret) {
                         if( ret ){
