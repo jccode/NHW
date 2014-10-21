@@ -384,3 +384,6 @@ input.awesome {
   line-height: normal;
   vertical-align: middle;
 }
+.pointer {
+  cursor: pointer;
+}

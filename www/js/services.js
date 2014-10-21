@@ -106,6 +106,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             notCheckins: function() {
                 var user = Util.currUser();                
                 return $resource(this.baseurl() + '/offline/:id', {id: '@id'}).query({id: user.id});
+            },
+
+            setUserState: function(isavailable) {
+                var cuser = Util.currUser(),
+                    url = this.baseurl() + '/setuserstatus/'+cuser.id+'/'+isavailable;
+                return $http.put(url);
             }, 
 
             incrementalUpdate: function(date) {
@@ -115,7 +121,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         };
     }])
 
-    .factory('Building', ['$resource', '$q', '_', function($resource, $q, _) {
+    .factory('Building', ['$resource', '$q', '_', 'Util', function($resource, $q, _, Util) {
         // var buildings = $resource('js/data/buildings.json');
 
         return {
@@ -127,6 +133,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 // return buildings.query();
                 return $resource(this.baseurl() + '/:id').query();
             },
+
+            seatCount: function(buildingId) {
+                return Util.httpget(this.baseurl() + '/count/' + buildingId);
+            }, 
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);
@@ -158,6 +168,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 // console.log('Floors service, all: ' + baseurl + "; getCustomerServerURL:" + Util.getCustomerServerURL());
                 // console.log(Floor);
                 return $resource(this.baseurl() + '/:id').query();
+            },
+
+            floorsByBuildingId: function(buildingId) {
+                return $resource(this.baseurl() + '/building/:buildingId').query({
+                    buildingId: buildingId
+                });
             }, 
 
             findById: function(id) {
@@ -212,7 +228,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             reserveseat: function(floorId) {
                 var url = this.seaturl() + '/reserveraseat/' + floorId;
                 return Util.httpget(url);
-            }, 
+            },
 
             incrementalUpdate: function(date) {
                 // return $q.when([]);

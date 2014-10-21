@@ -1,21 +1,20 @@
 
+<div ng-controller="FloorsCtrl">
 
 <div content-for="info-bar-title">
     Selecteer een verdieping:
-    <i class="pull-right">
-        367 ingecheckt
-    </i>
-    
+    <div class="pull-right">
+        <i> {{countInfo.UnavailableSeatCount}} ingecheckt </i>&nbsp;&nbsp;| <i> {{countInfo.AvailableSeatCount}} beschikbaar</i>
+    </div>
 </div>
 
-
-<div class="scrollable" ng-controller="FloorsCtrl">
+<div class="scrollable" >
     <div class="scrollable-content no-scrollable-x">
         <div class="row ">
             <div class="col-xs-12 ">
                 <div class="floor-list-container">
                     <table class="table table-striped floor-list">
-                        <tr ng-repeat="floor in floors" ng-click="select_floor(floor.FloorId)">
+                        <tr ng-repeat="floor in floors" ui-sref="app.floor_select({f:floor.FloorId})"> 
                             <td>Verdieping {{floor.FloorNum}}</td>
                             <td><i class="fa fa-users"></i></td>
                             <td>{{floor.NonEmptySeat}} aanwezig</td>
@@ -34,4 +33,4 @@
     </div>
 </div>
 
-
+</div>

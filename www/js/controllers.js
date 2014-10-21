@@ -163,12 +163,18 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('FloorsCtrl', ['$scope', '$state', 'Floors', function($scope, $state, Floors) {
-        $scope.floors = Floors.all();
-        $scope.select_floor = function (floorId) {
-            // console.log(floor);
-            $state.go('app.floor_select', { 'f': floorId });
-        };
+    .controller('BuildingsCtrl', ['$scope', '$state', '$stateParams', 'Building', function($scope, $state, $stateParams, Building) {
+        $scope.buildings = Building.all();
+        
+    }])
+
+    .controller('FloorsCtrl', ['$scope', '$state', '$stateParams', 'Floors', 'Building', function($scope, $state, $stateParams, Floors, Building) {
+        var buildingId = $stateParams.buildingId;
+        $scope.floors = Floors.floorsByBuildingId(buildingId);
+        
+        Building.seatCount(buildingId).then(function(ret) {
+            $scope.countInfo = ret;
+        });
         $scope.auto_reserve = function (floorId, seatRemain) {
             // console.log(floorId + '; ' + seatRemain);
             if(seatRemain <= 0) {
@@ -213,6 +219,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         var cuser = Util.currUser();
         $scope.floor = Floors.findById(floorId);
         $scope.baseurl = Util.getPictureRootUrl();
+        $scope.cuser = cuser;
         var hascheckin = false;
 
 
@@ -500,10 +507,15 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.back = function() {
             $window.history.back();
         }
+        $scope.updateUserState = function(available) {
+            User.setUserState(available);
+        };
+
     }])
 
     .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
         $scope.baseurl = Util.getPictureRootUrl();
+        $scope.cuser = Util.currUser();
         $scope.type = 'all';
         var fn = {
             'all': User.allWithFavourites, 

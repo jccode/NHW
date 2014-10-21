@@ -1,0 +1,20 @@
+
+
+<div content-for="info-bar-title">
+    Selecteer een locatie:
+</div>
+
+
+<div class="scrollable" ng-controller="BuildingsCtrl">
+    <div class="scrollable-content no-scrollable-x">
+        <ul class="list-group">
+            <li ng-repeat="building in buildings" class="list-group-item pointer" ui-sref="app.floors({buildingId:building.BuildingId})">
+                <i class="fa fa-building-o fa-lg text-primary">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <b>{{building.BuildingName}}</b>
+                <i class="fa fa-chevron-right pull-right"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+

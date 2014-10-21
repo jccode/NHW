@@ -85,18 +85,9 @@ Licence api: http://www.hongding.nl/api/customer/CheckLicense/1234567
 https://www.nweapp.nl/hnwapi/help
 
 * Need du update
-1. 所有的请求返回统一的 json 格式. 
-   {data: ret}
-2. Seat, checkin api. Need to change: 
-   Need to add an additional args, floorId. 
-3. User.hasCheckIn  Change:
-   Return false if user haven't checkin;
-   return seat information if user have checkin. 
-   seat information = {floor: floorId, seat: seatNo}
-4. Add a new api to return the amount of all checkins(for all floors).
-   allCheckinCount()?
-5. offline users api have issues. if no one have checkin. the list should return all
-   users. however, current behavour is return [];
+1. Get floor by id, "NotEmptySeat" value is incorrect.
+   Floor_select page will use this value.
+  
 * issues
 1. Locatie wijzigen: checkout, then send user to the checkin page.
 2. user list 列表. bugs.

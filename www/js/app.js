@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
@@ -191,8 +191,17 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                 }
             })
 
+            .state("app.buildings", {
+                url: "/buildings",
+                views: {
+                    "subContent": {
+                        templateUrl: "partials/buildings.html"
+                    }
+                }
+            })
+
             .state("app.floors", {
-                url: "/floors",
+                url: "/floors/:buildingId",
                 views: {
                     "subContent": {
                         templateUrl: "partials/floors.html"

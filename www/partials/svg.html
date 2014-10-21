@@ -19,10 +19,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-9 col-xs-offset-3 ">
-                        <b class="text-danger">Niet storen</b>
+                        <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
+                        <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
                     </div>
                 </div>
-                <div class="row footer-row">
+                <div class="row footer-row" ng-hide="user.UserId == cuser.id">
                     <!-- 
                     <div class="col-xs-3 details">
                         <a href="javascript:;">Details</a>
