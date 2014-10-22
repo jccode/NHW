@@ -42,7 +42,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             hasCheckIn: function() {
                 // return false;
 
-                var currUser = Util.currUser();
+                // var currUser = Util.currUser();
+                var currUser = $rootScope.cuser;
                 if(!currUser) return false;
                 var url = this.baseurl() + '/ischeckin/' + currUser.id;
                 return Util.httpget(url);

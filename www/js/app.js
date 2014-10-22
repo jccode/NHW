@@ -230,7 +230,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             })
 
             .state("app.employees", {
-                url: "/employees",
+                url: "/employees?t",
                 views: {
                     "subContent": {
                         templateUrl: "partials/employees.html"

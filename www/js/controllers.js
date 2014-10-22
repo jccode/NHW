@@ -27,7 +27,6 @@ angular.module("nhw.controllers", ['nhw.services'])
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
                 if(ret) {       // authenticated by license server
                     Util.setCustomerServerURL(ret, user.email);
-                    $rootScope.picurl = Util.getPictureRootUrl();
                     
                     User.isAuthenticated(user).then(function(ret) {
                         if( ret ){
@@ -35,6 +34,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                             $rootScope.cuser = ret;
                             ret.email = ret.email.toLowerCase();
                             Util.currUser(ret);
+                            $rootScope.picurl = Util.getPictureRootUrl();
                             
                             // $state.go('app.checkin');
                             // $state.go('home');
@@ -496,12 +496,13 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('ProfileCtrl', ['$scope', '$stateParams', '$window', 'User', 'Util', function($scope, $stateParams, $window, User, Util) {
+    .controller('ProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', function($scope, $stateParams, $rootScope, $window, User, Util) {
         var uid = $stateParams.uid;
         $scope.user = User.findById(uid);
-        $scope.baseurl = Util.getPictureRootUrl();
+        $scope.iscuser = uid == $rootScope.cuser.id; 
+        // $scope.baseurl = Util.getPictureRootUrl();
         User.favoriteCount(uid).then(function(ret) {
-            $scope.favourite_count = ret;
+            $scope.favourite_count = ret || 0;
         });
         User.isFavourite(uid).then(function(ret) {
             $scope.isFavourited = ret;
@@ -524,10 +525,11 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('EmployeesCtrl', ['$scope', 'Util', 'User', function($scope, Util, User) {
+    .controller('EmployeesCtrl', ['$scope', '$stateParams', 'Util', 'User', function($scope, $stateParams, Util, User) {
         // $scope.baseurl = Util.getPictureRootUrl();
         // $scope.cuser = Util.currUser();
-        $scope.type = 'all';
+        $scope.type = $stateParams.t || 'all';
+        console.log($scope.type);
         var fn = {
             'all': User.allWithFavourites, 
             'favourite': User.favourites,
