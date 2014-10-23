@@ -114,7 +114,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     Floors.reserveseat(floorId).then(function(data) {
                         var seat = parseInt(data);
                         var param = {f: floorId, s:seat};
-                        $state.go('app.floor_select', param);
+                        $state.go('app.floor_select', param, {location: false});
                     });
                 });
                 return ;
@@ -137,7 +137,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     
                 } else {
                     Floors.findByBuildingNoAndFloorNo(ret['building'], ret['floor']).$promise.then(function(floor) {
-                        $state.go('app.floor_select', {f: floor['FloorId'], s: ret['seat']});
+                        $state.go('app.floor_select', {f: floor['FloorId'], s: ret['seat']}, {location: false});
                     });
                 }
                 
@@ -193,7 +193,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             }
             Floors.reserveseat(floorId).then(function(data) {
                 var seat = parseInt(data);
-                $state.go('app.floor_select', {'f': floorId, 's': seat});
+                $state.go('app.floor_select', {'f': floorId, 's': seat}, {location: false});
             });
         };
 
@@ -215,7 +215,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             Floors.reserveseat(floorId).then(function(data) {
                 if(data) {
                     var seat = parseInt(data);
-                    $state.go('app.floor_select', {'f': floorId, 's': seat});
+                    $state.go('app.floor_select', {'f': floorId, 's': seat}, {location: false});
                 }
             });
         };
