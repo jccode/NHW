@@ -14,5 +14,13 @@
         "Minor":"53655",
         "Message":"Welcome to NS2.", 
         "Active": true
+    },
+    {
+        "UUID":"e2c56db5-dffb-48d2-b060-d0f5a71096e0",
+        "Name":"AprilBeacon",
+        "Major":0,
+        "Minor":1,
+        "Message":"Here's April Beacon",
+        "Active": true
     }
 ]

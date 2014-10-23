@@ -239,8 +239,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('Beacons', ['$resource', '$q', '_', function($resource, $q, _) {
-        // var beacons = $resource('http://10.81.231.198/hnwapi/api/Ibeacon/');
-        // var beacons = $resource('js/data/beacons.json');
+        var beacons = $resource('js/data/beacons.json');
 
         return {
             baseurl: function() {
@@ -248,13 +247,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             all: function() {
-                // return beacons.query();
-                return $resource(this.baseurl() + '/:id').query();
+                return beacons.query();
+                // return $resource(this.baseurl() + '/:id').query();
             }, 
 
             incrementalUpdate: function(date) {
-                // return $q.when([]);
-                return Util.httpget(this.baseurl() + '/incremental/' + date);
+                return $q.when([]);
+                // return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])

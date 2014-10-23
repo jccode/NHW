@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', function($log, Util, Beacons, SingleBeacon, Storage) {
+    .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', 'BeaconUtil', function($log, Util, Beacons, SingleBeacon, Storage, BeaconUtil) {
         // legacy. for upgrade check
         // That's because the localStorage value: current_user.
         // The current user stored in localStorage, should be {id:xx, email:xx},
@@ -24,17 +24,36 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
             }
+            // Beacons.all().$promise.then(function(beacons) {
+            //     console.log(angular.toJson(beacons));
+            //     _.each(beacons, function(beacon) {
+            //         $log.log(beacon);
+            //         if(beacon.Active) {
+            //             var singleBeacon = new SingleBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
+            //             singleBeacon.addEventListener('enter', function(result) {
+            //                 Util.createLocalNotification(beacon.Message);
+            //             });
+            //             console.log('start monitoring');
+            //             singleBeacon.startMonitoring();
+            //         }
+            //     });
+            // });
+
             Beacons.all().$promise.then(function(beacons) {
-                console.log(angular.toJson(beacons));
-                _.each(beacons, function(beacon) {
-                    $log.log(beacon);
-                    if(beacon.Active) {
-                        var singleBeacon = new SingleBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
-                        singleBeacon.addEventListener('enter', function(result) {
-                            Util.createLocalNotification(beacon.Message);
-                        });
-                        console.log('start monitoring');
-                        singleBeacon.startMonitoring();
+                var ibeacons = _.map(beacons, function(beacon) {
+                    if(!beacon.Active) {
+                        return null;
+                    }
+                    return BeaconUtil.createBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
+                });
+
+                var delegate = BeaconUtil.createDelegate(beacons);
+                cordova.plugins.locationManager.setDelegate(delegate);
+                _.each(ibeacons, function(ibeacon) {
+                    if(ibeacon) {
+                        cordova.plugins.locationManager.startMonitoringForRegion(ibeacon)
+                            .fail(console.log)
+                            .done();
                     }
                 });
             });
