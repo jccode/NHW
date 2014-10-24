@@ -453,8 +453,10 @@ angular.module("nhw.controllers", ['nhw.services'])
                 
                 Floors.checkin(floorId, seat).then(function(ret) {
                     if(ret) {
-                        $state.go("app.index", param);
-                        $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
+                        // $state.go("app.index", param);
+                        // $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
+                        
+                        $state.go("home");
                     } else {
                         // popup an error message
                     }
