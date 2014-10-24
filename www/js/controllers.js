@@ -215,7 +215,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             Floors.reserveseat(floorId).then(function(data) {
                 if(data) {
                     var seat = parseInt(data);
-                    $state.go('app.floor_select', {'f': floorId, 's': seat}, {location: false});
+                    $state.go('app.floor_select', {'f': floorId, 's': seat}, {location: false, reload: true});
                 }
             });
         };
@@ -396,6 +396,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
             });
         }
+
+
 
         /**
          * Calcuate the popup window position

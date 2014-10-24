@@ -5,21 +5,8 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
 
     // bootstrap etc
     .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', 'BeaconUtil', function($log, Util, Beacons, SingleBeacon, Storage, BeaconUtil) {
-        // legacy. for upgrade check
-        // That's because the localStorage value: current_user.
-        // The current user stored in localStorage, should be {id:xx, email:xx},
-        // but not {UserId:xx, Email:xxx} 
-        (function() {
-            var cuser = Util.currUser();
-            if(cuser) { // upgrade issues.
-                if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase())) {
-                    Util.clearCurrUser();
-                    Util.localStorage.remove(STORAGE_KEYS.USER_DATA);
-                }
-            }
-        })();
-        
 
+        
         function startIbeacon() {
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
@@ -121,7 +108,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
     }])
 
      // run config on startup
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap) {
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', '$modalStack', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap, $modalStack) {
         
         // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
         $rootScope._ = window._;
@@ -131,6 +118,32 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications
 
+
+        // legacy. for upgrade check
+        // That's because the localStorage value: current_user.
+        // The current user stored in localStorage, should be {id:xx, email:xx},
+        // but not {UserId:xx, Email:xxx} 
+        (function() {
+            var cuser = Util.currUser();
+            if(cuser) { // upgrade issues.
+                if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase())) {
+                    Util.clearCurrUser();
+                    Util.localStorage.remove(STORAGE_KEYS.USER_DATA);
+                }
+            }
+        })();
+
+
+        // angular-bootstrap dismiss modal
+        $rootScope.$on('$locationChangeSuccess', function () {
+            var topModal = $modalStack.getTop();
+            while (topModal) {
+                $modalStack.dismiss(topModal.key, '$locationChangeSuccess');
+                topModal = $modalStack.getTop();
+            }
+        });
+
+        
 
         
         // if(!Util.isRunningOnPhonegap() && Storage) {
