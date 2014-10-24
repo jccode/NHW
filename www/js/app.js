@@ -128,7 +128,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             if(cuser) { // upgrade issues.
                 if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase())) {
                     Util.clearCurrUser();
-                    Util.localStorage.remove(STORAGE_KEYS.USER_DATA);
+                    Util.clearAllUserData();
                 }
             }
         })();

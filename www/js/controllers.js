@@ -103,7 +103,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('CheckInCtrl', ['$scope', '$state', 'Util', 'Floors', function($scope, $state, Util, Floors) {
+    .controller('CheckInCtrl', ['$scope', '$state', '$modal', '$log', 'Util', 'Floors', function($scope, $state, $modal, $log, Util, Floors) {
 
         $scope.scanBarcode = function () {
 
@@ -148,6 +148,30 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
 
         };
+
+        // firstuse_modal.html
+
+        $scope.showRuleScreen = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'firstuse_modal.html',
+                controller: 'CheckInModalCtrl',
+                windowClass: 'mymodal',
+                size: 'sm',
+                resolve: {
+                    data: function() {
+                        return {};
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(ret) {
+                // success
+                
+            }, function() {
+                // dismissed
+                $log.info('Modal dismissed at: ' + new Date());
+            });            
+        }
 
     }])
 

@@ -191,6 +191,10 @@
 .golden {
   color: #FF9900;
 }
+#checkin_modal {
+  padding: 0px;
+  background-color: #f0f0f0;
+}
 #checkin_modal .profile .workspace {
   line-height: 1.5;
 }
@@ -299,7 +303,7 @@
   line-height: 1.1;
 }
 .mymodal .modal-body {
-  padding: 0px;
+  background-color: #F7F7F7;
 }
 .mymodal .modal-footer {
   background: #f0f0f0;
@@ -322,6 +326,14 @@
   color: #007aff;
   background: #f0f0f0;
   border-color: #ffffff;
+}
+.btn-cus1 {
+  color: #428bca;
+  background: #fff;
+  border-color: #e6e6e2;
+}
+.btn-cus1:hover {
+  color: #428bca;
 }
 .switch.inline {
   display: inline-block;

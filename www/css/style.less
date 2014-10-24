@@ -280,9 +280,11 @@
 
 
 #checkin_modal {
+    padding: 0px;
+    background-color: @profile-user-bg;
+    
     .profile {
         .workspace {
-            
             line-height: 1.5;
         }
     }
@@ -431,8 +433,7 @@
     }
 
     .modal-body {
-        padding: 0px;
-
+        background-color: #F7F7F7;
     }
     
     .modal-footer {
@@ -460,6 +461,15 @@
     color: @profile-btn-text-color;
     background: @profile-user-bg;
     border-color: @profile-btn-border-color; //#FCFCFC;    
+}
+
+.btn-cus1 {
+    color: @brand-primary;
+    background: #fff;
+    border-color: @info-section-border;
+    &:hover {
+        color: @brand-primary;
+    }
 }
 
 // switch

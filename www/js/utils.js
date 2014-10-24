@@ -7,7 +7,8 @@ var STORAGE_KEYS = {
     LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
     CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
     SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
-    SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN'
+    SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN',
+    FIRSTTIME_USE: 'KEY_LOCAL_FIRSTTIME_USE'
 };
 
 var EVENTS = {
@@ -191,6 +192,10 @@ var Util = {
         
         userdata[uid][key] = value;
         this.localStorage.set(dataKey, userdata);
+    },
+
+    clearAllUserData: function() {
+        this.localStorage.remove(STORAGE_KEYS.USER_DATA);
     }, 
 
     lastUpdateDate: function(date) {
@@ -202,7 +207,17 @@ var Util = {
             // return this.localStorage.get(key);
             return this.getUserData(key);
         }
-    }, 
+    },
+
+    // isFirstTime: function(b) {
+    //     var key = STORAGE_KEYS.FIRSTTIME_USE;
+    //     if(b == undefined) {
+    //         return this.getUserData(key);
+    //     } else {
+    //         this.setUserData(key, b);
+    //     }
+    // }, 
+
 
     /**
      * @param uid is optional. 
