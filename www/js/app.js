@@ -26,6 +26,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             //     });
             // });
 
+            
             Beacons.all().$promise.then(function(beacons) {
                 var ibeacons = _.map(beacons, function(beacon) {
                     if(!beacon.Active) {
@@ -44,6 +45,33 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                     }
                 });
             });
+
+            /*
+            var identifier1 = 'Estimote Beacon',
+                uuid1 = 'b9407f30-f5f8-466e-aff9-25556b57fe6d',
+                major1 = 58877,
+                minor1 = 52730,
+                major11 = 55445,
+                minor11 = 53655;
+            // var beacon1 = new cordova.plugins.locationManager.BeaconRegion(identifier1, uuid1);
+            var beacon1 = new cordova.plugins.locationManager.BeaconRegion(identifier1, uuid1, major1, minor1);
+            var beacon11 = new cordova.plugins.locationManager.BeaconRegion(identifier1, uuid1, major11, minor11);
+
+            var identifier2 = 'AprilBeacon',
+                uuid2 = 'e2c56db5-dffb-48d2-b060-d0f5a71096e0',
+                major2 = 0,
+                minor2 = 1;
+            var beacon2 = new cordova.plugins.locationManager.BeaconRegion(identifier2, uuid2, major2, minor2);
+
+            Beacons.all().$promise.then(function(beacons) {
+                var delegate = BeaconUtil.createDelegate(beacons);
+                cordova.plugins.locationManager.setDelegate(delegate);
+                cordova.plugins.locationManager.startMonitoringForRegion(beacon1).fail(console.log).done();
+                cordova.plugins.locationManager.startMonitoringForRegion(beacon11).fail(console.log).done();
+                cordova.plugins.locationManager.startMonitoringForRegion(beacon2).fail(console.log).done();
+            });
+             */
+            
         }
 
         function checkAndEnableBluetooth() {
