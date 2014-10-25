@@ -247,13 +247,13 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             all: function() {
-                return beacons.query();
-                // return $resource(this.baseurl() + '/:id').query();
+                // return beacons.query();
+                return $resource(this.baseurl() + '/:id').query();
             }, 
 
             incrementalUpdate: function(date) {
-                return $q.when([]);
-                // return Util.httpget(this.baseurl() + '/incremental/' + date);
+                // return $q.when([]);
+                return Util.httpget(this.baseurl() + '/incremental/' + date);
             }
         };
     }])
