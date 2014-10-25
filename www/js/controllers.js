@@ -2,6 +2,12 @@
 angular.module("nhw.controllers", ['nhw.services'])
 
     .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', 'LicenseServer', 'Util', 'Bootstrap', function($scope, $rootScope, $state, User, LicenseServer, Util, Bootstrap) {
+
+        var errorHandler = function() {
+            $scope.error = "Sorry, you're not authorized to use this app.";
+            $scope.loading = false;
+        }
+        
         $scope.login = function (user) {
             /*
             User.isAuthenticated(user).then(function(ret) {
@@ -19,11 +25,8 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
              */
 
-
-            var errorHandler = function() {
-                $scope.error = "Sorry, you're not authorized to use this app.";
-            }
-
+            $scope.loading = true;
+        
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
                 if(ret) {       // authenticated by license server
                     Util.setCustomerServerURL(ret, user.email);
@@ -41,7 +44,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
                             console.log('when login, start check and enable bluetooth');
                             Bootstrap.checkAndEnableBluetooth();
-                            $scope.loading = true;
+                            
                             Bootstrap.syncData(function(ret) {
                                 $scope.loading = false;
                                 if(ret) {
@@ -82,9 +85,12 @@ angular.module("nhw.controllers", ['nhw.services'])
         // $scope.cuser = Util.currUser();
         
         var checkinState = function() {
-            User.hasCheckIn().then(function(ret) {
-                $scope.hascheckin = !!ret;
-            });
+            var promise = User.hasCheckIn();
+            if(promise) {
+                promise.then(function(ret) {
+                    $scope.hascheckin = !!ret;
+                });
+            }
         };
 
         checkinState();

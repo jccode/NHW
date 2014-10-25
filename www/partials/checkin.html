@@ -1,18 +1,17 @@
 
 <div content-for="info-bar-title">Barcode scannen om in te checken:</div>
 
-<div class="container-fluid" ng-controller="CheckInCtrl">
+<div class="container-fluid" ng-controller="CheckInCtrl" id="checkin-page">
     <div class="row row-padding" >
         <div class="col-xs-12">
             <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.buildings">Handmatig inchecken</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button>
-        </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button>          </div>
     </div>
-    <div class="row row-padding">
+    <div class="row row-padding" ng-show="error">
         <div class="col-xs-12" ng-bind-html-unsafe="error">
         </div>
     </div>
-    <div class="row row-padding">
+    <div class="row row-padding top-dotted-line">
         <div class="col-xs-12">
             <button type="button" class="btn btn-lg btn-block btn-cus1" ng-click="showRuleScreen()">Gedragsregels</button>
         </div>
@@ -25,19 +24,27 @@
             <h4 class="modal-title">10 Gedragsregels</h4>
         </div>
         <div class="modal-body" >
-            <div class="container-fluid">
-                <ol>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                    <li>Rule text</li>
-                </ol>
+            <div class="container-fluid" id="rules_modal">
+                <!-- <div class="scrollable"> -->
+                <!--     <div class="scrollable-content"> -->
+                        
+                        <h4>Welkom bij NS</h4>
+                        <p>Welkom bij NS Iedereen is welkom in dit kantoor. Om goed samen te kunnen werken, houden we ons aan de volgende werkafspraken. Voor de huidige medewerkers een handig geheugensteuntje, voor gasten en nieuwe collega’s een houvast om snel de weg te vinden.</p>
+                        <ol>
+                            <li>We hebben geen vaste werkplek. We stellen ons voor aan collega’s die we nog niet kennen.</li>
+                            <li>We kiezen een werkplek die past bij de activiteit die we gaan doen.</li>
+                            <li>We zorgen ervoor dat we bereikbaar en vindbaar zijn.</li>
+                            <li>We houden de werkplekken schoon en netjes en eten op de daarvoor bestemde plekken.</li>
+                            <li>We loggen uit als we 60 minuten of langer afwezig zijn en laten onze werkplek leeg achter.</li>
+                            <li>We storen onze collega’s niet als we bellen of overleggen.</li>
+                            <li>We werken zoveel mogelijk digitaal.</li>
+                            <li>We halen en brengen ons externe bezoek bij de receptie.</li>
+                            <li>We houden rekening met elkaar en maken zaken bespreekbaar. Veel werkplezier!</li>                    
+                        </ol>
+                        
+                <!--     </div> -->
+                <!-- </div> -->
+
             </div>
         </div>
         <div class="modal-footer" >

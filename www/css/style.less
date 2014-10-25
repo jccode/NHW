@@ -122,6 +122,7 @@
 // login page
 //
 
+// deprecated
 .form-signin {
     max-width: 330px;
     padding: 15px;
@@ -156,8 +157,50 @@
 	    color: #fff;
         background-color: #8eb5e2;
     }
-
 }
+
+
+#login-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+img.bg-img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;    
+}
+
+.login-form {
+    position: relative;
+    margin: 20px 30px;
+
+    input {
+        border-radius: 4px;
+        // font-size: 18px;
+        line-height: 1.33;
+        padding: 10px 16px;
+        height: 44px;
+    }
+
+    button.btn {
+        opacity: 1;
+    }
+
+    .error-msg {
+        color: #fff;
+    }
+}
+
+// #checkin-page {
+//     margin: 20px 0px 0px;
+    
+    // .row {
+    //     padding: 15px 30px;
+    // }
+// }
 
 .floor-list-container {
     // padding: 18px;
@@ -273,6 +316,10 @@
     border-top: 1px solid @split-line-color;
 }
 
+.top-dotted-line {
+    border-top: 1px dotted @split-line-color;
+}
+
 
 .golden {
     color: #FF9900;
@@ -288,6 +335,11 @@
             line-height: 1.5;
         }
     }
+}
+
+#rules_modal {
+    height: 200px;
+    overflow: auto;
 }
 
 .profile {

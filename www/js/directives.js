@@ -41,6 +41,7 @@ angular.module('nhw.directives', [])
             }
         };
     }])
+
     .directive('stopEvent', function () {
         return {
             restrict: 'A',
@@ -50,7 +51,29 @@ angular.module('nhw.directives', [])
                 });
             }
         };
-    });
+    })
+
+    .directive('btnLoading',function () {
+        return {
+            link:function (scope, element, attrs) {
+                scope.$watch(
+                    function () {
+                        return scope.$eval(attrs.btnLoading);
+                    },
+                    function (value) {
+                        if(value) {
+                            element.addClass("disabled").attr("disabled","disabled");
+                            element.data('resetText', element.html());
+                            element.html(element.attr('data-loading'));
+                        } else {
+                            element.removeClass("disabled").removeAttr("disabled");
+                            element.html(element.data('resetText'));
+                        }
+                    }
+                );
+            }
+        };
+    })
 ;
 
 

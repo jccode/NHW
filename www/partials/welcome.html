@@ -1,20 +1,32 @@
 
 <!-- login -->
-<div class="container" style="width:100%;height:100%;" ng-controller="LoginCtrl">
+<div content-for="info-bar-title">Welkom bij Het Nieuwe Werken</div>
+
+<div class="container" id="login-page" ng-controller="LoginCtrl">
+
+    <img src="img/login_bg.jpg" alt="" class="bg-img" />
     
-    <div class="app-content-loading ng-hide" ng-show="loading">
-        <i class="fa fa-spinner fa-spin loading-spinner"></i>
-    </div>
+    <!-- <div class="app-content-loading ng-hide" ng-show="loading"> -->
+    <!--     <i class="fa fa-spinner fa-spin loading-spinner"></i> -->
+    <!-- </div> -->
     
-    <form name="form" class="form-signin" role="form">
-        <h2 class="form-signin-heading">Welcome to NHW</h2>
-        <input type="email" class="form-control" ng-model="user.email" placeholder="Email address" required autofocus />
-        <input type="password" class="form-control" ng-model="user.authKey" placeholder="Authorization key" required />
-        <button class="btn btn-block login-btn" type="button" ng-click="login(user)" ng-disabled="form.$invalid">
-            <i class="fa fa-check fa-2x"></i>
-        </button>
-        <p>{{error}}</p>
+    <i class="fa fa-spinner fa-spin loading-spinner" ng-show="loading"></i>
+    
+    <form name="form" class="login-form" role="form">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.authKey" placeholder="Autorisatiesleutel" required />
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" ng-model="user.email" placeholder="Emailadres" required autofocus />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-lg btn-block" type="button" ng-click="login(user)" ng-disabled="form.$invalid" btn-loading="loading" data-loading="Login ...">
+                Aanmelden
+            </button>
+        </div>
+        <p class="error-msg">{{error}}</p>
     </form>
+    
 
 </div> <!-- /container -->
 

@@ -4,7 +4,7 @@
             NS Werkplek
         </div>
 
-        <div class="btn-group pull-right">
+        <div class="btn-group pull-right" ng-show="cuser">
             <a class="btn btn-navbar" ng-click="checkout();" ng-show="hascheckin">Uitchecken</a>
             <a class="btn btn-navbar" ui-sref="app.profile({uid: cuser.id})"> <i class="fa fa-user text-muted"></i> Profiel </a>
             <a class="btn btn-navbar" ui-sref="app.employees"> <i class="fa fa-search text-muted"></i> Zoeken </a>

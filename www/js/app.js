@@ -207,7 +207,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
 
                     // do automatically state transition here according to user status
                     if( !authenticated ){
-                        $state.go('welcome', {}, {location: false});
+                        $state.go('app.welcome', {}, {location: false});
                         return;
                     }
 
@@ -223,16 +223,20 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                 }]
             })
         
-            .state("welcome", {
-                url: "/welcome", 
-                templateUrl: "partials/welcome.html"
-            })
-
-        
             .state("app", {
                 url: "/app",
                 abstract: true,
                 templateUrl: "partials/main.html"
+            })
+
+            .state("app.welcome", {
+                url: "/welcome", 
+                // templateUrl: "partials/welcome.html"
+                views: {
+                    "subContent": {
+                        templateUrl: "partials/welcome.html"
+                    }
+                }
             })
 
             .state("app.checkin", {
