@@ -129,6 +129,12 @@ img.bg-img {
 .login-form .error-msg {
   color: #fff;
 }
+#checkin-page {
+  margin: 20px 0px 0px;
+}
+#checkin-page .row {
+  padding: 0px 30px 15px;
+}
 .floor-list-container table.floor-list {
   color: #777;
   background-color: #ddd;

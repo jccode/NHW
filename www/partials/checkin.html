@@ -2,12 +2,17 @@
 <div content-for="info-bar-title">Barcode scannen om in te checken:</div>
 
 <div class="container-fluid" ng-controller="CheckInCtrl" id="checkin-page">
-    <div class="row row-padding" >
+    <div class="row " >
         <div class="col-xs-12">
             <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.buildings">Handmatig inchecken</button>
+            <!-- <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button> -->
+        </div>
+    </div>
+    <div class="row " >
+        <div class="col-xs-12">
             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button>          </div>
     </div>
-    <div class="row row-padding" ng-show="error">
+    <div class="row " ng-show="error">
         <div class="col-xs-12" ng-bind-html-unsafe="error">
         </div>
     </div>
