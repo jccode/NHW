@@ -507,14 +507,13 @@ nhwUtils.factory('Log', function() {
     function httpget(url, resultTransform) {
         
         console.log('HTTPGET: ' + url + ' ;');
-        if(resultTransform) {
-            console.log('HTTPGET: resultTransform ' + resultTransform);
-        }
+        // if(resultTransform) {
+        //     console.log('HTTPGET: resultTransform ' + resultTransform);
+        // }
         
         var deferred = $q.defer();
         $http.get(url).success(function(data, status, headers, config) {
-            console.log('HTTPGET success. ' + JSON.stringify(data));
-            
+            // console.log('HTTPGET success. ' + JSON.stringify(data));
             if(data) {
                 if(resultTransform) {
                     data = resultTransform(data);
@@ -525,8 +524,7 @@ nhwUtils.factory('Log', function() {
             }
         })
             .error(function(data, status, headers, config) {
-                console.log('HTTPGET failed. ' + JSON.stringify(data));
-                
+                // console.log('HTTPGET failed. ' + JSON.stringify(data));
                 Util.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
                 Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
                 Log.log('[HTTPGET ERROR]: data: ' + JSON.stringify(data) + '; status:' + JSON.stringify(status) +

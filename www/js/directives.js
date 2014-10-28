@@ -82,16 +82,17 @@ angular.module('nhw.directives', [])
             link: function(scope, element, attr) {
                 var attrName = normalizeAttrName("nhwSrc");
                 var FILE_PROTOCOL_REGEX = /^file:\/\//g;
+                var IMG_REGEX = /.*\/(\w+\.(jpg|png|gif|bmp|jpeg))/ig;
 
                 var imgName = function(url) {
-                    return url.replace(/.*\/(\w+\.(jpg|png|gif|bmp|jpeg))/ig, '$1');
+                    return url.replace(IMG_REGEX, '$1');
                 };
                 
-                console.log('nhw src link....');
-                console.log($rootScope.picurl);
+                // console.log('nhw src link....');
+                // console.log($rootScope.picurl);
                 
                 attr.$observe(attrName, function(value) {
-                    if(!value) {
+                    if(!value || !IMG_REGEX.test(value)) {
                         return;
                     }
                     if(FILE_PROTOCOL_REGEX.test(value)) {
@@ -101,18 +102,21 @@ angular.module('nhw.directives', [])
                     
                     var name = imgName(value),
                         localUrl = $rootScope.AVATAR_DIR + name;
-                    if(!_.contains($rootScope.userpics, name)) {
+                    if(_.contains($rootScope.userpics, name)) {
+                        attr.$set("src", localUrl);
+                    } else {
                         var ft = new FileTransfer();
                         ft.download(value, localUrl, function(entity) {
-                            $rootScope.userpics.push(name);
                             console.log('Download ' + value + ' successful. stored to ' + localUrl);
+                            $rootScope.userpics.push(name);
+                            attr.$set("src", localUrl);
                         }, function(e) {
                             console.log('ERROR: Download ' + value + ' failed.');
                             console.log( JSON.stringify(e) );
                             attr.$set("src", value);
                         });
                     }
-                    attr.$set("src", localUrl);
+                    
                 });
             }
         };
