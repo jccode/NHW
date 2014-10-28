@@ -103,7 +103,8 @@ angular.module('nhw.directives', [])
                         localUrl = $rootScope.AVATAR_DIR + name;
                     if(!_.contains($rootScope.userpics, name)) {
                         var ft = new FileTransfer();
-                        ft.download(escape(value), localUrl, function(entity) {
+                        ft.download(value, localUrl, function(entity) {
+                            $rootScope.userpics.push(name);
                             console.log('Download ' + value + ' successful. stored to ' + localUrl);
                         }, function(e) {
                             console.log('ERROR: Download ' + value + ' failed.');
