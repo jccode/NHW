@@ -138,11 +138,27 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
 
             $log.log('[initCacheFiles] os:' + os + "; datadir: " + datadir + "; avatardir: " + avatardir );
             
-            $rootScope.datadir = datadir;
-            $rootScope.avatardir = datadir;
+            $rootScope.DATADIR = datadir;
+            $rootScope.AVATAR_DIR = avatardir;
 
-            // $window.resolveLocalFileSystemURL(avatardir, function(d) {
-            //     fileSystem.root.getDirectory('.', {create: true}, function(d) {
+            $window.resolveLocalFileSystemURL(datadir, function(data_dir) {
+                data_dir.getDirectory('avatar', {create: true}, function(d) {
+                    var reader = d.createReader();
+                    reader.readEntries(function(entries) {
+                        _.each(entries, function(e) {
+                            avatars.push(e.name);
+                        });
+                        
+                        $rootScope.userpics = avatars;
+                        $log.log('[initCacheFiles] userpics: ' + JSON.stringify(avatars));
+                        
+                    }, onError);
+                }, onError);
+            }, onError);
+            
+
+            // $window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+            //     fileSystem.root.getDirectory(avatardir, {create: true}, function(d) {
             //         var reader = DATADIR.createReader();
             //         reader.readEntries(function(entries) {
             //             _.each(entries, function(e) {
@@ -154,23 +170,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
                         
             //         }, onError);
             //     }, onError);
-            // }, onError);
-            
-
-            $window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                fileSystem.root.getDirectory(avatardir, {create: true}, function(d) {
-                    var reader = DATADIR.createReader();
-                    reader.readEntries(function(entries) {
-                        _.each(entries, function(e) {
-                            avatars.push(e.name);
-                        });
-                        
-                        $rootScope.userpics = avatars;
-                        $log.log('[initCacheFiles] userpics: ' + JSON.stringify(avatars));
-                        
-                    }, onError);
-                }, onError);
-            }, null);
+            // }, null);
 
         }
 

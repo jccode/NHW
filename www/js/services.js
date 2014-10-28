@@ -16,7 +16,12 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             isAuthenticated: function(user) { // TODO: only need to verify email
+                console.log('User.isAuthenticated')
+                console.log(JSON.stringify(user));
+                
                 var cUser = Util.currUser();
+                
+                console.log(JSON.stringify(cUser));
                 
                 if(!user && !cUser) {
                     return false;
@@ -36,6 +41,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                  */
 
                 var checkurl = Util.getCustomerServerURL(user.email) + '/api/user/checkuser/' + user.email;
+                console.log(checkurl);
                 return Util.httpget(checkurl, DataTransform.user);
             }, 
 

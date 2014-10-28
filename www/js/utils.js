@@ -322,9 +322,11 @@ var DataTransform = (function() {
     };
 
     var transform = function(type, data) {
+        console.log('DataTransfer. ')
         var ret = {},
             m = mapping[type];
         _.each(m, function(tuple) {
+            console.log(tuple);
             var destKey = tuple[1];
             var val = _.isFunction(destKey)? destKey(data): data[destKey];
             if(val != undefined) {
@@ -503,8 +505,16 @@ nhwUtils.factory('Log', function() {
 }).factory('Util', ['$http', '$q', 'Log', function($http, $q, Log) {
     
     function httpget(url, resultTransform) {
+        
+        console.log('HTTPGET: ' + url + ' ;');
+        if(resultTransform) {
+            console.log('HTTPGET: resultTransform ' + resultTransform);
+        }
+        
         var deferred = $q.defer();
         $http.get(url).success(function(data, status, headers, config) {
+            console.log('HTTPGET success. ' + JSON.stringify(data));
+            
             if(data) {
                 if(resultTransform) {
                     data = resultTransform(data);
@@ -515,10 +525,13 @@ nhwUtils.factory('Log', function() {
             }
         })
             .error(function(data, status, headers, config) {
+                console.log('HTTPGET failed. ' + JSON.stringify(data));
+                
                 Util.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
                 Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
-                Log.log(data);
-                // TODO:: when connection error. popup message to inform user to check network.
+                Log.log('[HTTPGET ERROR]: data: ' + JSON.stringify(data) + '; status:' + JSON.stringify(status) +
+                       '; headers: ' + JSON.stringify(headers) + '; config:' + JSON.stringify(config));
+
                 deferred.reject(data);
             });
         return deferred.promise;

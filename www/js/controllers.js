@@ -26,12 +26,19 @@ angular.module("nhw.controllers", ['nhw.services'])
              */
 
             $scope.loading = true;
-        
+
+            console.log( '1.' );
+
             LicenseServer.getCustomerServerURL(user.authKey).then(function(ret) {
+                console.log( '2. ' + JSON.stringify(ret) );
                 if(ret) {       // authenticated by license server
                     Util.setCustomerServerURL(ret, user.email);
-                    
+
+                    console.log( '3.' );
+
                     User.isAuthenticated(user).then(function(ret) {
+                        console.log( '4. ' + JSON.stringify(ret) );
+
                         if( ret ){
                             $scope.error = "";
                             $rootScope.cuser = ret;

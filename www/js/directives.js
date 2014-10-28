@@ -77,10 +77,15 @@ angular.module('nhw.directives', [])
         };
     })
 
-    .directive('nhwSrc', ['$rootScope', function($rootScope) {
+    .directive('nhwSrc', ['$rootScope', '_', function($rootScope, _) {
         return {
             link: function(scope, element, attr) {
                 var attrName = normalizeAttrName("nhwSrc");
+                var FILE_PROTOCOL_REGEX = /^file:\/\//g;
+
+                var imgName = function(url) {
+                    return url.replace(/.*\/(\w+\.(jpg|png|gif|bmp|jpeg))/ig, '$1');
+                };
                 
                 console.log('nhw src link....');
                 console.log($rootScope.picurl);
@@ -89,7 +94,24 @@ angular.module('nhw.directives', [])
                     if(!value) {
                         return;
                     }
-                    attr.$set("src", value);
+                    if(FILE_PROTOCOL_REGEX.test(value)) {
+                        attr.$set("src", value);
+                        return;
+                    }
+                    
+                    var name = imgName(value),
+                        localUrl = $rootScope.AVATAR_DIR + name;
+                    if(!_.contains($rootScope.userpics, name)) {
+                        var ft = new FileTransfer();
+                        ft.download(escape(value), localUrl, function(entity) {
+                            console.log('Download ' + value + ' successful. stored to ' + localUrl);
+                        }, function(e) {
+                            console.log('ERROR: Download ' + value + ' failed.');
+                            console.log( JSON.stringify(e) );
+                            attr.$set("src", value);
+                        });
+                    }
+                    attr.$set("src", localUrl);
                 });
             }
         };
