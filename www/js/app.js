@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', 'Util', 'Beacons', 'SingleBeacon', 'Storage', 'BeaconUtil', function($log, Util, Beacons, SingleBeacon, Storage, BeaconUtil) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'SingleBeacon', 'Storage', 'BeaconUtil', function($log, $rootScope, $window, _, Util, Beacons, SingleBeacon, Storage, BeaconUtil) {
 
         
         function startIbeacon() {
@@ -122,9 +122,64 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
         }
 
 
+        function onError(e) {
+            console.log('[ERROR] File api error.');
+            console.log( JSON.stringify(e) );
+        }
+
+        
+        function initCacheFiles() {
+            var os = $window.device.platform.toLowerCase(),
+                datadir = (os == 'android' && cordova.file.externalApplicationStorageDirectory) ||
+                    (os == 'ios' && cordova.file.applicationStorageDirectory) ||
+                    cordova.file.dataDirectory,
+                avatardir = datadir + 'avatar/',
+                avatars = [];
+
+            $log.log('[initCacheFiles] os:' + os + "; datadir: " + datadir + "; avatardir: " + avatardir );
+            
+            $rootScope.datadir = datadir;
+            $rootScope.avatardir = datadir;
+
+            // $window.resolveLocalFileSystemURL(avatardir, function(d) {
+            //     fileSystem.root.getDirectory('.', {create: true}, function(d) {
+            //         var reader = DATADIR.createReader();
+            //         reader.readEntries(function(entries) {
+            //             _.each(entries, function(e) {
+            //                 avatars.push(e.name);
+            //             });
+                        
+            //             $rootScope.userpics = avatars;
+            //             $log.log('[initCacheFiles] userpics: ' + JSON.stringify(avatars));
+                        
+            //         }, onError);
+            //     }, onError);
+            // }, onError);
+            
+
+            $window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+                fileSystem.root.getDirectory(avatardir, {create: true}, function(d) {
+                    var reader = DATADIR.createReader();
+                    reader.readEntries(function(entries) {
+                        _.each(entries, function(e) {
+                            avatars.push(e.name);
+                        });
+                        
+                        $rootScope.userpics = avatars;
+                        $log.log('[initCacheFiles] userpics: ' + JSON.stringify(avatars));
+                        
+                    }, onError);
+                }, onError);
+            }, null);
+
+        }
+
+
+
         function deviceready() {
             checkAndEnableBluetooth();
             // syncDataFromServer();
+            initCacheFiles();
         }
 
         

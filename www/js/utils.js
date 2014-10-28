@@ -269,6 +269,37 @@ var Util = {
             floor: content.substring(10,12),
             seat: content.substring(13)
         };
+    },
+
+    normalizeAttrName: function(attr) {
+        var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+        var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+        var PREFIX_REGEXP = /^((?:x|data)[\:\-_])/i;
+        
+        /**
+         * Converts all accepted directives format into proper directive name.
+         * All of these will become 'myDirective':
+         * my:Directive
+         * my-directive
+         * x-my-directive
+         * data-my:directive
+         *
+         * Also there is special case for Moz prefix starting with upper case letter.
+         * @param name Name to normalize
+         */
+        function directiveNormalize(name) {
+            return camelCase(name.replace(PREFIX_REGEXP, ''));
+        }
+
+        function camelCase(name) {
+            return name.
+                replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+                    return offset ? letter.toUpperCase() : letter;
+                }).
+                replace(MOZ_HACK_REGEXP, 'Moz$1');
+        }
+
+        return directiveNormalize(attr);
     }
 
 };

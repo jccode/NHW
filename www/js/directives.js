@@ -1,5 +1,7 @@
 
 
+var normalizeAttrName = Util.normalizeAttrName;
+
 angular.module('nhw.directives', [])
     .directive('autoHeight', ['$window', '$timeout', function($window, $timeout) {
         return {
@@ -74,6 +76,24 @@ angular.module('nhw.directives', [])
             }
         };
     })
+
+    .directive('nhwSrc', ['$rootScope', function($rootScope) {
+        return {
+            link: function(scope, element, attr) {
+                var attrName = normalizeAttrName("nhwSrc");
+                
+                console.log('nhw src link....');
+                console.log($rootScope.picurl);
+                
+                attr.$observe(attrName, function(value) {
+                    if(!value) {
+                        return;
+                    }
+                    attr.$set("src", value);
+                });
+            }
+        };
+    }])
 ;
 
 
