@@ -262,7 +262,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         var hascheckin = false;
 
         var svg_name = function(path) {
-            return path.replace(/.*\/(.+\.svg)/ig, '$1');
+            return path.replace(/.*\/(.+\.svg)/i, '$1');
         };
 
         var svg_wrapper_size = function() {
@@ -433,49 +433,28 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                      */
 
-                    function showPopup() {
-                        var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
-                                ? "user"
-                                : (hascheckin ? "seat_change" : "workspace");
-                        $scope.$apply(function() {
-                            $scope.popup = t;
-                        });
-                        
-                        var popup = d3.select("#" + t + "_popup");
-                        var pos = calc_popup_pos(popup.node(), coord)
-                        popup.style({
-                            left: pos[0]+'px',
-                            top: pos[1]+'px'
-                        });                        
-                    }
-
-
                     $scope.seat = seat;
 
                     var userId = el.attr("data-user");
                     if (userId) {
                         User.findById(userId).$promise.then(function(user) {
                             $scope.user = user;
-                            showPopup();
                         });
-                        
-                    } else {
-                        showPopup();
-                    }
+                    } 
 
-                    // var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
-                    //         ? "user"
-                    //         : (hascheckin ? "seat_change" : "workspace");
-                    // $scope.$apply(function() {
-                    //     $scope.popup = t;
-                    // });
+                    var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
+                            ? "user"
+                            : (hascheckin ? "seat_change" : "workspace");
+                    $scope.$apply(function() {
+                        $scope.popup = t;
+                    });
                     
-                    // var popup = d3.select("#" + t + "_popup");
-                    // var pos = calc_popup_pos(popup.node(), coord)
-                    // popup.style({
-                    //     left: pos[0]+'px',
-                    //     top: pos[1]+'px'
-                    // });
+                    var popup = d3.select("#" + t + "_popup");
+                    var pos = calc_popup_pos(popup.node(), coord)
+                    popup.style({
+                        left: pos[0]+'px',
+                        top: pos[1]+'px'
+                    });
                 });
             }
 
