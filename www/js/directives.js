@@ -77,7 +77,7 @@ angular.module('nhw.directives', [])
         };
     })
 
-    .directive('nhwSrc', ['$rootScope', '_', function($rootScope, _) {
+    .directive('nhwSrc', ['$rootScope', '_', 'Util', function($rootScope, _, Util) {
         return {
             link: function(scope, element, attr) {
                 var attrName = normalizeAttrName("nhwSrc");
@@ -95,6 +95,13 @@ angular.module('nhw.directives', [])
                     if(!value || !IMG_REGEX.test(value)) {
                         return;
                     }
+                    // For desktop user. as the same as ng-src
+                    if(!Util.isRunningOnPhonegap()) {
+                        attr.$set("src", value);
+                        return;
+                    }
+
+                    // For phonegap user. download to local file system
                     if(FILE_PROTOCOL_REGEX.test(value)) {
                         attr.$set("src", value);
                         return;

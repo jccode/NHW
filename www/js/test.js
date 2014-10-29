@@ -321,4 +321,46 @@ angular.module("nhw.test", ["nhw.services"])
 
     }])
 
+    .controller('FileDownloadTestCtrl', ['$scope', '$rootScope', '$window', 'Floors', function($scope, $rootScope, $window, Floors) {
+
+        var svgName = function(path) {
+            return path.replace(/.*\/(.+\.svg)/ig, '$1');
+        };
+
+        function onError(e) {
+            console.log('ERROR. Error information as belows: ');
+            console.log(JSON.stringify(e));
+        }
+
+
+                
+        $scope.download = function () {
+            Floors.all().$promise.then(function(data) {
+                var floor = data[0];
+                var svg_name = svgName(floor.SvgFile), 
+                    svgpath = cordova.file.externalApplicationStorageDirectory + svg_name;
+                console.log('File download test: ' + svgpath);
+                $window.resolveLocalFileSystemURL(svgpath, function(f) {
+                    console.log('Found file :' + JSON.stringify(f) );
+                    console.log('file url is ' + f.toURL());
+                }, function(e) {
+                    console.log('ERROR: ');
+                    console.log(e);
+                    if(e.code == 1) {
+                        var baseurl = 'https://www.nweapp.nl/hnw',
+                            svgurl = baseurl + floor.SvgFile;
+                        console.log('File not exist. Download file from ' + svgurl);
+
+                        var ft = new FileTransfer();
+                        ft.download(svgurl, svgpath, function(entry) {
+                            console.log("File download successful. local url is " + entry.toURL());
+                        }, onError);
+                    }
+                });
+            });            
+        };
+
+
+    }])
+
 ;

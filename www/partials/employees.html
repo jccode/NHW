@@ -16,7 +16,7 @@
         <div class="scrollable-content">
             <ul class="list-group employee-list">
                 <li ng-repeat="employee in employees | excludeId:'UserId':cuser.id | filter:q " class="list-group-item" ui-sref="app.profile({uid:employee.UserId})">
-                    <img src="img/default_avatar.jpg" ng-src="{{picurl}}{{employee.UserPic}}" class="img-circle" width="28px" height="28px"/>
+                    <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{employee.UserPic}}" class="img-circle" width="28px" height="28px"/>
                     <b>{{employee.FirstName}} {{employee.MiddleName}} {{employee.LastName}}</b>
                     <a class="star" ng-class="{'active': employee.Favorited}" ng-click="toggle_favourite(employee.UserId, employee.Favorited);employee.Favorited=!employee.Favorited;" stop-event='click'><i class="fa fa-star"></i></a>
                 </li>

@@ -313,7 +313,7 @@ var DataTransform = (function() {
         user: [
             ['id', 'UserId'],
             ['name', function(data) {
-                var ret = [data['FirstName'], data['MiddleName'], data['LastName']].join(' ');
+                var ret = [data['FirstName'] || '', data['MiddleName'] || '', data['LastName'] || ''].join(' ');
                 return ret;
             }],
             ['email', 'Email'],
@@ -322,11 +322,10 @@ var DataTransform = (function() {
     };
 
     var transform = function(type, data) {
-        console.log('DataTransfer. ')
-        var ret = {},
+         var ret = {},
             m = mapping[type];
         _.each(m, function(tuple) {
-            console.log(tuple);
+            // console.log('[DataTransfer] '+tuple);
             var destKey = tuple[1];
             var val = _.isFunction(destKey)? destKey(data): data[destKey];
             if(val != undefined) {

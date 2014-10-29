@@ -140,6 +140,7 @@ angular.module('nhw', ['ui.router', 'ngSanitize', 'mobile-angular-ui', 'ui.boots
             
             $rootScope.DATADIR = datadir;
             $rootScope.AVATAR_DIR = avatardir;
+            $rootScope.SVG_DIR = datadir + 'svg/';
 
             $window.resolveLocalFileSystemURL(datadir, function(data_dir) {
                 data_dir.getDirectory('avatar', {create: true}, function(d) {

@@ -256,11 +256,14 @@ angular.module("nhw.controllers", ['nhw.services'])
             confirm_checkin = $scope.$parent.confirm_checkin;
         // var cuser = Util.currUser();
         var cuser = $rootScope.cuser;
-        $scope.floor = Floors.findById(floorId);
+        // $scope.floor = Floors.findById(floorId);
         // $scope.baseurl = Util.getPictureRootUrl();
         // $scope.cuser = cuser;
         var hascheckin = false;
 
+        var svg_name = function(path) {
+            return path.replace(/.*\/(.+\.svg)/ig, '$1');
+        };
 
         var svg_wrapper_size = function() {
             var el_wrapper = document.getElementById("svg-wrapper"), 
@@ -297,14 +300,70 @@ angular.module("nhw.controllers", ['nhw.services'])
 
         var container = svg.append('g');
 
-        var innersvg; 
-        d3.xml('img/map.svg', 'image/svg+xml', function(xml) {
-            innersvg = container.append('g')
-                .append(function() {
-                    return xml.documentElement;
-                });
+        var innersvg;
+        // d3.xml('img/map.svg', 'image/svg+xml', function(xml) {
+        //     innersvg = container.append('g')
+        //         .append(function() {
+        //             return xml.documentElement;
+        //         });
 
-            innersvgLoaded();
+        //     innersvgLoaded();
+        // });
+
+        var loadsvg = function(path) {
+            d3.xml(path, 'image/svg+xml', function(xml) {
+                innersvg = container.append('g')
+                    .append(function() {
+                        return xml.documentElement;
+                    });
+
+                innersvgLoaded();
+            });            
+        };
+        
+
+        // load svg file from local filesystem
+        var onError = function(msg, e) {
+            console.log( 'ERROR. ' + msg );
+            console.log( JSON.stringify(e) );
+        };
+
+        
+        Floors.findById(floorId).$promise.then(function(floor) {
+            $scope.floor = floor;
+            var svgurl = $rootScope.picurl + floor.SvgFile;
+
+            // for desktop user
+            if(!Util.isRunningOnPhonegap()) {
+                loadsvg('img/map.svg'); //svgurl
+                return;
+            }
+
+            // for phonegap user
+            var svgname = svg_name(floor.SvgFile),
+                svgpath = $rootScope.SVG_DIR + svgname;
+            
+            $window.resolveLocalFileSystemURL(svgpath, function(f) {
+                console.log( 'Found svg file in ' + f.toURL() );
+                loadsvg(f.toURL());
+                
+            }, function(e) {
+                
+                if(e.code == 1) {
+                    console.log( 'Svg file ' + svgpath + ' not found.' );
+                    console.log( 'Download from ' + svgurl + ' ...' );
+                    
+                    var ft = new FileTransfer();
+                    ft.download(svgurl, svgpath, function(entry) {
+                        loadsvg(entry.toURL());
+                    }, onError);
+                    
+                } else {
+                    console.log( 'ERROR. Cannot find svg file in ' + svgpath
+                                 + '. Error code is ' + e.code );
+                    loadsvg(svgurl);
+                }
+            });
         });
 
 
@@ -374,28 +433,49 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                      */
 
+                    function showPopup() {
+                        var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
+                                ? "user"
+                                : (hascheckin ? "seat_change" : "workspace");
+                        $scope.$apply(function() {
+                            $scope.popup = t;
+                        });
+                        
+                        var popup = d3.select("#" + t + "_popup");
+                        var pos = calc_popup_pos(popup.node(), coord)
+                        popup.style({
+                            left: pos[0]+'px',
+                            top: pos[1]+'px'
+                        });                        
+                    }
+
+
                     $scope.seat = seat;
 
                     var userId = el.attr("data-user");
                     if (userId) {
                         User.findById(userId).$promise.then(function(user) {
                             $scope.user = user;
+                            showPopup();
                         });
+                        
+                    } else {
+                        showPopup();
                     }
 
-                    var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
-                            ? "user"
-                            : (hascheckin ? "seat_change" : "workspace");
-                    $scope.$apply(function() {
-                        $scope.popup = t;
-                    });
+                    // var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
+                    //         ? "user"
+                    //         : (hascheckin ? "seat_change" : "workspace");
+                    // $scope.$apply(function() {
+                    //     $scope.popup = t;
+                    // });
                     
-                    var popup = d3.select("#" + t + "_popup");
-                    var pos = calc_popup_pos(popup.node(), coord)
-                    popup.style({
-                        left: pos[0]+'px',
-                        top: pos[1]+'px'
-                    });
+                    // var popup = d3.select("#" + t + "_popup");
+                    // var pos = calc_popup_pos(popup.node(), coord)
+                    // popup.style({
+                    //     left: pos[0]+'px',
+                    //     top: pos[1]+'px'
+                    // });
                 });
             }
 
