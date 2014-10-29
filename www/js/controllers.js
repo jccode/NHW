@@ -330,7 +330,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             console.log( JSON.stringify(e) );
         };
 
-        
+
         Floors.findById(floorId).$promise.then(function(floor) {
             $scope.floor = floor;
             var svgurl = $rootScope.picurl + floor.SvgFile;
