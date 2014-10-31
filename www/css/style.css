@@ -3,17 +3,21 @@
 }
 .navbar-brand {
   font-weight: bold;
-  color: #010169;
 }
 .navbar-app {
-  background-color: #ffffff;
+  background-color: #ffcc33;
+  color: #0c077f;
+}
+.navbar-app .navbar-brand {
+  padding: 15px 5px 15px 10px;
 }
 .navbar-app .btn-navbar {
   text-transform: none;
   padding: 0 5px;
+  color: #342cf3;
 }
 .navbar-absolute-top {
-  border-bottom-width: 0px;
+  border-bottom: 2px solid #D9A925;
 }
 .app-body {
   background-color: #ffffff;

@@ -11,20 +11,25 @@
 // 
 .navbar-brand {
     font-weight: bold;
-    color: @brand-color;
 }
 
 .navbar-app {
     background-color: @navbar-bg;
+    color: @brand-color;
+
+    .navbar-brand {
+        padding: 15px 5px 15px 10px;
+    }
 }
 
 .navbar-app .btn-navbar {
     text-transform: none;
     padding: 0 5px;
+    color: lighten(@brand-color, 30%); 
 }
 
 .navbar-absolute-top {
-    border-bottom-width: 0px;
+    border-bottom: 2px solid #D9A925;
 }
 
 

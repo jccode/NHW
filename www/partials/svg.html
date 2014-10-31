@@ -29,8 +29,9 @@
                         <a href="javascript:;">Details</a>
                     </div>  -->
                     <div class="col-xs-9">
-                        <a href="javascript:;" ng-click="toggle_favourite(user.UserId, user.Favorited); user.Favorited=!user.Favorited">
-                            <i class="fa fa-star" ng-class="{'golden': user.Favorited, 'text-muted': !user.Favorited}">&nbsp;&nbsp;</i>Toevoegen favorieten
+                        <a href="javascript:;" ng-click="toggle_favourite(user.UserId, user.Favorited); isFavourited=!isFavourited">
+                            <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
+                            <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijderen favorieten </span>
                         </a>
                     </div>
                 </div>

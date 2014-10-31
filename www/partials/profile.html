@@ -22,7 +22,9 @@
                     <div class="row row-padding top-line">
                         <div class="col-xs-12">
                             <a href="javascript:;" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited" ng-hide="iscuser">
-                                <i class="fa fa-star" ng-class="{'golden': isFavourited, 'text-muted': !isFavourited}">&nbsp;&nbsp;</i>Toevoegen favorieten
+                                <!-- <i class="fa fa-star" ng-class="{'golden': isFavourited, 'text-muted': !isFavourited}">&nbsp;&nbsp;</i>Toevoegen favorieten -->
+                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
+                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijderen favorieten </span>
                             </a>
                             <a href="javascript:;" ui-sref="app.employees({t:'favourite'})" ng-show="iscuser">
                                 <i class="fa fa-star golden">&nbsp;&nbsp;</i>Favorieten bekijken

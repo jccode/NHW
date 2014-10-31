@@ -442,6 +442,9 @@ angular.module("nhw.controllers", ['nhw.services'])
                         User.findById(userId).$promise.then(function(user) {
                             $scope.user = user;
                         });
+                        User.isFavourite(userId).then(function(ret) {
+                            $scope.isFavourited = ret;
+                        });
                     } 
 
                     var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
@@ -618,11 +621,10 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('EmployeesCtrl', ['$scope', '$stateParams', 'Util', 'User', function($scope, $stateParams, Util, User) {
+    .controller('EmployeesCtrl', ['$scope', '$state', '$stateParams', 'Util', 'User', function($scope, $state, $stateParams, Util, User) {
         // $scope.baseurl = Util.getPictureRootUrl();
         // $scope.cuser = Util.currUser();
         $scope.type = $stateParams.t || 'all';
-        console.log($scope.type);
         var fn = {
             'all': User.allWithFavourites, 
             'favourite': User.favourites,
