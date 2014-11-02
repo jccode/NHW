@@ -2,7 +2,8 @@
 
 var exclude_files = [
     'node_modules',
-    'spec'
+    'spec',
+    'res'
 ];
 
 var path = require( "path" ),

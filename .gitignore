@@ -3,3 +3,5 @@ platforms/
 plugins/
 .tern-port
 *.log
+*.done
+assets/
