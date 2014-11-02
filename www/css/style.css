@@ -14,7 +14,10 @@
 .navbar-app .btn-navbar {
   text-transform: none;
   padding: 0 5px;
-  color: #342cf3;
+  color: #0c077f;
+}
+.navbar-app .btn-navbar:hover {
+  color: #0c077f;
 }
 .navbar-absolute-top {
   border-bottom: 2px solid #D9A925;
@@ -239,7 +242,6 @@ img.bg-img {
   line-height: 1.5;
 }
 #rules_modal {
-  height: 200px;
   overflow: auto;
 }
 .profile {

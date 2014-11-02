@@ -25,7 +25,11 @@
 .navbar-app .btn-navbar {
     text-transform: none;
     padding: 0 5px;
-    color: lighten(@brand-color, 30%); 
+    color: @brand-color;
+
+    &:hover {
+        color: @brand-color;
+    }
 }
 
 .navbar-absolute-top {
@@ -344,7 +348,7 @@ img.bg-img {
 }
 
 #rules_modal {
-    height: 200px;
+    // height: 200px;
     overflow: auto;
 }
 
