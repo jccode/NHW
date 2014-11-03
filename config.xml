@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="nl.everlink.nhw" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>NHW</name>
+    <name>NS: Het Nieuwe Werken</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Met behulp van deze applicatie kunnen NS medewerkers eenvoudig inchecken op een werkplek. Dit op locaties waar gebruik wordt gemaakt van Flexibel werken.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="support@hongdingltd.com" href="http://hongdingltd.com">
+        HongDingLtd Team
     </author>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
@@ -42,6 +42,14 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+
+    <gap:plugin name="com.conetix.ibeacon" version="1.0.0" />
+    <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.5" />
+    <gap:plugin name="com.randdusing.bluetoothle" version="1.0.6" />
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.0.0" />
+    <gap:plugin name="com.brodysoft.sqliteplugin" version="1.0.0" />
+    <gap:plugin name="nl.x-services.plugins.toast" />
+    
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
     <icon gap:platform="android" gap:qualifier="mdpi" src="www/res/icon/android/icon-48-mdpi.png" />
