@@ -36,7 +36,9 @@
     border-bottom: 2px solid #D9A925;
 }
 
-
+.btn-primary {
+    background-color: @deepblue-color !important;
+}
 
 
 
@@ -219,6 +221,15 @@ img.bg-img {
     table.floor-list {
         color: #777;
         background-color: #ddd;
+        border: none;
+
+        tr {
+            border-bottom: 1px solid rgb(221,221,221);
+        }
+
+        td {
+            border: none;
+        }
 
         td:first-child {
             color: #333;
@@ -350,6 +361,11 @@ img.bg-img {
 #rules_modal {
     // height: 200px;
     overflow: auto;
+
+    ol {
+        list-style-position: outside;
+        padding: 0 15px;
+    }
 }
 
 .profile {
@@ -525,12 +541,12 @@ img.bg-img {
     border-color: @profile-btn-border-color; //#FCFCFC;    
 }
 
-.btn-cus1 {
-    color: @brand-primary;
+.btn-primary-reverse {
+    color: @deepblue-color;
     background: #fff;
     border-color: @info-section-border;
     &:hover {
-        color: @brand-primary;
+        color: @deepblue-color;
     }
 }
 
@@ -603,6 +619,19 @@ img.bg-img {
             border-color: #adadad;
             color: #333;            
         }
+    }
+}
+
+.text-deepblue {
+    color: @deepblue-color;
+}
+
+a.text-deepblue {
+    &:hover {
+        color: @deepblue-color;
+    }
+    &:active {
+        color: @deepblue-color;
     }
 }
 

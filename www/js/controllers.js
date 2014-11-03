@@ -109,7 +109,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('CheckInCtrl', ['$scope', '$state', '$modal', '$log', 'Util', 'Floors', function($scope, $state, $modal, $log, Util, Floors) {
+    .controller('CheckInCtrl', ['$scope', '$state', '$modal', '$log', '$window', 'Util', 'Floors', function($scope, $state, $modal, $log, $window, Util, Floors) {
 
         $scope.scanBarcode = function () {
 
@@ -158,9 +158,10 @@ angular.module("nhw.controllers", ['nhw.services'])
         // firstuse_modal.html
 
         $scope.showRuleScreen = function() {
+            
             var modalInstance = $modal.open({
                 templateUrl: 'firstuse_modal.html',
-                controller: 'CheckInModalCtrl',
+                controller:  'CheckInModalCtrl',
                 windowClass: 'mymodal',
                 size: 'sm',
                 resolve: {
@@ -169,7 +170,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     }
                 }
             });
-
+            
             modalInstance.result.then(function(ret) {
                 // success
                 
@@ -211,6 +212,11 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('FloorsCtrl', ['$scope', '$state', '$stateParams', 'Floors', 'Building', function($scope, $state, $stateParams, Floors, Building) {
         var buildingId = $stateParams.buildingId;
         $scope.floors = Floors.floorsByBuildingId(buildingId);
+        // $scope.floors = [
+        //     {FloorNum: 1, NonEmptySeat: 70, SeatCount: 100, FloorId: 1}, 
+        //     {FloorNum: 2, NonEmptySeat: 70, SeatCount: 100, FloorId: 2}, 
+        //     {FloorNum: 3, NonEmptySeat: 70, SeatCount: 100, FloorId: 3}
+        // ];
         
         Building.seatCount(buildingId).then(function(ret) {
             $scope.countInfo = ret;

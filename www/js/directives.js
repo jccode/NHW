@@ -126,6 +126,21 @@ angular.module('nhw.directives', [])
             }
         };
     }])
+
+    .directive('popwin', ['$window', function($window) {
+        return {
+            link: function(scope, element, attr) {
+                var height = $window.document.documentElement.offsetHeight;
+                // console.log('in popwin directive ' + height);
+                // return element.css('height', height-500);
+                // return element[0].style.height = "50px";
+                return element.css({
+                    'height': (height - 200)+'px',
+                    'overflow': 'auto'
+                });
+            }
+        };
+    }])
 ;
 
 

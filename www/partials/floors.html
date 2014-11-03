@@ -23,7 +23,7 @@
                                 <i class="fa fa-check-circle text-success" ng-if="(floor.SeatCount>0) && (floor.SeatCount-floor.NonEmptySeat>0)"></i>
                             </td>
                             <td>{{floor.SeatCount - floor.NonEmptySeat}} vrij</td>
-                            <td><a ng-click="auto_reserve(floor.FloorId, floor.SeatCount-floor.NonEmptySeat);" stop-event='click'><i class="fa fa-map-marker fa-lg"></i></a></td> 
+                            <td><a class="text-deepblue" ng-click="auto_reserve(floor.FloorId, floor.SeatCount-floor.NonEmptySeat);" stop-event='click'><i class="fa fa-map-marker fa-lg"></i></a></td> 
                         </tr>
                     </table>
                 </div>

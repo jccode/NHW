@@ -29,7 +29,7 @@
                         <a href="javascript:;">Details</a>
                     </div>  -->
                     <div class="col-xs-9">
-                        <a href="javascript:;" ng-click="toggle_favourite(user.UserId, user.Favorited); isFavourited=!isFavourited">
+                        <a class="text-deepblue" href="javascript:;" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
                             <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
                             <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijderen favorieten </span>
                         </a>
@@ -67,7 +67,7 @@
                 <div class="row footer-row top-line">
                     <div class="col-xs-12">
                         <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
-                        <a ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                 <div class="row footer-row top-line">
                     <div class="col-xs-12">
                         <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
-                        <a ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
                     </div>
                 </div>
             </div>

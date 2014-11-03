@@ -22,6 +22,9 @@
 .navbar-absolute-top {
   border-bottom: 2px solid #D9A925;
 }
+.btn-primary {
+  background-color: #0c077f !important;
+}
 .app-body {
   background-color: #ffffff;
 }
@@ -145,6 +148,13 @@ img.bg-img {
 .floor-list-container table.floor-list {
   color: #777;
   background-color: #ddd;
+  border: none;
+}
+.floor-list-container table.floor-list tr {
+  border-bottom: 1px solid #dddddd;
+}
+.floor-list-container table.floor-list td {
+  border: none;
 }
 .floor-list-container table.floor-list td:first-child {
   color: #333;
@@ -179,7 +189,7 @@ img.bg-img {
   fill: red;
 }
 .seat-me {
-  fill: #007aff;
+  fill: #0c077f;
 }
 .popup {
   position: absolute;
@@ -244,6 +254,10 @@ img.bg-img {
 #rules_modal {
   overflow: auto;
 }
+#rules_modal ol {
+  list-style-position: outside;
+  padding: 0 15px;
+}
 .profile {
   background-color: #f8f8f8;
 }
@@ -268,7 +282,7 @@ img.bg-img {
   text-align: right;
 }
 .profile .footer button {
-  color: #007aff;
+  color: #0c077f;
   background: #f0f0f0;
   border-color: #ffffff;
 }
@@ -301,7 +315,7 @@ img.bg-img {
   margin-top: 10px;
 }
 #info-section-profile .current-checkin .fa {
-  color: #007aff;
+  color: #0c077f;
 }
 @media (max-width: 767px) {
   #info-section-profile.profile .user {
@@ -358,7 +372,7 @@ img.bg-img {
   border-top-width: 0px;
 }
 .mymodal .modal-footer button {
-  color: #007aff;
+  color: #0c077f;
   background: #f0f0f0;
   border-color: #ffffff;
 }
@@ -369,17 +383,17 @@ img.bg-img {
   }
 }
 .btn-profile {
-  color: #007aff;
+  color: #0c077f;
   background: #f0f0f0;
   border-color: #ffffff;
 }
-.btn-cus1 {
-  color: #428bca;
+.btn-primary-reverse {
+  color: #0c077f;
   background: #fff;
   border-color: #e6e6e2;
 }
-.btn-cus1:hover {
-  color: #428bca;
+.btn-primary-reverse:hover {
+  color: #0c077f;
 }
 .switch.inline {
   display: inline-block;
@@ -427,6 +441,15 @@ img.bg-img {
   background-color: #ebebeb;
   border-color: #adadad;
   color: #333;
+}
+.text-deepblue {
+  color: #0c077f;
+}
+a.text-deepblue:hover {
+  color: #0c077f;
+}
+a.text-deepblue:active {
+  color: #0c077f;
 }
 input.awesome {
   font-family: FontAwesome;
