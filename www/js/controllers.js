@@ -638,6 +638,9 @@ angular.module("nhw.controllers", ['nhw.services'])
         User.isFavourite(uid).then(function(ret) {
             $scope.isFavourited = ret;
         });
+        User.hasCheckIn(uid).then(function(ret) {
+            $scope.checkinInfo = ret;
+        });
 
         $scope.toggle_favourite = function (uid, favouried) {
             if(favouried) {

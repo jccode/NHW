@@ -356,6 +356,15 @@ img.bg-img {
     padding-right: 20px;
   }
 }
+.checkin-info label {
+  width: 80px;
+  display: inline-block;
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+.checkin-info .available-status {
+  margin-top: 10px;
+}
 .mymodal .modal-dialog {
   margin: 50px 10px;
 }

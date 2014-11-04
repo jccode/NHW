@@ -41,12 +41,45 @@
                         </div>
                     </div>
                     <div class="row form-group row-padding top-line">
+                        <!--
                         <label class="control-label col-xs-3 col-sm-2 col-lg-1" ng-show="iscuser">
                             <switch ng-model="user.IsAvailable" class="inline switch-sm green" ng-change="updateUserState(user.IsAvailable);"></switch>
                         </label>
                         <div class="form-control-wrapper col-xs-9 col-sm-10 col-lg-11">
                             <span ng-show="user.IsAvailable" ng-class="{'': iscuser, 'text-success': !iscuser }">Beschikbaar</span>
                             <span ng-hide="user.IsAvailable" ng-class="{'': iscuser, 'text-danger': !iscuser }">Niet storen</span>
+                        </div>
+                        -->
+
+                        <div ng-show="iscuser"> <!-- For current user -->
+                            <label class="control-label col-xs-3 col-sm-2 col-lg-1">
+                                <switch ng-model="user.IsAvailable" class="inline switch-sm green" ng-change="updateUserState(user.IsAvailable);"></switch>
+                            </label>
+                            <div class="form-control-wrapper col-xs-9 col-sm-10 col-lg-11">
+                                <span ng-show="user.IsAvailable" >Beschikbaar</span>
+                                <span ng-hide="user.IsAvailable" >Niet storen</span>
+                            </div>                            
+                        </div>
+                        
+                        <div ng-show="!iscuser"> <!-- For colleague -->
+                            <div class="col-xs-12 checkin-info" ng-show="checkinInfo">
+                                <h6>Ingecheckt op: </h6>
+                                <div>
+                                    <label>Verdieping:</label>
+                                    <b >{{checkinInfo.BuildingFloor.FloorNum}}</b>
+                                </div>
+                                <div>
+                                    <label>Werkplek:</label>
+                                    <b >{{checkinInfo.SeatCode}}</b>
+                                </div>
+                                <div class="available-status">
+                                    <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
+                                    <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" ng-show="!checkinInfo">
+                                Niet ingecheckt
+                            </div>
                         </div>
                     </div>
                 </div>

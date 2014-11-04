@@ -45,13 +45,17 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return Util.httpget(checkurl, DataTransform.user);
             }, 
 
-            hasCheckIn: function() {
+            hasCheckIn: function(id) {
                 // return false;
-
-                // var currUser = Util.currUser();
-                var currUser = $rootScope.cuser;
-                if(!currUser) return false;
-                var url = this.baseurl() + '/ischeckin/' + currUser.id;
+                var uid; 
+                if(!id) {
+                    var currUser = $rootScope.cuser;
+                    if(!currUser) return false;
+                    uid = currUser.id;
+                } else {
+                    uid = id;
+                }
+                var url = this.baseurl() + '/ischeckin/' + uid;
                 return Util.httpget(url);
             },
 
