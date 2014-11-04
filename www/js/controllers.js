@@ -341,6 +341,13 @@ angular.module("nhw.controllers", ['nhw.services'])
             $scope.floor = floor;
             var svgurl = $rootScope.picurl + floor.SvgFile;
 
+            // barcode scan, auto checkin
+            if(confirm_checkin) {
+                $scope.seat = seat;
+                $scope.confirm_checkin();
+            }
+
+
             // for desktop user
             if(!Util.isRunningOnPhonegap()) {
                 loadsvg('img/map.svg'); //svgurl
@@ -372,6 +379,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     loadsvg(svgurl);
                 }
             });
+            
         });
 
 
@@ -576,11 +584,6 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
         
         
-        // barcode scan, auto checkin
-        if(confirm_checkin) {
-            $scope.seat = seat;
-            $scope.confirm_checkin();
-        }
         
     }])
 

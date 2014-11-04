@@ -16,12 +16,11 @@
                     <table class="table table-striped floor-list">
                         <tr ng-repeat="floor in floors" ui-sref="app.floor_select({f:floor.FloorId})"> 
                             <td>Verdieping {{floor.FloorNum}}</td>
-                            <td>{{floor.NonEmptySeat}} ingecheckt</td>
-                            <td><i class="fa fa-users"></i></td>
-                            <td>{{floor.SeatCount - floor.NonEmptySeat}} beschikbaar</td>
+                            <td>{{floor.NonEmptySeat}} ingecheckt &nbsp;&nbsp; <i class="fa fa-users"></i></td>
                             <td>
+                                {{floor.SeatCount - floor.NonEmptySeat}} beschikbaar &nbsp;&nbsp;
                                 <i class="fa fa-ban text-danger" ng-if="floor.SeatCount == 0 || floor.SeatCount - floor.NonEmptySeat == 0"></i>
-                                <i class="fa fa-check-circle text-success" ng-if="(floor.SeatCount>0) && (floor.SeatCount-floor.NonEmptySeat>0)"></i>
+                                <i class="fa fa-check-circle text-success" ng-if="(floor.SeatCount>0) && (floor.SeatCount-floor.NonEmptySeat>0)"></i>                                
                             </td>
                             <td>
                                 <!-- <a class="text-deepblue" ng-click="auto_reserve(floor.FloorId, floor.SeatCount-floor.NonEmptySeat);" stop-event='click'><i class="fa fa-map-marker fa-lg"></i></a> -->

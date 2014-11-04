@@ -156,6 +156,7 @@ img.bg-img {
 }
 .floor-list-container table.floor-list td {
   border: none;
+  padding: 8px 2px;
 }
 .floor-list-container table.floor-list td:first-child {
   color: #333;
