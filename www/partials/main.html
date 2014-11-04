@@ -1,11 +1,11 @@
 <div class="app">
     <div id="navbar" class="navbar navbar-app navbar-absolute-top" ng-controller="NavCtrl">
-        <div class="navbar-brand"><!-- ui-sref="test.navigation" -->
+        <div class="navbar-brand" ui-sref="test.navigation"><!-- ui-sref="test.navigation" -->
             <img src="img/NS-logo-small.png" alt="" /> Werkplek
         </div>
 
         <div class="btn-group pull-right" ng-show="cuser">
-            <a class="btn btn-navbar" ng-click="checkout();" ng-show="hascheckin">Uitchecken</a>
+            <a class="btn btn-navbar" ng-click="checkout_confirm();" ng-show="hascheckin">Uitchecken</a>
             <a class="btn btn-navbar" ui-sref="app.profile({uid: cuser.id})"> <i class="fa fa-user "></i> Profiel </a> <!--text-muted-->
             <a class="btn btn-navbar" ui-sref="app.employees"> <i class="fa fa-search "></i> Zoek </a>
         </div>
@@ -26,4 +26,21 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="confirm_checkout_modal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><i class="fa fa-times" ></i></button>
+        <h4 class="modal-title">Confirm</h4>
+    </div>
+    <div class="modal-body" >
+        <div class="container-fluid">
+            Weet u zeker dat u wilt uitchecken?
+        </div>
+    </div>
+    <div class="modal-footer" >
+        <button class="btn" ng-click="ok(true)">&nbsp;&nbsp;Ja&nbsp;&nbsp;</button>
+        <button class="btn" ng-click="ok(false)">&nbsp;&nbsp;Nee&nbsp;&nbsp;</button>
+    </div>
+</script>
+
 

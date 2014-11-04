@@ -81,7 +81,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('NavCtrl', ['$scope', '$state', 'User', 'Util', function($scope, $state, User, Util) {
+    .controller('NavCtrl', ['$scope', '$state', '$modal', '$log', 'User', 'Util', function($scope, $state, $modal, $log, User, Util) {
         // $scope.cuser = Util.currUser();
         
         var checkinState = function() {
@@ -107,6 +107,32 @@ angular.module("nhw.controllers", ['nhw.services'])
                 }
             });
         };
+
+        $scope.checkout_confirm = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'confirm_checkout_modal.html',
+                controller:  'CheckInModalCtrl',
+                windowClass: 'mymodal',
+                size: 'sm',
+                resolve: {
+                    data: function() {
+                        return {};
+                    }
+                }
+            });
+            
+            modalInstance.result.then(function(ret) {
+                // click on buttons. 'true' if click yes, 'false' if click no.
+                if(ret) {
+                    $scope.checkout();
+                }
+                
+            }, function() {
+                // dismissed
+                $log.info('Modal dismissed at: ' + new Date());
+            });            
+        };
+
     }])
 
     .controller('CheckInCtrl', ['$scope', '$state', '$modal', '$log', '$window', 'Util', 'Floors', function($scope, $state, $modal, $log, $window, Util, Floors) {
@@ -177,7 +203,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             }, function() {
                 // dismissed
                 $log.info('Modal dismissed at: ' + new Date());
-            });            
+            });
         }
 
     }])
