@@ -12,7 +12,9 @@ module.exports = function(config){
             "lib/underscore-min.js",
             
             'lib/angular/angular-mocks.js',
-            
+
+            'js/observer.js', 
+            'js/utils.js', 
             'js/**/*.js',
             'spec/unit/**/*.js'
         ],

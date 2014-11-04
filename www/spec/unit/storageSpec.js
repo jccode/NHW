@@ -44,25 +44,25 @@ describe('Storage', function() {
         // expect("Tom").toEqual(users[0]["name"]);
 
         
-        var users;
+        var user;
         runs(function() {
             storage.User.insert({"name":"Tom", "email":"Tom@gmail.com", "photo":"img/tom.jpg"});
             // console.log('---------');
             storage.User.all().then(function(data) {
-                users = data;
+                user = data[data.length-1];
             });
         });
 
         waitsFor(function() {
             rootScope.$apply();
-            return users;
+            return user;
         }, "The users should be return", 3000);
 
         runs(function() {
             // console.log("~~~~~~~");
             // console.log(users);
-            expect(users.length).toEqual(1);
-            expect("Tom").toEqual(users[0]["name"]);
+            // expect(users.length).toEqual(1);
+            expect("Tom").toEqual(user["name"]);
         });
     });
     
