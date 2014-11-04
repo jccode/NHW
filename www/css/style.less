@@ -268,6 +268,7 @@ img.bg-img {
     bottom: 40px;
 }
 
+// svg css
 
 .seat-available {
     fill: green;
@@ -281,9 +282,21 @@ img.bg-img {
     fill: @currrent-user-checkin-color;
 }
 
-.seat-seleted {
-    fill: blue;
+// .seat-seleted {
+//     fill: blue;
+// }
+
+@keyframes changecolor {
+    0% { fill: green; }
+    50% { fill: blue; }
+    100% { fill: green; }
 }
+
+.seat-seleted {
+    animation: changecolor 1s ease infinite;
+}
+
+// svg css end
 
 .popup {
     position: absolute;

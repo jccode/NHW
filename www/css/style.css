@@ -193,8 +193,19 @@ img.bg-img {
 .seat-me {
   fill: #2ecefa;
 }
+@keyframes changecolor {
+  0% {
+    fill: green;
+  }
+  50% {
+    fill: blue;
+  }
+  100% {
+    fill: green;
+  }
+}
 .seat-seleted {
-  fill: blue;
+  animation: changecolor 1s ease infinite;
 }
 .popup {
   position: absolute;
