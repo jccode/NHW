@@ -107,3 +107,13 @@ https://www.nweapp.nl/hnwapi/help
    the images can be download so quick. After that, next time you open the app, even if
    the bluetooth is on, the user list can be shown smoothly.
   
+* iBeacon
+** DB
+1. Beacon
+   UUID / Name / Major / Minor / Active
+2. Group 
+   GroupId / GroupNum / BeaconId
+3. Rules
+   RuleId / From / To / Message
+
+   
