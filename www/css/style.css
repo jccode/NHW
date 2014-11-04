@@ -193,6 +193,9 @@ img.bg-img {
 .seat-me {
   fill: #2ecefa;
 }
+.seat-seleted {
+  fill: blue;
+}
 .popup {
   position: absolute;
   background-color: #F0F0F0;

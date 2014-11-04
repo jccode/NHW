@@ -500,12 +500,38 @@ angular.module("nhw.controllers", ['nhw.services'])
                         left: pos[0]+'px',
                         top: pos[1]+'px'
                     });
+
+                    
+                    // set color on the current select node
+                    restore_last_selected_seat();
+                    if(el.classed('seat-available')) {
+                        $scope.last_selected_seat = el;
+                        el.classed({
+                            'seat-available': false,
+                            'seat-seleted': true
+                        });
+                    }
                 });
             }
 
             init_state();
             add_event_handler();
         }
+
+        function restore_last_selected_seat() {
+            if($scope.last_selected_seat) {
+                $scope.last_selected_seat.classed({
+                    'seat-available': true,
+                    'seat-seleted': false
+                });
+            }
+        }
+
+        $scope.close_popup = function () {
+            restore_last_selected_seat();
+            $scope.popup = false;
+        };
+
 
 
         // register a resize handler

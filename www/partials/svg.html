@@ -40,7 +40,7 @@
 
         <div id="workspace_popup" class="popup" ng-show="popup == 'workspace'">
             <div class="close-btn">
-                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+                <i class="fa fa-times fa-2x" ng-click="close_popup()"></i>
             </div>
             <div class="container-fluid no-gutter">
                 <div class="row">
@@ -75,7 +75,7 @@
 
         <div id="seat_change_popup" class="popup" ng-show="popup == 'seat_change'">
             <div class="close-btn">
-                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+                <i class="fa fa-times fa-2x" ng-click="close_popup();"></i>
             </div>
             <div class="container-fluid no-gutter">
                 <div class="row">
