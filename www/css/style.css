@@ -190,7 +190,7 @@ img.bg-img {
   fill: red;
 }
 .seat-me {
-  fill: #0c077f;
+  fill: #2ecefa;
 }
 .popup {
   position: absolute;
@@ -241,6 +241,9 @@ img.bg-img {
 }
 .top-dotted-line {
   border-top: 1px dotted #cecece;
+}
+.bottom-line {
+  border-bottom: 1px solid #cecece;
 }
 .golden {
   color: #FF9900;
@@ -316,7 +319,7 @@ img.bg-img {
   margin-top: 10px;
 }
 #info-section-profile .current-checkin .fa {
-  color: #0c077f;
+  color: #2ecefa;
 }
 @media (max-width: 767px) {
   #info-section-profile.profile .user {

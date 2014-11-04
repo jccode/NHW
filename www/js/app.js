@@ -289,7 +289,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 url: "/welcome", 
                 // templateUrl: "partials/welcome.html"
                 views: {
-                    "subContent": {
+                    "mainContent": {
                         templateUrl: "partials/welcome.html"
                     }
                 }
