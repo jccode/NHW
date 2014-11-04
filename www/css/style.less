@@ -292,8 +292,15 @@ img.bg-img {
     100% { fill: green; }
 }
 
+@-webkit-keyframes changecolor {
+    0% { fill: green; }
+    50% { fill: blue; }
+    100% { fill: green; }
+}
+
 .seat-seleted {
     animation: changecolor 1s ease infinite;
+    -webkit-animation: changecolor 1s ease infinite;
 }
 
 // svg css end

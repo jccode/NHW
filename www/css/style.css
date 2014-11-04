@@ -204,8 +204,20 @@ img.bg-img {
     fill: green;
   }
 }
+@-webkit-keyframes changecolor {
+  0% {
+    fill: green;
+  }
+  50% {
+    fill: blue;
+  }
+  100% {
+    fill: green;
+  }
+}
 .seat-seleted {
   animation: changecolor 1s ease infinite;
+  -webkit-animation: changecolor 1s ease infinite;
 }
 .popup {
   position: absolute;
