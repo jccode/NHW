@@ -84,15 +84,19 @@ describe('beacon', function() {
         _.each(rules, function(rule) {
             _.each(rule.from.beacons, function(beacon) {
                 beacon.addSubscriber(rule.action.bind(rule));
+                console.log( 'beacon ' + beacon + ' add subscriber: ' + rule );
+
             });
             _.each(rule.to.beacons, function(beacon) {
                 beacon.addSubscriber(rule.action.bind(rule));
+                console.log( 'beacon ' + beacon + ' add subscriber: ' + rule );                
             });
         });
 
         beacons[0].stateChange(Beacon.IN_RANGE);
         
         // expected rule.action fired.
+        
     });
 
 });
