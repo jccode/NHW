@@ -81,8 +81,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         
     }])
 
-    .controller('NavCtrl', ['$scope', '$state', '$modal', '$log', 'User', 'Util', function($scope, $state, $modal, $log, User, Util) {
-        // $scope.cuser = Util.currUser();
+    .controller('SidebarCtrl', ['$scope', 'CtrlService', 'User', function($scope, CtrlService, User) {
         
         var checkinState = function() {
             var promise = User.hasCheckIn();
@@ -96,6 +95,27 @@ angular.module("nhw.controllers", ['nhw.services'])
         checkinState();
         $scope.$on(EVENTS.CHECKIN_STATE_CHANGE, checkinState);
         
+        $scope.checkout_confirm = CtrlService.checkout_confirm;
+    }])
+
+    .controller('NavCtrl', ['$scope', '$state', '$modal', '$log', 'User', 'Util', 'CtrlService', function($scope, $state, $modal, $log, User, Util, CtrlService) {
+        // $scope.cuser = Util.currUser();
+        
+        var checkinState = function() {
+            var promise = User.hasCheckIn();
+            if(promise) {
+                promise.then(function(ret) {
+                    $scope.hascheckin = !!ret;
+                });
+            }
+        };
+
+        checkinState();
+        $scope.$on(EVENTS.CHECKIN_STATE_CHANGE, checkinState);
+
+        $scope.checkout_confirm = CtrlService.checkout_confirm;
+
+        /*
         $scope.checkout = function () {
             User.checkout().then(function(ret) {
                 if(ret) {
@@ -132,6 +152,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                 $log.info('Modal dismissed at: ' + new Date());
             });            
         };
+         */
 
     }])
 

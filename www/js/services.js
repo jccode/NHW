@@ -284,5 +284,55 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }
         };
     }])
+
+    .factory('CtrlService', ['$rootScope', '$state', '$modal', '$log', 'User', function($rootScope, $state, $modal, $log, User) {
+
+        function checkout() {
+            User.checkout().then(function(ret) {
+                if(ret) {
+                    $state.go("app.checkin");
+                    $rootScope.$emit(EVENTS.CHECKIN_STATE_CHANGE);
+
+                    // close sidemenu
+                    console.log('toggle mainSidebar off');
+                    $rootScope.toggle('mainSidebar');
+                } else {
+                    // notify user that checkout failed
+                    console.log("user checkout failed");
+                }
+            });   
+        }
+
+        
+        return {
+            checkout: checkout, 
+
+            checkout_confirm: function() {
+                var modalInstance = $modal.open({
+                    templateUrl: 'confirm_checkout_modal.html',
+                    controller:  'CheckInModalCtrl',
+                    windowClass: 'mymodal',
+                    size: 'sm',
+                    resolve: {
+                        data: function() {
+                            return {};
+                        }
+                    }
+                });
+                
+                modalInstance.result.then(function(ret) {
+                    // click on buttons. 'true' if click yes, 'false' if click no.
+                    if(ret) {
+                        checkout();
+                    }
+                    
+                }, function() {
+                    // dismissed
+                    $rootScope.toggle('mainSidebar', 'off');
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            }
+        };
+    }])
 ;
 
