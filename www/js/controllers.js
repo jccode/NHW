@@ -92,6 +92,10 @@ angular.module("nhw.controllers", ['nhw.services'])
             }
         };
 
+        // User.isAuthenticated().then(function(ret) {
+        //     $scope.authenticated = ret;
+        // });
+
         checkinState();
         $scope.$on(EVENTS.CHECKIN_STATE_CHANGE, checkinState);
         

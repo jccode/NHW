@@ -295,7 +295,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
                     // close sidemenu
                     console.log('toggle mainSidebar off');
-                    $rootScope.toggle('mainSidebar');
+                    $rootScope.toggle('mainSidebar', 'off');
                 } else {
                     // notify user that checkout failed
                     console.log("user checkout failed");
@@ -328,7 +328,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     
                 }, function() {
                     // dismissed
-                    $rootScope.toggle('mainSidebar', 'off');
+                    // $rootScope.toggle('mainSidebar', 'off');
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             }
