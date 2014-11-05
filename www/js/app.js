@@ -210,7 +210,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         (function() {
             var cuser = Util.currUser();
             if(cuser) { // upgrade issues.
-                if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase())) {
+                if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase()) || !cuser['num']) {
                     Util.clearCurrUser();
                     Util.clearAllUserData();
                 }
