@@ -136,6 +136,17 @@ describe('beacon', function() {
 
     describe("Final test, should detect the rule and do corrosponding action", function() {
         it("should do corrosponding actions, show notification messages", function() {
+            console.log('==================================================');
+            beacons[0].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+            // expected r12_3 notification
+
+            sleep(100);
+            beacons[1].stateChange(Beacon.IN_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+            // expected r12_3, r2_3 notification
             
         });
     })

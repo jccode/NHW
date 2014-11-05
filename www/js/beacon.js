@@ -120,7 +120,7 @@ Rule.prototype = {
                 (fb.state == Beacon.OUT_OF_RANGE && tb.state == Beacon.OUT_OF_RANGE) ) {
 
                 // push notifications.
-                console.log(this.message);
+                console.log("Notification: "+this.message);
             }
         }
     }, 
@@ -131,7 +131,7 @@ Rule.prototype = {
 
     isBeaconInRule: function(beacon) {
         var beacons = this.from.beacons;
-        beacons.concat(this.to.beacons);
+        beacons = beacons.concat(this.to.beacons);
         return _.contains(beacons, beacon);
     }
 
