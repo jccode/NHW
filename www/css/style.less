@@ -30,6 +30,10 @@
     &:hover {
         color: @brand-color;
     }
+
+    &.sidebar-toggle {
+        width: 30px;
+    }
 }
 
 .navbar-absolute-top {
@@ -41,6 +45,41 @@
     border-color: @deepblue-color !important;
 }
 
+
+// sidemenu
+
+.sidebar-left {
+    width: @sidemenu-width;
+
+    background-color: #fff;
+
+    .app-name {
+        color: @brand-primary;
+        line-height: 25px;
+        font-weight: 200;
+        font-size: 18px;
+
+        padding-top: 20px;
+        padding-bottom: 5px;
+        border-bottom: #ddd 1px solid;
+    }
+}
+
+.sidebar-left-in .app {
+    transform: translate3d(@sidemenu-width, 0px, 0px);
+}
+
+.app-name + .scrollable {
+    padding-top: 50px;
+}
+
+a.list-group-item {
+    color: @deepblue-color;
+
+    i.pull-right {
+        color: @gray-light;
+    }
+}
 
 
 //

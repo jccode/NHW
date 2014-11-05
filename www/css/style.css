@@ -19,12 +19,40 @@
 .navbar-app .btn-navbar:hover {
   color: #0c077f;
 }
+.navbar-app .btn-navbar.sidebar-toggle {
+  width: 30px;
+}
 .navbar-absolute-top {
   border-bottom: 2px solid #D9A925;
 }
 .btn-primary {
   background-color: #0c077f !important;
   border-color: #0c077f !important;
+}
+.sidebar-left {
+  width: 200px;
+  background-color: #fff;
+}
+.sidebar-left .app-name {
+  color: #428bca;
+  line-height: 25px;
+  font-weight: 200;
+  font-size: 18px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: #ddd 1px solid;
+}
+.sidebar-left-in .app {
+  transform: translate3d(200px, 0px, 0px);
+}
+.app-name + .scrollable {
+  padding-top: 50px;
+}
+a.list-group-item {
+  color: #0c077f;
+}
+a.list-group-item i.pull-right {
+  color: #777777;
 }
 .app-body {
   background-color: #ffffff;
