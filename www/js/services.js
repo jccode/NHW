@@ -291,7 +291,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             User.checkout().then(function(ret) {
                 if(ret) {
                     $state.go("app.checkin");
-                    $rootScope.$emit(EVENTS.CHECKIN_STATE_CHANGE);
+                    $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
 
                     // close sidemenu
                     console.log('toggle mainSidebar off');
