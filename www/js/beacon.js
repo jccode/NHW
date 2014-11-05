@@ -23,6 +23,8 @@ function Beacon(uuid, name, major, minor) {
     
     this.state = null;          // null or "IN_RANGE" or "OUT_OF_RANGE"
     this.ts = null;             // timestamp. last update time.
+
+    observer.make(this);
 }
 
 // constant
@@ -34,10 +36,19 @@ Beacon.prototype = {
         this.state = state;
         this.ts = Date.now();
         this.publish(this);
-    }
-};
+    },
 
-observer.make(Beacon.prototype);
+    toString: function() {
+        var ss = [];
+        ss.push("[object Beacon]");
+        ss.push("[" + this.identifier + "]");
+        // ss.push("[" + this.uuid + "]");
+        ss.push("[" + this.major + "]");
+        ss.push("[" + this.minor + "]");
+        return ss.join("");
+    }
+
+};
 
 
 /**
@@ -58,6 +69,10 @@ BeaconGroup.prototype = {
     removeBeacon: function(beacon) {
         var index = this.beacons.indexOf(beacon);
         this.beacons.splice(index, 1);
+    },
+
+    toString: function() {
+        return "[object BeaconGroup]["+this.num+"]";
     }
 };
 
@@ -71,7 +86,11 @@ function Rule(id, from, to, message) {
 
 Rule.prototype = {
     action: function(beacon) {
-        console.log(this.id + ' rule action. fired by ' + beacon.uuid + ',' + beacon.identifier);
+        console.log( this + ' action. Fired by ' + beacon );
+    }, 
+
+    toString: function() {
+        return "[object Rule]["+this.id+"]";
     }
 
 };
