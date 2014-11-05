@@ -33,6 +33,13 @@ describe('beacon', function() {
             ]
     ;
 
+    function sleep(n) {        //millis
+        var s = Date.now();
+        while(Date.now() - s < n) {
+        }
+    }
+
+
     var beacons = [];
     _.each(beacons_data, function(data) {
         var b = new Beacon(data.UUID, data.Name, data.Major, data.Minor);
@@ -95,8 +102,42 @@ describe('beacon', function() {
 
         beacons[0].stateChange(Beacon.IN_RANGE);
         
-        // expected rule.action fired.
-        
+        // expected rule.action have been called. However, spy not work here.
+        // don't know how to write assertion here. pls see the console output
     });
+
+    describe("Logical function test", function() {
+        it("Rule.isBeaconInRule should works", function() {
+            var b1 = beacons[0];
+            b1.stateChange(Beacon.IN_RANGE);
+            expect(r12_3.isBeaconInRule(b1)).toBe(true);
+            
+            // console.log(r12_3);
+            expect(r12_3.from.beacons.length).toEqual(2);
+            expect(r12_3.to.beacons.length).toEqual(1);
+        });
+
+        it("Group's lastUpdateBeacon should works'", function() {
+            beacons[0].stateChange(Beacon.IN_RANGE);
+            sleep(100);
+            beacons[1].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+
+            expect(g1.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+            expect(g2.lastUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
+            expect(g3.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+
+            expect(g12.lastUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
+            expect(g123.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+        });
+
+    });
+
+    describe("Final test, should detect the rule and do corrosponding action", function() {
+        it("should do corrosponding actions, show notification messages", function() {
+            
+        });
+    })
 
 });
