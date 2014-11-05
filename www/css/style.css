@@ -55,6 +55,9 @@ a.list-group-item {
 a.list-group-item i.pull-right {
   color: #777777;
 }
+.has-navbar-top .app-body {
+  padding-top: 50px;
+}
 .app-body {
   background-color: #ffffff;
 }
