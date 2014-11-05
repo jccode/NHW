@@ -51,8 +51,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                                             var floorId = info["FloorId"],
                                                 seat = parseInt(info["SeatCode"]);
                                             $state.go('app.index', {f:floorId, s:seat}, {location: false});
-                                            // $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
-                                            angular.element(document.getElementById('navbar')).scope().$emit(EVENTS.CHECKIN_STATE_CHANGE);
+                                            $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
+                                            // angular.element(document.getElementById('navbar')).scope().$emit(EVENTS.CHECKIN_STATE_CHANGE);
                                         } else {
                                             $state.go('app.checkin');
                                         }
