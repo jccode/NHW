@@ -43,7 +43,8 @@
   border-bottom: #ddd 1px solid;
 }
 .sidebar-left-in .app {
-  transform: translate3d(200px, 0px, 0px);
+  -webkit-transform: translate3d(200px, 0px, 0px) !important;
+  transform: translate3d(200px, 0px, 0px) !important;
 }
 .app-name + .scrollable {
   padding-top: 50px;
