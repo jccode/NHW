@@ -22,7 +22,7 @@ function Beacon(uuid, name, major, minor) {
     this.minor = minor;
     
     this.state = null;          // null or "IN_RANGE" or "OUT_OF_RANGE"
-    this.ts = null;             // timestamp. last update time.
+    this.ts = 0;                // timestamp. last update time.
 
     observer.make(this);
 }
@@ -47,7 +47,6 @@ Beacon.prototype = {
         ss.push("[" + this.minor + "]");
         return ss.join("");
     }
-
 };
 
 
@@ -73,7 +72,26 @@ BeaconGroup.prototype = {
 
     toString: function() {
         return "[object BeaconGroup]["+this.num+"]";
+    },
+
+    /**
+     * get BeaconGroup state
+     *
+     * @return {state: IN_RANGE/OUT_OF_RANGE, ts: int}
+     */
+    lastUpdateBeacon: function() {
+        if(this.beacons.length == 0) {
+            return null;
+        }
+        else if(this.beacons.length == 1) {
+            return this.beacons[0];
+        }
+        var latest = _.max(this.beacons, function(beacon) {
+            return beacon.ts;
+        });
+        return latest;
     }
+
 };
 
 
@@ -84,14 +102,39 @@ function Rule(id, from, to, message) {
     this.message = message;
 }
 
+Rule.THRESHOLD = 1000;          // 20 * 60 * 1000; 20 min;
+
 Rule.prototype = {
     action: function(beacon) {
         console.log( this + ' action. Fired by ' + beacon );
+        if(!this.isBeaconInRule(beacon)) {
+            return;
+        }
+        var fb = this.from.lastUpdateBeacon(),
+            tb = this.to.lastUpdateBeacon();
+        if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
+            // from -> to
+            // OUT -> IN, IN -> IN, OUT -> OUT
+            if( (fb.state == Beacon.OUT_OF_RANGE && tb.state == Beacon.IN_RANGE) ||
+                (fb.state == Beacon.IN_RANGE && tb.state == Beacon.IN_RANGE) ||
+                (fb.state == Beacon.OUT_OF_RANGE && tb.state == Beacon.OUT_OF_RANGE) ) {
+
+                // push notifications.
+                console.log(this.message);
+            }
+        }
     }, 
 
     toString: function() {
         return "[object Rule]["+this.id+"]";
+    },
+
+    isBeaconInRule: function(beacon) {
+        var beacons = this.from.beacons;
+        beacons.concat(this.to.beacons);
+        return _.contains(beacons, beacon);
     }
+
 
 };
 
