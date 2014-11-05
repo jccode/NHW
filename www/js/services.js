@@ -15,9 +15,9 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return Util.getCustomerServerURL() + '/api/favorite';
             }, 
 
-            isAuthenticated: function(user) { // TODO: only need to verify email
-                console.log('User.isAuthenticated')
-                console.log(JSON.stringify(user));
+            isAuthenticated: function(user) { // 
+                // console.log('User.isAuthenticated')
+                // console.log(JSON.stringify(user));
                 
                 var cUser = Util.currUser();
                 
@@ -29,7 +29,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 else if(!user && cUser) {
                     user = {
                         name: cUser.name,
-                        email: cUser.email
+                        email: cUser.email,
+                        num: cUser.num
                     };
                 }
 

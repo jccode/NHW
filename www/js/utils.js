@@ -316,6 +316,7 @@ var DataTransform = (function() {
                 var ret = [data['FirstName'] || '', data['MiddleName'] || '', data['LastName'] || ''].join(' ');
                 return ret;
             }],
+            ['num', 'PersId'], 
             ['email', 'Email'],
             ['photo', 'UserPic']
         ]
