@@ -41,7 +41,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 });
                  */
 
-                var checkurl = Util.getCustomerServerURL(user.email) + '/api/user/checkuser/' + user.email;
+                var checkurl = Util.getCustomerServerURL(user.email)+'/api/user/checkuser/'+user.email+'/'+user.num;
                 console.log(checkurl);
                 return Util.httpget(checkurl, DataTransform.user);
             }, 
