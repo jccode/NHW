@@ -11,7 +11,7 @@ BEACON_IN_RANGE = 1;
 BEACON_OUT_OF_RANGE = 2;
 
 angular.module('nhw.beacon-model', [])
-    .factory('BeaconModel', ['Util', function(Util) {
+    .factory('BeaconModel', ['Util', 'Beacons', function(Util, Beacons) {
 
 
         /**
@@ -38,7 +38,8 @@ angular.module('nhw.beacon-model', [])
                 this.ts = Date.now();
                 this.publish(this);
                 
-                // TODO: state persistence
+                // state persistence
+                Util.setBeaconState(this.id, state);
             },
 
             toString: function() {
@@ -107,7 +108,7 @@ angular.module('nhw.beacon-model', [])
             this.message = message;
         }
 
-        Rule.THRESHOLD = 1000;          // 20 * 60 * 1000; 20 min;
+        Rule.THRESHOLD = 20 * 60 * 1000;          // 20 * 60 * 1000; 20 min;
 
         Rule.prototype = {
             action: function(beacon) {
@@ -127,6 +128,7 @@ angular.module('nhw.beacon-model', [])
                         // push notifications.
                         console.log("[Rule "+this.id+" trigger] Push Notification: "+this.message);
                         Util.createLocalNotification(this.message);
+                        Beacons.logRuleTrigger(this.id);
                     }
                 }
             }, 

@@ -1,5 +1,6 @@
 [
     {
+        "IbeaconId": 26, 
         "UUID":"b9407f30-f5f8-466e-aff9-25556b57fe6d",
         "Name":"Estimote Beacon",
         "Major":"58877",
@@ -8,6 +9,7 @@
         "Active": true
     },
     {
+        "IbeaconId": 27,         
         "UUID":"b9407f30-f5f8-466e-aff9-25556b57fe6d",
         "Name":"Estimote Beacon",
         "Major":"55445",
@@ -16,6 +18,7 @@
         "Active": true
     },
     {
+        "IbeaconId": 28,         
         "UUID":"e2c56db5-dffb-48d2-b060-d0f5a71096e0",
         "Name":"AprilBeacon",
         "Major":0,

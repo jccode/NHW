@@ -7,6 +7,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'Storage', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, Storage, BeaconUtil, BeaconModel) {
 
         function init_beacon_model() {
+            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+                return;
+            }
+            
             var model = {
                 beacons: [],
                 groups: [],
@@ -30,7 +34,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                         var bcons = _.map(bids, function(id) {
                             return beaconMap[id]; 
                         });
-                        var g = new BeaconModel.BeaconGroup(group.GroupNum, bcons);
+                        var g = new BeaconModel.BeaconGroup(group.GroupId, group.GroupNum, bcons);
                         model.groups.push(g);
                         groupMap[group.GroupId] = g;
                     });
@@ -42,11 +46,20 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                             model.rules.push(r);
                         });
 
-                        // TODO: Read beacon state from localStorage, then restore to objects.
+                        // Read beacon state from localStorage, then restore to objects.
+                        var states = Util.getBeaconStates();
+                        _.each(states, function(val, key) {
+                            beaconMap[key].state = val.state;
+                            beaconMap[key].ts = val.ts;
+                        });
                         
 
                         // test
-                        console.log(model);
+                        console.log("Init beacon model complelted");
+                        console.log( JSON.stringify($rootScope.beaconmodel.beacons) );
+
+                        bindRulesToBeacon(model.rules);
+                        
                         // var b1 = $rootScope.beaconmodel.beacons[0];
                         // console.log( b1 );
                         // b1.stateChange(BEACON_IN_RANGE);
@@ -58,6 +71,22 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
             $rootScope.beaconmodel = model;
         }
+
+        function bindRulesToBeacon(rules) {
+            console.log( 'bind rules to beacon' );
+            _.each(rules, function(rule) {
+                _.each(rule.from.beacons, function(beacon) {
+                    beacon.addSubscriber(rule.action.bind(rule));
+                    console.log( 'beacon ' + beacon + ' add subscriber: ' + rule );
+
+                });
+                _.each(rule.to.beacons, function(beacon) {
+                    beacon.addSubscriber(rule.action.bind(rule));
+                    console.log( 'beacon ' + beacon + ' add subscriber: ' + rule );                
+                });
+            });
+        }
+
 
         
         function startIbeacon() {
@@ -73,7 +102,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     return BeaconUtil.createBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
                 });
 
-                var delegate = BeaconUtil.createDelegate(beacons);
+                var delegate = BeaconUtil.createDelegate();
                 cordova.plugins.locationManager.setDelegate(delegate);
                 _.each(ibeacons, function(ibeacon) {
                     if(ibeacon) {

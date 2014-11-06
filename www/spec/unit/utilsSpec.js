@@ -82,6 +82,21 @@ describe('utils', function() {
             Util.setCustomerServerURL(url, uid);
             expect(url).toEqual(Util.getCustomerServerURL(uid));
         }]));
+
+        it("getBeaconState, setBeaconState should works", inject(['Util', function(Util) {
+            var IN_RANGE = 1, OUT_OF_RANGE = 2;
+            Util.clearBeaconStates();
+            expect(Util.getBeaconStates()).toBeNull();
+            
+            Util.setBeaconState('id1', IN_RANGE);
+            var s = Util.getBeaconStates();
+            expect(s.id1).not.toBeNull();
+            expect(s.id1.state).toEqual(IN_RANGE);
+            var diff = Date.now() - s.id1.ts;
+            // expect(diff).toBeGreaterThan(0);
+            expect(diff >= 0).toBeTruthy();
+            
+        }]));
     });
     
 });

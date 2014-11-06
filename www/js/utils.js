@@ -6,6 +6,7 @@ var STORAGE_KEYS = {
     USER_DATA: 'KEY_LOCAL_USER_DATA', 
     LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
     CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
+    BEACON_STATE: 'KEY_LOCAL_BEACON_STATE', 
     SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
     SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN',
     FIRSTTIME_USE: 'KEY_LOCAL_FIRSTTIME_USE'
@@ -245,6 +246,24 @@ var Util = {
         } else {
             return null;
         }
+    },
+
+    getBeaconStates: function() {
+        return this.localStorage.get(STORAGE_KEYS.BEACON_STATE);
+    }, 
+
+    setBeaconState: function(id, state) {
+        var key = STORAGE_KEYS.BEACON_STATE;
+        var ss = Util.getBeaconStates() || {};
+        ss[id] = {
+            'state': state,
+            'ts': Date.now()
+        };
+        this.localStorage.set(key, ss);
+    },
+
+    clearBeaconStates: function() {
+        this.localStorage.remove(STORAGE_KEYS.BEACON_STATE);
     }, 
 
 
@@ -490,6 +509,8 @@ var BeaconUtil = function($rootScope) {
                             beacon['minor'] == region['minor'];
                     });
                     if(match) {
+                        console.log('beacon in range ' + state);
+                        
                         if(state == 'CLRegionStateInside') {
                             match.stateChange(BEACON_IN_RANGE);
                         }
