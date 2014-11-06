@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="nl.everlink.nhw" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>NS: Het Nieuwe Werken</name>
+    <name>NS Werkplek</name>
     <description>
         Met behulp van deze applicatie kunnen NS medewerkers eenvoudig inchecken op een werkplek. Dit op locaties waar gebruik wordt gemaakt van Flexibel werken.
     </description>
