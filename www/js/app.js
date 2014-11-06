@@ -4,7 +4,60 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'Storage', 'BeaconUtil', function($log, $rootScope, $window, _, Util, Beacons, Storage, BeaconUtil) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'Storage', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, Storage, BeaconUtil, BeaconModel) {
+
+        function init_beacon_model() {
+            var model = {
+                beacons: [],
+                groups: [],
+                rules: []
+            };
+            var beaconMap = {},
+                groupMap = {};
+
+            // beacons
+            Beacons.allBeacons().$promise.then(function(beacons) {
+                _.each(beacons, function(beacon) {
+                    var b = new BeaconModel.Beacon(beacon.IbeaconId, beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
+                    model.beacons.push(b);
+                    beaconMap[beacon.IbeaconId] = b;
+                });
+
+                // groups
+                Beacons.allGroups().$promise.then(function(groups) {
+                    _.each(groups, function(group) {
+                        var bids = (group.BeaconId+"").split(",");
+                        var bcons = _.map(bids, function(id) {
+                            return beaconMap[id]; 
+                        });
+                        var g = new BeaconModel.BeaconGroup(group.GroupNum, bcons);
+                        model.groups.push(g);
+                        groupMap[group.GroupId] = g;
+                    });
+
+                    // rules
+                    Beacons.allRules().$promise.then(function(rules) {
+                        _.each(rules, function(rule) {
+                            var r = new BeaconModel.Rule(rule.RuleId, groupMap[rule.From], groupMap[rule.To], rule.Message);
+                            model.rules.push(r);
+                        });
+
+                        // TODO: Read beacon state from localStorage, then restore to objects.
+                        
+
+                        // test
+                        console.log(model);
+                        // var b1 = $rootScope.beaconmodel.beacons[0];
+                        // console.log( b1 );
+                        // b1.stateChange(BEACON_IN_RANGE);
+                        // console.log($rootScope.beaconmodel);
+                    });
+                    
+                });
+            });
+
+            $rootScope.beaconmodel = model;
+        }
 
         
         function startIbeacon() {
@@ -163,6 +216,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
 
         function deviceready() {
+            init_beacon_model();
             checkAndEnableBluetooth();
             // syncDataFromServer();
             initCacheFiles();
@@ -172,7 +226,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         return {
             deviceready: deviceready,
             syncData: syncDataFromServer, 
-            checkAndEnableBluetooth: checkAndEnableBluetooth
+            checkAndEnableBluetooth: checkAndEnableBluetooth,
+            initBeaconModel: init_beacon_model
         };
     }])
 
@@ -214,9 +269,13 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
         
 
-        
+        // test
         // if(!Util.isRunningOnPhonegap() && Storage) {
         //     Storage.createDBs();
+        // }
+        
+        // if(!Util.isRunningOnPhonegap() && Storage) {
+        //     Bootstrap.initBeaconModel();
         // }
 
 

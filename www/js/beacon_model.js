@@ -4,18 +4,23 @@
 // 
 // @author jcchen (2014-11-05)
 // @dependency observer.js
-// 
+//
+
+// Constants
+BEACON_IN_RANGE = 1;
+BEACON_OUT_OF_RANGE = 2;
 
 angular.module('nhw.beacon-model', [])
-    .factory('BeaconModel', function() {
+    .factory('BeaconModel', ['Util', function(Util) {
 
 
         /**
          * Beacon
          * 
          */
-        function Beacon(uuid, name, major, minor) {
+        function Beacon(id, uuid, name, major, minor) {
             // arguments.length
+            this.id = id;
             this.uuid = uuid;
             this.identifier = name;
             this.major = major;
@@ -27,20 +32,19 @@ angular.module('nhw.beacon-model', [])
             observer.make(this);
         }
 
-        // constant
-        Beacon.IN_RANGE = 1;
-        Beacon.OUT_OF_RANGE = 2;
-
         Beacon.prototype = {
             stateChange: function(state) {
                 this.state = state;
                 this.ts = Date.now();
                 this.publish(this);
+                
+                // TODO: state persistence
             },
 
             toString: function() {
                 var ss = [];
                 ss.push("[object Beacon]");
+                ss.push("[" + this.id + "]");
                 ss.push("[" + this.identifier + "]");
                 // ss.push("[" + this.uuid + "]");
                 ss.push("[" + this.major + "]");
@@ -55,7 +59,8 @@ angular.module('nhw.beacon-model', [])
          * 
          * @param beacons optional
          */
-        function BeaconGroup(num, beacons) {
+        function BeaconGroup(id, num, beacons) {
+            this.id = id;
             this.num = num;
             this.beacons = beacons || [];
         }
@@ -71,13 +76,13 @@ angular.module('nhw.beacon-model', [])
             },
 
             toString: function() {
-                return "[object BeaconGroup]["+this.num+"]";
+                return "[object BeaconGroup]["+this.id+"]";
             },
 
             /**
              * get BeaconGroup state
              *
-             * @return {state: IN_RANGE/OUT_OF_RANGE, ts: int}
+             * @return {state: BEACON_IN_RANGE/BEACON_OUT_OF_RANGE, ts: int}
              */
             lastUpdateBeacon: function() {
                 if(this.beacons.length == 0) {
@@ -115,12 +120,13 @@ angular.module('nhw.beacon-model', [])
                 if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
                     // from -> to
                     // OUT -> IN, IN -> IN, OUT -> OUT
-                    if( (fb.state == Beacon.OUT_OF_RANGE && tb.state == Beacon.IN_RANGE) ||
-                        (fb.state == Beacon.IN_RANGE && tb.state == Beacon.IN_RANGE) ||
-                        (fb.state == Beacon.OUT_OF_RANGE && tb.state == Beacon.OUT_OF_RANGE) ) {
+                    if( (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_IN_RANGE) ||
+                        (fb.state == BEACON_IN_RANGE && tb.state == BEACON_IN_RANGE) ||
+                        (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_OUT_OF_RANGE) ) {
 
                         // push notifications.
-                        console.log("Notification: "+this.message);
+                        console.log("[Rule "+this.id+" trigger] Push Notification: "+this.message);
+                        Util.createLocalNotification(this.message);
                     }
                 }
             }, 
@@ -144,7 +150,7 @@ angular.module('nhw.beacon-model', [])
             Rule: Rule
         };
         
-    })
+    }])
 ;
 
 

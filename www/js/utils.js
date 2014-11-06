@@ -103,7 +103,7 @@ var Util = {
     createLocalNotification: function(msg) {
         var defaultOpts = {
             id: +new Date() + "",
-            title: "NHW",
+            title: "NS Werkplek",
             message: ""
         };
         var obj = _.isObject(msg)? msg: {"message": msg};
@@ -435,63 +435,83 @@ SingleBeacon.prototype = {
 };
 
 
-var BeaconUtil = {
-    createBeacon: function(uuid, identifier, major, minor) {
-        var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
-        return beaconRegion; 
-    },
-    
-    createDelegate: function(beacons) {
-        var delegate = new cordova.plugins.locationManager.Delegate().implement({
-            didDetermineStateForRegion: function (pluginResult) {
-                // console.log("--------------------------------------------------");
-                console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-                // console.log("--------------------------------------------------");
+var BeaconUtil = function($rootScope) {
 
-                var state = pluginResult['state'],
-                    region = pluginResult['region'];
+    return {
+        createBeacon: function(uuid, identifier, major, minor) {
+            var beaconRegion = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+            return beaconRegion; 
+        },
+        
+        createDelegate: function() {
+            var delegate = new cordova.plugins.locationManager.Delegate().implement({
+                didDetermineStateForRegion: function (pluginResult) {
+                    // console.log("--------------------------------------------------");
+                    console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+                    // console.log("--------------------------------------------------");
 
-                // if(pluginResult['state'] == 'CLRegionStateInside') {
-                //     _.each(self.events['enter'], function(fn) {
-                //         fn.apply(self, [pluginResult]);
-                //     });
-                // }
-                // else if(pluginResult['state'] == 'CLRegionStateOutside') {
-                //     _.each(self.events['leave'], function(fn) {
-                //         fn.apply(self, [pluginResult]);
-                //     });
-                // }
+                    var state = pluginResult['state'],
+                        region = pluginResult['region'];
 
-                if(state == 'CLRegionStateInside') {
+                    // if(pluginResult['state'] == 'CLRegionStateInside') {
+                    //     _.each(self.events['enter'], function(fn) {
+                    //         fn.apply(self, [pluginResult]);
+                    //     });
+                    // }
+                    // else if(pluginResult['state'] == 'CLRegionStateOutside') {
+                    //     _.each(self.events['leave'], function(fn) {
+                    //         fn.apply(self, [pluginResult]);
+                    //     });
+                    // }
+
+                    // if(state == 'CLRegionStateInside') {
+                    //     var match = _.find(beacons, function(beacon) {
+                    //         return beacon['UUID'] == region['uuid'] &&
+                    //             beacon['Name'] == region['identifier'] &&
+                    //             beacon['Major'] == region['major'] &&
+                    //             beacon['Minor'] == region['minor'];
+                    //     });
+                    //     if(match) {
+                    //         var now = +new Date();
+                    //         Util.createLocalNotification({
+                    //             title: region['identifier'],
+                    //             message: match['Message'], 
+                    //             date: new Date(now + 2*1000)
+                    //         });
+                    //         console.log("[PUSH NOTIFICATION] " + region['identifier'] + " " + match['Message']);
+                    //     }
+                    // }
+
+                    var beacons = $rootScope.beaconmodel.beacons;
                     var match = _.find(beacons, function(beacon) {
-                        return beacon['UUID'] == region['uuid'] &&
-                            beacon['Name'] == region['identifier'] &&
-                            beacon['Major'] == region['major'] &&
-                            beacon['Minor'] == region['minor'];
+                        return beacon['uuid'] == region['uuid'] &&
+                            beacon['identifier'] == region['identifier'] &&
+                            beacon['major'] == region['major'] &&
+                            beacon['minor'] == region['minor'];
                     });
                     if(match) {
-                        var now = +new Date();
-                        Util.createLocalNotification({
-                            title: region['identifier'],
-                            message: match['Message'], 
-                            date: new Date(now + 2*1000)
-                        });
-                        console.log("[PUSH NOTIFICATION] " + region['identifier'] + " " + match['Message']);
+                        if(state == 'CLRegionStateInside') {
+                            match.stateChange(BEACON_IN_RANGE);
+                        }
+                        else if(state == 'CLRegionStateOutside') {
+                            match.stateChange(BEACON_OUT_OF_RANGE);
+                        }
                     }
+                    
+                    cordova.plugins.locationManager.appendToDeviceLog('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+                },
+                didStartMonitoringForRegion: function (pluginResult) {
+                    console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
+                },
+                didRangeBeaconsInRegion: function (pluginResult) {
+                    console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
                 }
-                
-                cordova.plugins.locationManager.appendToDeviceLog('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-            },
-            didStartMonitoringForRegion: function (pluginResult) {
-                console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
-            },
-            didRangeBeaconsInRegion: function (pluginResult) {
-                console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-            }
-        });
-        
-        return delegate;
-    }, 
+            });
+            
+            return delegate;
+        }
+    };
+    
 };
 
 
@@ -544,9 +564,9 @@ nhwUtils.factory('Log', function() {
     
 }]).factory('DataTransform', function() {
     return DataTransform;
-}).factory('BeaconUtil', function() {
-    return BeaconUtil;
-});
+}).factory('BeaconUtil', ['$rootScope', function($rootScope) {
+    return BeaconUtil($rootScope);
+}]);
 
 _.each(['LocalStorage', 'SessionStorage'], function(storageType) {    
     nhwUtils.factory(storageType, ['$window', WebStorage(storageType)]);
