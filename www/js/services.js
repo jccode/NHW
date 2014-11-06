@@ -249,7 +249,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         };
     }])
 
-    .factory('Beacons', ['$resource', '$q', '_', function($resource, $q, _) {
+    .factory('Beacons', ['$resource', '$q', '$http', '$rootScope', '_', function($resource, $q, $http, $rootScope, _) {
         var beacons = $resource('js/data/beacons.json');
 
         return {
@@ -257,9 +257,21 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return Util.getCustomerServerURL() + '/api/ibeacon';
             }, 
 
-            all: function() {
+            allBeacons: function() {
                 // return beacons.query();
                 return $resource(this.baseurl() + '/:id').query();
+            },
+
+            allGroups: function() {
+                return $resource(this.baseurl() + '/group').query();
+            },
+
+            allRules:function() {
+                return $resource(this.baseurl() + '/rules').query();
+            },
+
+            logRuleTrigger: function(ruleId) {
+                return $http.post(this.baseurl() + '/userpassinandout/' + $rootScope.cuser.id + '/' + ruleId);
             }, 
 
             incrementalUpdate: function(date) {

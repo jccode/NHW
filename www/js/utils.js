@@ -542,10 +542,7 @@ nhwUtils.factory('Log', function() {
     
     return util;
     
-}]).factory('SingleBeacon', function() {
-    return SingleBeacon;
-    
-}).factory('DataTransform', function() {
+}]).factory('DataTransform', function() {
     return DataTransform;
 }).factory('BeaconUtil', function() {
     return BeaconUtil;

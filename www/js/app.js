@@ -1,33 +1,18 @@
 
-angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.beacon-model', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'SingleBeacon', 'Storage', 'BeaconUtil', function($log, $rootScope, $window, _, Util, Beacons, SingleBeacon, Storage, BeaconUtil) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'Storage', 'BeaconUtil', function($log, $rootScope, $window, _, Util, Beacons, Storage, BeaconUtil) {
 
         
         function startIbeacon() {
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
             }
-            // Beacons.all().$promise.then(function(beacons) {
-            //     console.log(angular.toJson(beacons));
-            //     _.each(beacons, function(beacon) {
-            //         $log.log(beacon);
-            //         if(beacon.Active) {
-            //             var singleBeacon = new SingleBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
-            //             singleBeacon.addEventListener('enter', function(result) {
-            //                 Util.createLocalNotification(beacon.Message);
-            //             });
-            //             console.log('start monitoring');
-            //             singleBeacon.startMonitoring();
-            //         }
-            //     });
-            // });
-
             
-            Beacons.all().$promise.then(function(beacons) {
+            Beacons.allBeacons().$promise.then(function(beacons) {
                 var ibeacons = _.map(beacons, function(beacon) {
                     if(!beacon.Active) {
                         return null;
@@ -63,7 +48,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 minor2 = 1;
             var beacon2 = new cordova.plugins.locationManager.BeaconRegion(identifier2, uuid2, major2, minor2);
 
-            Beacons.all().$promise.then(function(beacons) {
+            Beacons.allBeacons().$promise.then(function(beacons) {
                 var delegate = BeaconUtil.createDelegate(beacons);
                 cordova.plugins.locationManager.setDelegate(delegate);
                 cordova.plugins.locationManager.startMonitoringForRegion(beacon1).fail(console.log).done();
