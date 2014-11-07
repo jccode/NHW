@@ -248,6 +248,10 @@ var Util = {
         }
     },
 
+    /**
+     * {'beaconId1':{'state':'IN_RANGE / OUT_OF_RANGE', 'ts':'int_of_timestamp'}, 'beaconId2':{xxxx}, ... }
+     * 
+     */
     getBeaconStates: function() {
         return this.localStorage.get(STORAGE_KEYS.BEACON_STATE);
     }, 

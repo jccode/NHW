@@ -56,14 +56,14 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
                         // test
                         console.log("Init beacon model complelted");
-                        console.log( JSON.stringify($rootScope.beaconmodel.beacons) );
+                        // console.log( JSON.stringify($rootScope.beaconmodel.beacons) );
 
                         bindRulesToBeacon(model.rules);
-                        
-                        // var b1 = $rootScope.beaconmodel.beacons[0];
-                        // console.log( b1 );
-                        // b1.stateChange(BEACON_IN_RANGE);
-                        // console.log($rootScope.beaconmodel);
+
+                        // determine whether a user is inside building
+                        $rootScope.isInBuilding = _.some(_.values(states), function(s) {
+                            return s.state == BEACON_IN_RANGE;
+                        });
                     });
                     
                 });
@@ -306,6 +306,12 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         // if(!Util.isRunningOnPhonegap() && Storage) {
         //     Bootstrap.initBeaconModel();
         // }
+
+        // for desktop user testing
+        if(!Util.isRunningOnPhonegap()) {
+            $rootScope.isInBuilding = true;
+        }
+        
 
 
         // device ready

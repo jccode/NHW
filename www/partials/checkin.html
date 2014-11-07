@@ -4,8 +4,10 @@
 <div class="container-fluid" ng-controller="CheckInCtrl" id="checkin-page">
     <div class="row " >
         <div class="col-xs-12">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.buildings">Handmatig inchecken</button>
-            <!-- <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button> -->
+            <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.buildings">
+                {{ isInBuilding ? "Handmatig inchecken" : "Raadplegen" }}
+            </button>
+
         </div>
     </div>
     <div class="row " >
