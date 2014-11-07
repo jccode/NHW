@@ -566,7 +566,8 @@ nhwUtils.factory('Log', function() {
         })
             .error(function(data, status, headers, config) {
                 // console.log('HTTPGET failed. ' + JSON.stringify(data));
-                Util.toast('Fail to connect to the remote server right now. Please check if the network is on, or contact the system administrator.');
+                // failed to connect to the server
+                Util.toast('Er kon geen verbinding tot stand worden gebracht met de applicatie server.');
                 Log.log('[HTTPGET ERROR]: get ' + url + ' error.');
                 Log.log('[HTTPGET ERROR]: data: ' + JSON.stringify(data) + '; status:' + JSON.stringify(status) +
                        '; headers: ' + JSON.stringify(headers) + '; config:' + JSON.stringify(config));

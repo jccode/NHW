@@ -4,7 +4,8 @@ angular.module("nhw.controllers", ['nhw.services'])
     .controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'User', 'LicenseServer', 'Util', 'Bootstrap', function($scope, $rootScope, $state, User, LicenseServer, Util, Bootstrap) {
 
         var errorHandler = function() {
-            $scope.error = "Sorry, you're not authorized to use this app.";
+            // you are not authorized to use this app.
+            $scope.error = "U bent niet geautoriseerd om gebruik te maken van deze applicatie.";
             $scope.loading = false;
         }
         
