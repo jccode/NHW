@@ -60,10 +60,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
                         bindRulesToBeacon(model.rules);
 
-                        // determine whether a user is inside building
-                        $rootScope.isInBuilding = _.some(_.values(states), function(s) {
-                            return s.state == BEACON_IN_RANGE;
-                        });
+                        
                     });
                     
                 });
@@ -93,6 +90,11 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
             }
+
+            // determine whether a user is inside building
+            $rootScope.isInBuilding = _.some(_.values(states), function(s) {
+                return s.state == BEACON_IN_RANGE;
+            });
             
             Beacons.allBeacons().$promise.then(function(beacons) {
                 var ibeacons = _.map(beacons, function(beacon) {

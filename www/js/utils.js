@@ -517,6 +517,7 @@ var BeaconUtil = function($rootScope) {
                         
                         if(state == 'CLRegionStateInside') {
                             match.stateChange(BEACON_IN_RANGE);
+                            $rootScope.isInBuilding = true;
                         }
                         else if(state == 'CLRegionStateOutside') {
                             match.stateChange(BEACON_OUT_OF_RANGE);
