@@ -222,7 +222,7 @@ img.bg-img {
 .seat-unavailable {
   fill: red;
 }
-.seat-me {
+.seat-cuser {
   fill: #2ecefa;
 }
 @keyframes changecolor {
@@ -250,6 +250,32 @@ img.bg-img {
 .seat-seleted {
   animation: changecolor 1s ease infinite;
   -webkit-animation: changecolor 1s ease infinite;
+}
+@keyframes red2white {
+  0% {
+    fill: red;
+  }
+  50% {
+    fill: white;
+  }
+  100% {
+    fill: red;
+  }
+}
+@-webkit-keyframes red2white {
+  0% {
+    fill: red;
+  }
+  50% {
+    fill: white;
+  }
+  100% {
+    fill: red;
+  }
+}
+.seat-me {
+  animation: red2white 1s ease infinite;
+  -webkit-animation: red2white 1s ease infinite;
 }
 .popup {
   position: absolute;

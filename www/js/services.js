@@ -383,6 +383,9 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
          *         });
          *      });
          *
+         *
+         * @param seat optional. if set, map will center to this seat.
+         *
          */
         function SVG(floorId, seat) {
             this.floorId = floorId;
@@ -496,29 +499,17 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             init_seat_state: function() {
-                var cuser = $rootScope.cuser;
                 var self = this;
                 this.innersvg.selectAll("[id^='circle']").classed('seat-available', true);
                 Floors.getUnAvailableSeatsByFloor(this.floorId).then(function(unavailable_seats) {
                     // console.log(unavailable_seats);
+                    var classes = {
+                        "seat-available": false,
+                        "seat-unavailable": true
+                    };
                     _.each(unavailable_seats, function(item) {
-                        var isme = cuser && cuser.id && cuser.id == item.userId;
-                        var classes = {"seat-available": false};
-                        classes["seat-me"] = isme;
-                        classes["seat-unavailable"] = !isme;
-                        
                         var el = self.innersvg.select("#circle" + item.seat);
                         el.classed(classes).attr("data-user", item.userId);
-                        
-                        if(isme) {
-                            self.hascheckin = true;
-
-                            // center the map
-                            var cx = el.attr("cx"), cy = el.attr("cy");
-                            var deltax = (cx >= self.width) ? -(cx - self.width/2) : 0,
-                                deltay = (cy >= self.height) ? -(cy - self.height/2) : 0;
-                            self.zoom.translate([deltax, deltay]).event(self.svg);
-                        }
                     });
                 });
             }, 
@@ -548,7 +539,18 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     
                 });
                 // end
+            },
+
+            center_map: function() {
+                if(this.seat) {
+                    var el = this.innersvg.select("#circle" + this.seat);
+                    var cx = el.attr("cx"), cy = el.attr("cy");
+                    var deltax = (cx >= this.width) ? -(cx - this.width/2) : 0,
+                        deltay = (cy >= this.height) ? -(cy - this.height/2) : 0;
+                    this.zoom.translate([deltax, deltay]).event(this.svg);
+                }
             }
+
 
         };
 

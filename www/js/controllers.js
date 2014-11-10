@@ -471,7 +471,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                     _.each(unavailable_seats, function(item) {
                         var isme = cuser && cuser.id && cuser.id == item.userId;
                         var classes = {"seat-available": false};
-                        classes["seat-me"] = isme;
+                        classes["seat-cuser"] = isme;
                         classes["seat-unavailable"] = !isme;
                         
                         var el = innersvg.select("#circle" + item.seat);
@@ -509,7 +509,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                         });
                     } 
 
-                    var t = (el.classed('seat-me') || el.classed('seat-unavailable'))
+                    var t = (el.classed('seat-cuser') || el.classed('seat-unavailable'))
                             ? "user"
                             : (hascheckin ? "seat_change" : "workspace");
                     $scope.$apply(function() {
@@ -692,23 +692,25 @@ angular.module("nhw.controllers", ['nhw.services'])
             if(ret) {
                 var svg = new SVG(ret.FloorId, parseInt(ret.SeatCode));
                 svg.load().then(function(svg) {
-                    // svg.init_seat_state();
-                    
-                    svg.innersvg.selectAll("[id^='circle']").classed('seat-available', true);
-                    var el = svg.innersvg.select("#circle" + svg.seat);
-                    el.classed({
+                    svg.init_seat_state();
+
+                    var classes = {
                         "seat-available": false,
-                        "seat-unavailable": true
-                    }).attr("data-user", uid);
+                        "seat-unavailable": false
+                    };
+                    if($scope.iscuser) {
+                        classes["seat-cuser"] = true;
+                    } else {
+                        classes["seat-me"] = true;
+                    }
+                    
+                    var el = svg.innersvg.select("#circle"+svg.seat);
+                    el.classed(classes).attr("data-user", uid);
 
                     setTimeout(function() {
-                        var cx = el.attr("cx"), cy = el.attr("cy");
-                        var deltax = (cx >= svg.width) ? -(cx - svg.width/2) : 0,
-                            deltay = (cy >= svg.height) ? -(cy - svg.height/2) : 0;
-                        // console.log('cx:'+cx + ', cy:'+cy +', width:'+svg.width + ',height:'+svg.height);
-                        svg.zoom.translate([deltax, deltay]).event(svg.svg);
-                    
-                    }, 1000);
+                        svg.center_map();
+                    }, 500);
+                
                 });
             }
         });
