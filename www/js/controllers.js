@@ -688,7 +688,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('ProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', function($scope, $stateParams, $rootScope, $window, User, Util) {
+    .controller('ProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', 'SVG', function($scope, $stateParams, $rootScope, $window, User, Util, SVG) {
         var uid = $stateParams.uid;
         $scope.user = User.findById(uid);
         $scope.iscuser = uid == $rootScope.cuser.id; 
@@ -701,6 +701,13 @@ angular.module("nhw.controllers", ['nhw.services'])
         });
         User.hasCheckIn(uid).then(function(ret) {
             $scope.checkinInfo = ret;
+
+            if(ret) {
+                var svg = new SVG(ret.FloorId, parseInt(ret.SeatCode));
+                svg.load().then(function(ret) {
+                    svg.init_seat_state();
+                });
+            }
         });
 
         $scope.toggle_favourite = function (uid, favouried) {
@@ -718,7 +725,9 @@ angular.module("nhw.controllers", ['nhw.services'])
             User.setUserState(available);
         };
 
+        
     }])
+
 
     .controller('EmployeesCtrl', ['$scope', '$state', '$stateParams', 'Util', 'User', function($scope, $state, $stateParams, Util, User) {
         // $scope.baseurl = Util.getPictureRootUrl();

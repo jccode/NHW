@@ -1,0 +1,128 @@
+
+
+    <div id="svg-wrapper" >
+
+        <!-- popups -->
+        <div id="user_popup" class="popup " ng-show="popup == 'user'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="popup = false"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-3 avatar">
+                        <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{user.UserPic}}" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+                    </div>
+                    <div class="col-xs-9 user">
+                        <b class="uname">{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b><br />
+                        <small>{{user.Email}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9 col-xs-offset-3 ">
+                        <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
+                        <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
+                    </div>
+                </div>
+                <div class="row footer-row" ng-hide="user.UserId == cuser.id">
+                    <!-- 
+                    <div class="col-xs-3 details">
+                        <a href="javascript:;">Details</a>
+                    </div>  -->
+                    <div class="col-xs-9">
+                        <a class="text-deepblue" href="javascript:;" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
+                            <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
+                            <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijderen favorieten </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="workspace_popup" class="popup" ng-show="popup == 'workspace'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="close_popup()"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <b>Inchecken</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        Verdieping:
+                    </div>
+                    <div class="col-xs-8">
+                        {{floor.FloorNum}}
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-4">
+                        Werkplek:
+                    </div>
+                    <div class="col-xs-8">
+                        {{seat}}
+                    </div>
+                </div>
+                <div class="row footer-row top-line" ng-show="isInBuilding">
+                    <div class="col-xs-12">
+                        <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
+                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="seat_change_popup" class="popup" ng-show="popup == 'seat_change'">
+            <div class="close-btn">
+                <i class="fa fa-times fa-2x" ng-click="close_popup();"></i>
+            </div>
+            <div class="container-fluid no-gutter">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <b>Locatie wijzigen</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-11">
+                        Weet u zeker dat u uw locatie wilt wijzigen naar Werkplek {{seat}}?
+                    </div>
+                </div>
+                <div class="row footer-row top-line">
+                    <div class="col-xs-12">
+                        <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
+                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="checkin_modal.html">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><i class="fa fa-times" ></i></button>
+                <h4 class="modal-title">Check-in geslaagd</h4>
+            </div>
+            <div class="modal-body" id="checkin_modal">
+                <div class="container-fluid no-gutter profile ">
+                    <div class="row">
+                        <div class="col-xs-6 user">
+                            <b>{{cuser.name}}</b> <br />
+                            <small>{{cuser.email}}</small> <br />
+                            <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{cuser.photo}}" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+                        </div>
+                        <div class="col-xs-6 workspace">
+                            <p>U bent ingechecked op:</p>
+                            <p>Verdieping:  <b>{{data.floor.FloorNum}}</b></p>
+                            <p>Werkplek:   <b>{{data.seat}}</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" ng-click="cancel()"><i class="fa fa-repeat text-muted">&nbsp;&nbsp;</i> Locatie wijzigen</button> <!-- ok('Locatie wijzigen') -->
+                <button class="btn" ng-click="ok('ok')">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
+            </div>
+        </script>
+            
+    </div>
+    

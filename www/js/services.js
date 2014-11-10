@@ -297,6 +297,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         };
     }])
 
+
+// ////////////////////////////////////////////////////////////////////////////////
+
+
     .factory('CtrlService', ['$rootScope', '$state', '$modal', '$log', 'User', function($rootScope, $state, $modal, $log, User) {
 
         function checkout() {
@@ -315,36 +319,234 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             });   
         }
 
+        function checkout_confirm() {
+            var modalInstance = $modal.open({
+                templateUrl: 'confirm_checkout_modal.html',
+                controller:  'CheckInModalCtrl',
+                windowClass: 'mymodal',
+                size: 'sm',
+                resolve: {
+                    data: function() {
+                        return {};
+                    }
+                }
+            });
+            
+            modalInstance.result.then(function(ret) {
+                // click on buttons. 'true' if click yes, 'false' if click no.
+                if(ret) {
+                    checkout();
+                }
+                
+            }, function() {
+                // dismissed
+                // $rootScope.toggle('mainSidebar', 'off');
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        }
+
+
         
         return {
             checkout: checkout, 
+            checkout_confirm: checkout_confirm
+        };
+    }])
 
-            checkout_confirm: function() {
-                var modalInstance = $modal.open({
-                    templateUrl: 'confirm_checkout_modal.html',
-                    controller:  'CheckInModalCtrl',
-                    windowClass: 'mymodal',
-                    size: 'sm',
-                    resolve: {
-                        data: function() {
-                            return {};
-                        }
+    .factory('SVG', ['$rootScope', '$window', '$q', 'Floors', function($rootScope, $window, $q, Floors) {
+
+        var svg_name = function(path) {
+            return path.replace(/.*\/(.+\.svg)/i, '$1');
+        };
+
+        var svg_wrapper_size = function() {
+            var el_wrapper = document.getElementById("svg-wrapper"), 
+                style = el_wrapper.currentStyle || $window.getComputedStyle(el_wrapper);
+            return {
+                "w": el_wrapper.offsetWidth,
+                "h": el_wrapper.offsetHeight - (parseInt(style.paddingBottom, 10) + parseInt(style.paddingTop, 10))
+            };
+        };
+
+        var margin = {top: -5, right: -5, bottom: -5, left: -5};
+        
+
+        /**
+         * Usage:
+         *
+         *      var svg =  new SVG(floorId);
+         *      svg.load().then(function() {
+         *         // ...
+         *      });
+         *
+         */
+        function SVG(floorId, seat) {
+            this.floorId = floorId;
+            this.seat = seat;
+            
+            var ws = svg_wrapper_size();
+            this.width = ws["w"];
+            this.height = ws["h"];
+
+            this.zoom = d3.behavior.zoom()
+                .scaleExtent([1, 10])
+                .on('zoomstart', this.zoomstarted.bind(this))
+                .on('zoom', this.zoomed.bind(this))
+                .on('zoomend', this.zoomended.bind(this));
+
+            this.svg = d3.select("#svg-wrapper").append("svg")
+                .attr("width", this.width + margin.left + margin.right)
+                .attr("height", this.height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.right + ")" )
+                .call(this.zoom);
+            
+            this.rect = this.svg.append("rect")
+                .attr('width', this.width)
+                .attr('height', this.height)
+                .style('fill', 'none')
+                .style('pointer-events', 'all');
+
+            this.container = this.svg.append('g');
+
+            this.bind_resize();
+        }
+
+        SVG.prototype = {
+            zoomstarted: function() {
+            },
+            
+            zoomended: function() {
+            }, 
+
+            zoomed: function() {
+                this.container.attr("transform", "translate("+ d3.event.translate +") scale("+ d3.event.scale +")");
+            },
+
+            _load_svg: function(path, callback) {
+                var self = this;
+                d3.xml(path, 'image/svg+xml', function(xml) {
+                    self.innersvg = self.container.append('g')
+                        .append(function() {
+                            return xml.documentElement;
+                        });
+
+                    callback && callback();
+                }); 
+            }, 
+
+            load: function() {
+                var deferred = $q.defer();
+                var self = this;
+                var loadSuccess = function() {
+                    deferred.resolve(self);
+                }
+
+
+                Floors.findById(self.floorId).$promise.then(function(floor) {
+                    self.floor = floor;
+                    var svgurl = $rootScope.picurl + floor.SvgFile;
+
+                    // for desktop user
+                    if(!Util.isRunningOnPhonegap()) {
+                        self._load_svg('img/map.svg', loadSuccess); //svgurl
+                        return;
                     }
+
+                    // for phonegap user
+                    var svgname = svg_name(floor.SvgFile),
+                        svgpath = $rootScope.SVG_DIR + svgname;
+                    
+                    $window.resolveLocalFileSystemURL(svgpath, function(f) {
+                        console.log( 'Found svg file in ' + f.toURL() );
+                        self._load_svg(f.toURL(), loadSuccess);
+                        return;
+                        
+                    }, function(e) {
+                        if(e.code == 1) {
+                            console.log( 'Svg file ' + svgpath + ' not found.' );
+                            console.log( 'Download from ' + svgurl + ' ...' );
+                            
+                            var ft = new FileTransfer();
+                            ft.download(svgurl, svgpath, function(entry) {
+                                self._load_svg(entry.toURL(), loadSuccess);
+                                
+                            }, function(msg, e) {
+                                console.log('ERROR.' + msg);
+                                console.log(JSON.stringify(e));
+                                deferred.reject(e);
+                            });
+                            
+                        } else {
+                            console.log( 'ERROR. Cannot find svg file in ' + svgpath
+                                         + '. Error code is ' + e.code );
+                            self._load_svg(svgurl, loadSuccess);
+                        }
+                    });
+                    
+                }, function(error) {
+                    deferred.reject(error);
                 });
                 
-                modalInstance.result.then(function(ret) {
-                    // click on buttons. 'true' if click yes, 'false' if click no.
-                    if(ret) {
-                        checkout();
-                    }
-                    
-                }, function() {
-                    // dismissed
-                    // $rootScope.toggle('mainSidebar', 'off');
-                    $log.info('Modal dismissed at: ' + new Date());
+                return deferred.promise;
+            }, 
+
+            init_seat_state: function() {
+                var cuser = $rootScope.cuser;
+                var self = this;
+                this.innersvg.selectAll("[id^='circle']").classed('seat-available', true);
+                Floors.getUnAvailableSeatsByFloor(this.floorId).then(function(unavailable_seats) {
+                    // console.log(unavailable_seats);
+                    _.each(unavailable_seats, function(item) {
+                        var isme = cuser && cuser.id && cuser.id == item.userId;
+                        var classes = {"seat-available": false};
+                        classes["seat-me"] = isme;
+                        classes["seat-unavailable"] = !isme;
+                        
+                        var el = self.innersvg.select("#circle" + item.seat);
+                        el.classed(classes).attr("data-user", item.userId);
+                        
+                        if(isme) {
+                            self.hascheckin = true;
+
+                            // center the map
+                            var cx = el.attr("cx"), cy = el.attr("cy");
+                            var deltax = (cx >= self.width) ? -(cx - self.width/2) : 0,
+                                deltay = (cy >= self.height) ? -(cy - self.height/2) : 0;
+                            self.zoom.translate([deltax, deltay]).event(self.svg);
+                        }
+                    });
                 });
+            }, 
+
+            bind_event: function() {
+                
+            },
+
+            bind_resize: function() {
+                var self = this;
+                angular.element($window).bind('resize', function() {
+                    var ws = svg_wrapper_size();
+                    self.width = ws["w"];
+                    self.height = ws["h"];
+                    d3.select("#svg-wrapper").select("svg")
+                        .attr({
+                            'width': self.width + margin.left + margin.right,
+                            'height': self.height + margin.top + margin.bottom
+                        })
+                        .select('rect')
+                        .attr({
+                            'width': self.width,
+                            'height': self.height
+                        });                    
+                });
+                // end
             }
+
         };
+
+        return SVG;
+        
     }])
 ;
 

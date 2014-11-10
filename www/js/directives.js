@@ -38,6 +38,7 @@ angular.module('nhw.directives', [])
                 angular.element($window).bind('resize', setHeight);
                 setHeight();
                 return $timeout(function() {
+                    console.log('auto-heigth trigger resize');
                     return angular.element($window).triggerHandler('resize');
                 }, 1000);
             }
