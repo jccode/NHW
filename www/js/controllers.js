@@ -704,8 +704,24 @@ angular.module("nhw.controllers", ['nhw.services'])
 
             if(ret) {
                 var svg = new SVG(ret.FloorId, parseInt(ret.SeatCode));
-                svg.load().then(function(ret) {
-                    svg.init_seat_state();
+                svg.load().then(function(svg) {
+                    // svg.init_seat_state();
+                    
+                    svg.innersvg.selectAll("[id^='circle']").classed('seat-available', true);
+                    var el = svg.innersvg.select("#circle" + svg.seat);
+                    el.classed({
+                        "seat-available": false,
+                        "seat-unavailable": true
+                    }).attr("data-user", uid);
+
+                    setTimeout(function() {
+                        var cx = el.attr("cx"), cy = el.attr("cy");
+                        var deltax = (cx >= svg.width) ? -(cx - svg.width/2) : 0,
+                            deltay = (cy >= svg.height) ? -(cy - svg.height/2) : 0;
+                        // console.log('cx:'+cx + ', cy:'+cy +', width:'+svg.width + ',height:'+svg.height);
+                        svg.zoom.translate([deltax, deltay]).event(svg.svg);
+                    
+                    }, 1000);
                 });
             }
         });

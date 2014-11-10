@@ -538,7 +538,9 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                         .attr({
                             'width': self.width,
                             'height': self.height
-                        });                    
+                        });
+                    
+                    // console.log('resize width:'+self.width + ',height:'+self.height);
                 });
                 // end
             }
