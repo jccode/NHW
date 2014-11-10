@@ -377,6 +377,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
          *      var svg =  new SVG(floorId);
          *      svg.load().then(function() {
          *         // ...
+         *         svg.init_seat_state();
+         *         svg.bind_event(function() {
+         *             // ...
+         *         });
          *      });
          *
          */
@@ -519,8 +523,10 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 });
             }, 
 
-            bind_event: function() {
-                
+            bind_event: function(handler) {
+                innersvg.selectAll("[id^='circle']").on("click", function(d, i) {
+                    handler(d, i);
+                });
             },
 
             bind_resize: function() {
@@ -540,7 +546,6 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                             'height': self.height
                         });
                     
-                    // console.log('resize width:'+self.width + ',height:'+self.height);
                 });
                 // end
             }

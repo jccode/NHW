@@ -496,19 +496,6 @@ angular.module("nhw.controllers", ['nhw.services'])
                     var seat = el.attr("id").substring(6);
 
                     var coord = d3.mouse(this); //coord: [width, height]
-                    // console.log(coord[0] + ',' + coord[1]);
-                    
-
-                    // toggle state
-                    /*
-                    el.classed("seat-available") ? el.classed({
-                        "seat-available": false,
-                        "seat-unavailable": true
-                    }) : el.classed({
-                        "seat-available": true,
-                        "seat-unavailable": false
-                    });
-                     */
 
                     $scope.seat = seat;
 
