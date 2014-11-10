@@ -473,11 +473,19 @@ angular.module("nhw.controllers", ['nhw.services'])
                         var classes = {"seat-available": false};
                         classes["seat-me"] = isme;
                         classes["seat-unavailable"] = !isme;
-                        if(isme) hascheckin = true;
                         
-                        innersvg.select("#circle" + item.seat)
-                            .classed(classes)
-                            .attr("data-user", item.userId);
+                        var el = innersvg.select("#circle" + item.seat);
+                        el.classed(classes).attr("data-user", item.userId);
+                        
+                        if(isme) {
+                            hascheckin = true;
+
+                            // center the map
+                            var cx = el.attr("cx"), cy = el.attr("cy");
+                            var deltax = (cx >= width) ? -(cx - width/2) : 0,
+                                deltay = (cy >= height) ? -(cy - height/2) : 0;
+                            zoom.translate([deltax, deltay]).event(svg);
+                        }
                     });
                 });
             }
