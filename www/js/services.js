@@ -515,8 +515,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             }, 
 
             bind_event: function(handler) {
-                innersvg.selectAll("[id^='circle']").on("click", function(d, i) {
-                    handler(d, i);
+                this.innersvg.selectAll("[id^='circle']").on("click", function(d, i) {
+                    handler(this);
                 });
             },
 
@@ -549,8 +549,16 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                         deltay = (cy >= this.height) ? -(cy - this.height/2) : 0;
                     this.zoom.translate([deltax, deltay]).event(this.svg);
                 }
-            }
+            },
 
+            wrapper_size: function() {
+                var el_wrapper = document.getElementById("svg-wrapper"), 
+                    style = el_wrapper.currentStyle || $window.getComputedStyle(el_wrapper);
+                return {
+                    "w": el_wrapper.offsetWidth,
+                    "h": el_wrapper.offsetHeight - (parseInt(style.paddingBottom, 10) + parseInt(style.paddingTop, 10))
+                };
+            }
 
         };
 

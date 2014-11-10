@@ -311,234 +311,86 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$rootScope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', function($scope, $rootScope, $stateParams, Floors, $window, User, $modal, $log, $state, Util) {
+    .controller('SvgCtrl', ['$scope', '$rootScope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', 'SVG', function($scope, $rootScope, $stateParams, Floors, $window, User, $modal, $log, $state, Util, SVG) {
         var floorId = $stateParams.f,
             seat = $stateParams.s, 
             confirm_checkin = $scope.$parent.confirm_checkin;
-        // var cuser = Util.currUser();
         var cuser = $rootScope.cuser;
-        // $scope.floor = Floors.findById(floorId);
-        // $scope.baseurl = Util.getPictureRootUrl();
-        // $scope.cuser = cuser;
         var hascheckin = false;
 
-        var svg_name = function(path) {
-            return path.replace(/.*\/(.+\.svg)/i, '$1');
-        };
-
-        var svg_wrapper_size = function() {
-            var el_wrapper = document.getElementById("svg-wrapper"), 
-                style = el_wrapper.currentStyle || $window.getComputedStyle(el_wrapper);
-            return {
-                "w": el_wrapper.offsetWidth,
-                "h": el_wrapper.offsetHeight - (parseInt(style.paddingBottom, 10) + parseInt(style.paddingTop, 10))
-            };
-        }
-
-        var margin = {top: -5, right: -5, bottom: -5, left: -5},
-            ws = svg_wrapper_size(), 
-            width = ws["w"], 
-            height = ws["h"];
-
-        var zoom = d3.behavior.zoom()
-                .scaleExtent([1, 10])
-                .on('zoomstart', zoomstarted)
-                .on('zoom', zoomed)
-                .on('zoomend', zoomended);
-
-        var svg = d3.select("#svg-wrapper").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.right + ")" )
-                .call(zoom);
-
-        var rect = svg.append("rect")
-                .attr('width', width)
-                .attr('height', height)
-                .style('fill', 'none')
-                .style('pointer-events', 'all');
-
-        var container = svg.append('g');
-
-        var innersvg;
-        // d3.xml('img/map.svg', 'image/svg+xml', function(xml) {
-        //     innersvg = container.append('g')
-        //         .append(function() {
-        //             return xml.documentElement;
-        //         });
-
-        //     innersvgLoaded();
-        // });
-
-        var loadsvg = function(path) {
-            d3.xml(path, 'image/svg+xml', function(xml) {
-                innersvg = container.append('g')
-                    .append(function() {
-                        return xml.documentElement;
-                    });
-
-                innersvgLoaded();
-            });            
-        };
-        
-
-        // load svg file from local filesystem
-        var onError = function(msg, e) {
-            console.log( 'ERROR. ' + msg );
-            console.log( JSON.stringify(e) );
-        };
-
-
+        // auto-checkin
         Floors.findById(floorId).$promise.then(function(floor) {
             $scope.floor = floor;
-            var svgurl = $rootScope.picurl + floor.SvgFile;
-
-            // barcode scan, auto checkin
             if(confirm_checkin) {
                 $scope.seat = seat;
                 $scope.confirm_checkin();
             }
+        });
 
+        // svg
+        var svg = new SVG(floorId, seat);
+        svg.load().then(function() {
+            svg.init_seat_state();
 
-            // for desktop user
-            if(!Util.isRunningOnPhonegap()) {
-                loadsvg('img/map.svg'); //svgurl
-                return;
-            }
+            User.hasCheckIn().then(function(ret) {
+                if(ret) {
+                    hascheckin = true;
+                    var el = svg.innersvg.select("#circle" + parseInt(ret.SeatCode));
+                    var classes = {
+                        "seat-available": false,
+                        "seat-unavailable": false,
+                        "seat-cuser": true
+                    };
+                    el.classed(classes).attr("data-user", cuser.id);
 
-            // for phonegap user
-            var svgname = svg_name(floor.SvgFile),
-                svgpath = $rootScope.SVG_DIR + svgname;
-            
-            $window.resolveLocalFileSystemURL(svgpath, function(f) {
-                console.log( 'Found svg file in ' + f.toURL() );
-                loadsvg(f.toURL());
-                
-            }, function(e) {
-                
-                if(e.code == 1) {
-                    console.log( 'Svg file ' + svgpath + ' not found.' );
-                    console.log( 'Download from ' + svgurl + ' ...' );
-                    
-                    var ft = new FileTransfer();
-                    ft.download(svgurl, svgpath, function(entry) {
-                        loadsvg(entry.toURL());
-                    }, onError);
-                    
-                } else {
-                    console.log( 'ERROR. Cannot find svg file in ' + svgpath
-                                 + '. Error code is ' + e.code );
-                    loadsvg(svgurl);
+                    svg.center_map();
                 }
+            });
+
+
+            svg.bind_event(function(d) {
+                var el = d3.select(d);
+                var seat = el.attr("id").substring(6);
+                var coord = d3.mouse(d); //coord: [width, height]
+                
+                $scope.seat = seat;
+
+                var userId = el.attr("data-user");
+                if (userId) {
+                    User.findById(userId).$promise.then(function(user) {
+                        $scope.user = user;
+                    });
+                    User.isFavourite(userId).then(function(ret) {
+                        $scope.isFavourited = ret;
+                    });
+                }
+
+                var t = (el.classed('seat-cuser') || el.classed('seat-unavailable'))
+                        ? "user"
+                        : (hascheckin ? "seat_change" : "workspace");
+                $scope.$apply(function() {
+                    $scope.popup = t;
+                });
+                
+                var popup = d3.select("#" + t + "_popup");
+                var pos = calc_popup_pos(popup.node(), coord);
+                popup.style({
+                    left: pos[0]+'px',
+                    top: pos[1]+'px'
+                });
+                
+                // set color on the current select node
+                restore_last_selected_seat();
+                if(el.classed('seat-available')) {
+                    $scope.last_selected_seat = el;
+                    el.classed({
+                        'seat-available': false,
+                        'seat-seleted': true
+                    });
+                }                
             });
             
         });
-
-
-        function zoomstarted() {
-            // d3.event.sourceEvent.stopPropagation();
-            // console.log(d3.event.sourceEvent);
-            // $ionicSideMenuDelegate.canDragContent(false);
-        }
-
-        function zoomended() {
-            // $ionicSideMenuDelegate.canDragContent(true);
-        }
-
-        function zoomed() {
-            container.attr("transform", "translate("+ d3.event.translate +") scale("+ d3.event.scale +")");
-        }
-
-
-        // init when inner svg loaded
-        function innersvgLoaded() {
-
-            function init_state() {
-                /*
-                var unavailable_seats = Floors.getUnAvailableSeatsByFloor(floorId);
-                innersvg.selectAll("[id^='circle']").classed('seat-available', true);
-                _.each(unavailable_seats, function(item) {
-                    innersvg.select("#circle" + item.seat)
-                        .classed({"seat-available": false, "seat-unavailable": true})
-                        .attr("data-user", item.userId);
-                });
-                 */
-                
-                innersvg.selectAll("[id^='circle']").classed('seat-available', true);
-                Floors.getUnAvailableSeatsByFloor(floorId).then(function(unavailable_seats) {
-                    // console.log(unavailable_seats);
-                    _.each(unavailable_seats, function(item) {
-                        var isme = cuser && cuser.id && cuser.id == item.userId;
-                        var classes = {"seat-available": false};
-                        classes["seat-cuser"] = isme;
-                        classes["seat-unavailable"] = !isme;
-                        
-                        var el = innersvg.select("#circle" + item.seat);
-                        el.classed(classes).attr("data-user", item.userId);
-                        
-                        if(isme) {
-                            hascheckin = true;
-
-                            // center the map
-                            var cx = el.attr("cx"), cy = el.attr("cy");
-                            var deltax = (cx >= width) ? -(cx - width/2) : 0,
-                                deltay = (cy >= height) ? -(cy - height/2) : 0;
-                            zoom.translate([deltax, deltay]).event(svg);
-                        }
-                    });
-                });
-            }
-
-            function add_event_handler() {
-                innersvg.selectAll("[id^='circle']").on("click", function(d, i) {
-                    var el = d3.select(this);
-                    var seat = el.attr("id").substring(6);
-
-                    var coord = d3.mouse(this); //coord: [width, height]
-
-                    $scope.seat = seat;
-
-                    var userId = el.attr("data-user");
-                    if (userId) {
-                        User.findById(userId).$promise.then(function(user) {
-                            $scope.user = user;
-                        });
-                        User.isFavourite(userId).then(function(ret) {
-                            $scope.isFavourited = ret;
-                        });
-                    } 
-
-                    var t = (el.classed('seat-cuser') || el.classed('seat-unavailable'))
-                            ? "user"
-                            : (hascheckin ? "seat_change" : "workspace");
-                    $scope.$apply(function() {
-                        $scope.popup = t;
-                    });
-                    
-                    var popup = d3.select("#" + t + "_popup");
-                    var pos = calc_popup_pos(popup.node(), coord)
-                    popup.style({
-                        left: pos[0]+'px',
-                        top: pos[1]+'px'
-                    });
-
-                    
-                    // set color on the current select node
-                    restore_last_selected_seat();
-                    if(el.classed('seat-available')) {
-                        $scope.last_selected_seat = el;
-                        el.classed({
-                            'seat-available': false,
-                            'seat-seleted': true
-                        });
-                    }
-                });
-            }
-
-            init_state();
-            add_event_handler();
-        }
 
         function restore_last_selected_seat() {
             if($scope.last_selected_seat) {
@@ -555,37 +407,14 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
 
 
-
-        // register a resize handler
-        $window.onresize = function() {
-            $scope.$apply(function() {
-                ws = svg_wrapper_size();
-                // width = $window.innerWidth - margin.left - margin.right;
-                // height = $window.innerHeight / 2 - margin.top - margin.bottom;
-                width = ws["w"];
-                height = ws["h"];
-                d3.select("#svg-wrapper").select("svg")
-                    .attr({
-                        'width': width + margin.left + margin.right,
-                        'height': height + margin.top + margin.bottom
-                    })
-                    .select('rect')
-                    .attr({
-                        'width': width,
-                        'height': height
-                    });
-            });
-        }
-
-
-
         /**
          * Calcuate the popup window position
          *
          * coords: Array. [left, top] of the mouse pointer
          */
         function calc_popup_pos(el, coords) {
-            var cw = ws["w"],
+            var ws = svg.wrapper_size(), 
+                cw = ws["w"],
                 ch = ws["h"],
                 ew = el.offsetWidth,
                 eh = el.offsetHeight,
@@ -618,7 +447,6 @@ angular.module("nhw.controllers", ['nhw.services'])
                             seat: $scope.seat
                         };
                     }
-
                 }
             });
 
