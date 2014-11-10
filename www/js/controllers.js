@@ -311,7 +311,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('SvgCtrl', ['$scope', '$rootScope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', 'SVG', function($scope, $rootScope, $stateParams, Floors, $window, User, $modal, $log, $state, Util, SVG) {
+    .controller('SvgCtrl', ['$scope', '$rootScope', '$stateParams', 'Floors', '$window', 'User', '$modal', '$log', '$state', 'Util', 'SVG', 'CtrlService', function($scope, $rootScope, $stateParams, Floors, $window, User, $modal, $log, $state, Util, SVG, CtrlService) {
         var floorId = $stateParams.f,
             seat = $stateParams.s, 
             confirm_checkin = $scope.$parent.confirm_checkin;
@@ -477,15 +477,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         };
 
-        $scope.toggle_favourite = function (uid, favouried) {
-            if(favouried) {
-                User.cancelFavourite(uid);
-            } else {
-                User.addFavourite(uid);
-            }
-        };
-        
-        
+        $scope.toggle_favourite = CtrlService.toggle_favourite;
         
     }])
 
@@ -503,7 +495,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         };
     }])
 
-    .controller('ProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', 'SVG', function($scope, $stateParams, $rootScope, $window, User, Util, SVG) {
+    .controller('ProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', 'SVG', 'CtrlService', function($scope, $stateParams, $rootScope, $window, User, Util, SVG, CtrlService) {
         var uid = $stateParams.uid;
         $scope.user = User.findById(uid);
         $scope.iscuser = uid == $rootScope.cuser.id; 
@@ -543,13 +535,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             }
         });
 
-        $scope.toggle_favourite = function (uid, favouried) {
-            if(favouried) {
-                User.cancelFavourite(uid);
-            } else {
-                User.addFavourite(uid);
-            }
-        };
+        $scope.toggle_favourite = CtrlService.toggle_favourite;
 
         $scope.back = function() {
             $window.history.back();
@@ -562,7 +548,7 @@ angular.module("nhw.controllers", ['nhw.services'])
     }])
 
 
-    .controller('EmployeesCtrl', ['$scope', '$state', '$stateParams', 'Util', 'User', function($scope, $state, $stateParams, Util, User) {
+    .controller('EmployeesCtrl', ['$scope', '$state', '$stateParams', 'Util', 'User', 'CtrlService', function($scope, $state, $stateParams, Util, User, CtrlService) {
         // $scope.baseurl = Util.getPictureRootUrl();
         // $scope.cuser = Util.currUser();
         $scope.type = $stateParams.t || 'all';
@@ -577,13 +563,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             $scope.employees = fn[$scope.type].call(User);
         });
 
-        $scope.toggle_favourite = function (uid, favouried) {
-            if(favouried) {
-                User.cancelFavourite(uid);
-            } else {
-                User.addFavourite(uid);
-            }
-        };
+        $scope.toggle_favourite = CtrlService.toggle_favourite;
     }])
 
 ;

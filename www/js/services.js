@@ -345,11 +345,19 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
             });
         }
 
+        function toggle_favourite(uid, favouried) {
+            if(favouried) {
+                User.cancelFavourite(uid);
+            } else {
+                User.addFavourite(uid);
+            }
+        }
 
         
         return {
             checkout: checkout, 
-            checkout_confirm: checkout_confirm
+            checkout_confirm: checkout_confirm,
+            toggle_favourite: toggle_favourite
         };
     }])
 
