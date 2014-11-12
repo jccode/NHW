@@ -83,17 +83,20 @@ angular.module('nhw.directives', [])
             link: function(scope, element, attr) {
                 var attrName = normalizeAttrName("nhwSrc");
                 var FILE_PROTOCOL_REGEX = /^file:\/\//g;
-                var IMG_REGEX = /.*\/(\w+\.(jpg|png|gif|bmp|jpeg))/i;
+                var IMG_REGEX = /.*\/(.+\.(jpg|png|gif|bmp|jpeg))/i;
 
                 var imgName = function(url) {
                     return url.replace(IMG_REGEX, '$1');
                 };
-                
+
                 attr.$observe(attrName, function(value) {
+
+                    // console.log( 'nhw src observe: ' + value );
+
                     if(!value || !IMG_REGEX.test(value)) {
                         return;
                     }
-                    
+
                     // For desktop user. as the same as ng-src
                     if(!Util.isRunningOnPhonegap()) {
                         attr.$set("src", value);

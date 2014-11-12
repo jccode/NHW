@@ -265,12 +265,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     }])
 
      // run config on startup
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', '$modalStack', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap, $modalStack) {
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap, $modalStack, User) {
         
-        // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
-        $rootScope._ = window._;
-        $rootScope.cuser = Util.currUser();
-        $rootScope.picurl = Util.getPictureRootUrl();
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications
@@ -280,8 +276,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         // That's because the localStorage value: current_user.
         // The current user stored in localStorage, should be {id:xx, email:xx},
         // but not {UserId:xx, Email:xxx} 
+        var cuser = Util.currUser();
         (function() {
-            var cuser = Util.currUser();
             if(cuser) { // upgrade issues.
                 if(cuser['Email'] || (cuser['email'] !== cuser['email'].toLowerCase()) || !cuser['num']) {
                     Util.clearCurrUser();
@@ -289,6 +285,24 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 }
             }
         })();
+
+        
+        // update user photo if needed
+        if(cuser) {
+            User.isAuthenticated(cuser).then(function(ret) {
+                if(ret) {
+                    if(ret.photo !== cuser.photo) {
+                        cuser.photo = ret.photo;
+                        Util.currUser(cuser);
+                    }
+                }
+            });
+        }
+
+        // allow use underscore in view. e.g. ng-repeat="x in _.range(3)"
+        $rootScope._ = window._;
+        $rootScope.cuser = cuser;
+        $rootScope.picurl = Util.getPictureRootUrl();
 
 
         // angular-bootstrap dismiss modal
