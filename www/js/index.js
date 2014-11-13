@@ -48,6 +48,15 @@ var app = {
         console.log('Received Event: ' + id);
          */
 
+        
+        // for ios debug
+        if (window.cordova.logger) {
+            try {
+                window.cordova.logger.__onDeviceReady();
+            } catch(e) {}
+        }
+        
+
         var tryGetRootScope = function() {
             try {
                 return angular.element(document.body).scope();
