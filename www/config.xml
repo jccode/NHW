@@ -43,6 +43,7 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     -->
 
+    <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.device" version="0.2.8"/>
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
