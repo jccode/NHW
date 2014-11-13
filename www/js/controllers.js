@@ -162,10 +162,11 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('CheckInCtrl', ['$scope', '$state', '$modal', '$log', '$window', 'Util', 'Floors', function($scope, $state, $modal, $log, $window, Util, Floors) {
+    .controller('CheckInCtrl', ['$scope', '$state', '$sce', '$modal', '$log', '$window', 'Util', 'Floors', function($scope, $state, $sce, $modal, $log, $window, Util, Floors) {
 
         $scope.scanBarcode = function () {
 
+            // console.log( Util.isCordovaNotSupport() );
             if(Util.isCordovaNotSupport()) {      // For desktop, skip scanning barcode
                 // auto checkin.
                 Floors.all().$promise.then(function(data) {
@@ -177,12 +178,12 @@ angular.module("nhw.controllers", ['nhw.services'])
                     });
                 });
                 return ;
-            }     
+            }
 
             cordova.plugins.barcodeScanner.scan(function(result) {
 
                 // console.log(JSON.stringify(result));
-                
+
                 var text = result.text;
                 var ret = Util.parseBarcode(text);
                 if(!ret) {
@@ -191,7 +192,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                             + text;
 
                     $scope.$apply(function() {
-                        $scope.error = msg;
+                        $scope.error = $sce.trustAsHtml(msg);
                     });
                     
                 } else {
@@ -201,8 +202,8 @@ angular.module("nhw.controllers", ['nhw.services'])
                 }
                 
             }, function(error) {
-                 $scope.$apply(function() {
-                    $scope.error = error;
+                $scope.$apply(function() {
+                    $scope.error = $sce.trustAsHtml(error);
                 });
             });
 

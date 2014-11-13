@@ -17,7 +17,7 @@
             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button>          </div>
     </div>
     <div class="row " ng-show="error">
-        <div class="col-xs-12" ng-bind-html-unsafe="error">
+        <div class="col-xs-12" ng-bind-html="error" >
         </div>
     </div>
     <div class="row row-padding top-dotted-line">
