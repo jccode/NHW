@@ -48,6 +48,7 @@ var app = {
         console.log('Received Event: ' + id);
          */
 
+        console.log('------ receive event -----');
         
         // for ios debug
         if (window.cordova.logger) {
@@ -57,6 +58,7 @@ var app = {
         }
         
 
+        /*
         var tryGetRootScope = function() {
             try {
                 return angular.element(document.body).scope();
@@ -65,9 +67,7 @@ var app = {
                 return null;
             }
         };
-
-
-        console.log('------ receive event -----');
+        
         console.log(document.body);
         console.log(angular.element(document.body));
         console.log(tryGetRootScope());
@@ -83,6 +83,9 @@ var app = {
         }
         
         $scope.$emit('deviceready'); // not work on android 4.1.2. why?
+         */
+
+        angular.element(document.body).scope().$emit('deviceready');
       }
 };
 

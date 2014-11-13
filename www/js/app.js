@@ -1,12 +1,16 @@
 
-angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.storage', 'nhw.controllers', 'nhw.beacon-model', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.controllers', 'nhw.beacon-model', 'nhw.test']) 
 
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'Storage', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, Storage, BeaconUtil, BeaconModel) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, BeaconUtil, BeaconModel) {
 
         function init_beacon_model() {
+            if(!Util.isIbeaconSupported()) {
+                return;
+            }
+            
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
             }
@@ -144,6 +148,12 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
         function checkAndEnableBluetooth() {
             // console.log('check and enable bluetooth');
+            if(!Util.isIbeaconSupported()) {
+                Log.log('ibeacon is not supported on this device.');
+                Util.toast('ibeacon wordt niet ondersteund'); // ibeacon is not supported
+                return;
+            }
+            
             try {
                 if(!bluetoothle) {  // bluetoothle is not support
                     Log.log('Bluetooth LE is not supported.');
@@ -171,6 +181,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             });
         }
 
+        /*
         function syncDataFromServer(callback) {
             if(!Storage) {      // for Firefox that not support WebSQL
                 callback && callback(true);
@@ -187,7 +198,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     if(callback) callback(false);
                 });
             }
-        }
+        } */
 
 
         function onError(e) {
@@ -255,14 +266,14 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         
         return {
             deviceready: deviceready,
-            syncData: syncDataFromServer, 
+            // syncData: syncDataFromServer, 
             checkAndEnableBluetooth: checkAndEnableBluetooth,
             initBeaconModel: init_beacon_model
         };
     }])
 
      // run config on startup
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Storage', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, Util, Storage, Bootstrap, $modalStack, User) {
+    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, Util, Bootstrap, $modalStack, User) {
         
         
         // It's very handy to add references to $state and $stateParams to the $rootScope

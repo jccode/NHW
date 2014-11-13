@@ -45,9 +45,9 @@ angular.module("nhw.controllers", ['nhw.services'])
                             Bootstrap.initBeaconModel();
                             Bootstrap.checkAndEnableBluetooth();
                             
-                            Bootstrap.syncData(function(ret) {
+                            // Bootstrap.syncData(function(ret) {
                                 $scope.loading = false;
-                                if(ret) {
+                                // if(ret) {
                                     User.hasCheckIn().then(function(info) {
                                         if(info) {
                                             var floorId = info["FloorId"],
@@ -59,10 +59,10 @@ angular.module("nhw.controllers", ['nhw.services'])
                                             $state.go('app.checkin');
                                         }
                                     }, errorHandler);
-                                } else {
-                                    $scope.error = "Sorry, some error occured when loading data from server";
-                                }
-                            });
+                                // } else {
+                                //     $scope.error = "Sorry, some error occured when loading data from server";
+                                // }
+                            // });
 
                         } else {
                             errorHandler();

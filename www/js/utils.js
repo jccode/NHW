@@ -100,6 +100,14 @@ var Util = {
         } catch (e) {
             return true;
         }
+    },
+
+    isIbeaconSupported: function() {
+        if(!window.device)
+            return false;
+        var platform = device.platform.toLowerCase(),
+            version = device.version;
+        return platform == 'ios' || (platform == 'android' && version >= '4.3');
     }, 
 
     createLocalNotification: function(msg) {
