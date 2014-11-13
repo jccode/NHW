@@ -14,7 +14,8 @@ var STORAGE_KEYS = {
 
 var EVENTS = {
     DEVICE_READY: 'deviceready',
-    CHECKIN_STATE_CHANGE: 'checkin_state_change'
+    CHECKIN_STATE_CHANGE: 'checkin_state_change',
+    BEACON_STATE_CHANGE: 'beacon_state_change'
 };
 
 // Utilities
@@ -270,6 +271,13 @@ var Util = {
         this.localStorage.remove(STORAGE_KEYS.BEACON_STATE);
     }, 
 
+    isInBuilding: function() {
+        var states = Util.getBeaconStates();
+        return _.some(_.values(states), function(s) {
+            return s.state == BEACON_IN_RANGE;
+        });
+    }, 
+
 
     // trim: function(x) {
     //     return x.replace(/^\s+|\s+$/gm,'');
@@ -522,6 +530,8 @@ var BeaconUtil = function($rootScope) {
                         else if(state == 'CLRegionStateOutside') {
                             match.stateChange(BEACON_OUT_OF_RANGE);
                         }
+                        
+                        $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                     }
                     
                     cordova.plugins.locationManager.appendToDeviceLog('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
