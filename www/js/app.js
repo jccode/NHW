@@ -147,12 +147,14 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
         function checkAndEnableBluetooth() {
-            // console.log('check and enable bluetooth');
+            console.log('check and enable bluetooth');
+            
             if(!Util.isIbeaconSupported()) {
                 Log.log('ibeacon is not supported on this device.');
                 Util.toast('ibeacon wordt niet ondersteund'); // ibeacon is not supported
                 return;
             }
+            console.log('check and enable bluetooth 2.');
             
             try {
                 if(!bluetoothle) {  // bluetoothle is not support

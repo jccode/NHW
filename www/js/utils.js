@@ -107,6 +107,9 @@ var Util = {
             return false;
         var platform = device.platform.toLowerCase(),
             version = device.version;
+        
+        console.log('[util.js 110] platform: ' + platform);
+        
         return platform == 'ios' || (platform == 'android' && version >= '4.3');
     }, 
 
