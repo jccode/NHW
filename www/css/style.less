@@ -280,6 +280,18 @@ img.bg-img {
             color: #333;
             font-weight: bold;
         }
+
+        .fa-users, .fa-ban, .fa-check-circle {
+            padding-left: 10px;
+        }
+    }
+
+    @media (max-width: @screen-iphone4) {
+        table.floor-list {
+            .fa-users, .fa-ban, .fa-check-circle {
+                display: none;
+            }
+        }
     }
 }
 
@@ -724,6 +736,12 @@ img.bg-img {
     }
 }
 
+@media (max-width: @screen-iphone4) {
+    .btn-group.gray {
+        margin-left: -10px;
+    }
+}
+
 .text-deepblue {
     color: @deepblue-color;
 }
@@ -736,6 +754,23 @@ a.text-deepblue {
         color: @deepblue-color;
     }
 }
+
+.building-icon {
+    padding-right: 15px;
+}
+
+@media (max-width: @screen-iphone4) {
+    .building-icon {
+        padding-right: 2px;
+    }
+}
+
+@media (max-width: @screen-iphone4) {
+    .employee-zoek {
+        display: none;
+    }
+}
+
 
 input.awesome {
     font-family: FontAwesome;
@@ -757,4 +792,5 @@ input.awesome {
 .pointer {
     cursor: pointer;
 }
+
 

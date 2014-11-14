@@ -194,6 +194,18 @@ img.bg-img {
   color: #333;
   font-weight: bold;
 }
+.floor-list-container table.floor-list .fa-users,
+.floor-list-container table.floor-list .fa-ban,
+.floor-list-container table.floor-list .fa-check-circle {
+  padding-left: 10px;
+}
+@media (max-width: 320px) {
+  .floor-list-container table.floor-list .fa-users,
+  .floor-list-container table.floor-list .fa-ban,
+  .floor-list-container table.floor-list .fa-check-circle {
+    display: none;
+  }
+}
 .no-scrollable-x {
   overflow-x: hidden;
 }
@@ -540,6 +552,11 @@ img.bg-img {
   border-color: #adadad;
   color: #333;
 }
+@media (max-width: 320px) {
+  .btn-group.gray {
+    margin-left: -10px;
+  }
+}
 .text-deepblue {
   color: #0c077f;
 }
@@ -548,6 +565,19 @@ a.text-deepblue:hover {
 }
 a.text-deepblue:active {
   color: #0c077f;
+}
+.building-icon {
+  padding-right: 15px;
+}
+@media (max-width: 320px) {
+  .building-icon {
+    padding-right: 2px;
+  }
+}
+@media (max-width: 320px) {
+  .employee-zoek {
+    display: none;
+  }
 }
 input.awesome {
   font-family: FontAwesome;

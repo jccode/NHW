@@ -187,9 +187,9 @@ angular.module("nhw.controllers", ['nhw.services'])
                 var text = result.text;
                 var ret = Util.parseBarcode(text);
                 if(!ret) {
-                    var msg = 'Sorry, the barcode is not for HNW application!<br>'
-                            + 'Barcode content is: <br>'
-                            + text;
+                    var msg = 'De QR code is niet geldig.<br>';
+                            // + 'Barcode content is: <br>'
+                            // + text;
 
                     $scope.$apply(function() {
                         $scope.error = $sce.trustAsHtml(msg);

@@ -210,7 +210,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         function initCacheFiles() {
             var os = $window.device.platform.toLowerCase(),
                 datadir = (os == 'android' && cordova.file.externalApplicationStorageDirectory) ||
-                    (os == 'ios' && cordova.file.applicationStorageDirectory) ||
+                    (os == 'ios' && cordova.file.dataDirectory) ||
                     cordova.file.dataDirectory,
                 avatardir = datadir + 'avatar/',
                 avatars = [];

@@ -9,7 +9,7 @@
     <div class="scrollable-content no-scrollable-x">
         <ul class="list-group">
             <li ng-repeat="building in buildings" class="list-group-item pointer" ui-sref="app.floors({buildingId:building.BuildingId})">
-                <i class="fa fa-building-o fa-lg text-deepblue">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-building-o fa-lg text-deepblue building-icon"></i>
                 <b>{{building.BuildingName}}</b>
                 <i class="fa fa-chevron-right pull-right"></i>
             </li>
