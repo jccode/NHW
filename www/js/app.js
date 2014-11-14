@@ -213,6 +213,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             var os = $window.device.platform.toLowerCase(),
                 datadir = (os == 'android' && cordova.file.externalApplicationStorageDirectory) ||
                     (os == 'ios' && cordova.file.dataDirectory) ||
+                    // For winphone. http://msdn.microsoft.com/en-us/library/windows/apps/windows.storage.applicationdata.localfolder.aspx
+                    ((os == 'wince' || os == 'win32nt') && 'ms-appdata:///local/') || 
                     cordova.file.dataDirectory,
                 avatardir = datadir + 'avatar/',
                 avatars = [];
