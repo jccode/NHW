@@ -1,4 +1,5 @@
 {
+	"name": "NS Werkplek", 
     "lib": {
         "www": {
             "id": "nl.everlink.nhw",
