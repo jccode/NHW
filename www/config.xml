@@ -48,8 +48,7 @@
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.5" />
-    <!-- <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.0.0" /> -->
-    <gap:plugin name="org.bloxlab.barcodescanner" />
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.0.0" />
     <gap:plugin name="com.brodysoft.sqliteplugin" version="1.0.0" />
     <gap:plugin name="nl.x-services.plugins.toast" />
     <gap:plugin name="com.randdusing.bluetoothle" version="1.0.6" />
