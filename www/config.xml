@@ -85,5 +85,21 @@
     <gap:splash gap:platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="winphone" src="www/res/screen/windows-phone/screen-portrait.jpg" />
     -->
+    
+    <!-- iPhone and iPod touch -->
+    <gap:splash src="res/screen/ios/Default.png" gap:platform="ios" width="320" height="480" />
+    <gap:splash src="res/screen/ios/Default@2x.png" gap:platform="ios" width="640" height="960" />
+
+    <!-- iPhone 5 / iPod Touch (5th Generation) -->
+    <gap:splash src="res/screen/ios/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
+
+    <!-- iPad -->
+    <gap:splash src="res/screen/ios/Default-Landscape.png" gap:platform="ios" width="1024" height="748" />
+    <gap:splash src="res/screen/ios/Default-Portrait.png" gap:platform="ios" width="768" height="1004" />
+
+    <!-- Retina iPad -->
+    <gap:splash src="res/screen/ios/Default-Portrait@2x.png" gap:platform="ios" width="1536" height="2048" />
+    <gap:splash src="res/screen/ios/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
+    
     <access origin="*" />
 </widget>
