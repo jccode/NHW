@@ -5,3 +5,4 @@ plugins/
 *.log
 *.done
 assets/
+.DS_Store
