@@ -16,6 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+function loadjscssfile(filename, filetype){
+    if (filetype=="js"){ //if filename is a external JavaScript file
+        var fileref=document.createElement('script')
+        fileref.setAttribute("type","text/javascript")
+        fileref.setAttribute("src", filename)
+    }
+    else if (filetype=="css"){ //if filename is an external CSS file
+        var fileref=document.createElement("link")
+        fileref.setAttribute("rel", "stylesheet")
+        fileref.setAttribute("type", "text/css")
+        fileref.setAttribute("href", filename)
+    }
+    if (typeof fileref!="undefined")
+        document.getElementsByTagName("head")[0].appendChild(fileref)
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -55,6 +73,18 @@ var app = {
             try {
                 window.cordova.logger.__onDeviceReady();
             } catch(e) {}
+        }
+
+        // fix winphone icon font issue
+
+        if( window.device ) {
+            var os = window.device.platform.toLowerCase();
+            console.log( os );
+            if(os == 'wince' || os == 'win32nt') { // windows phone
+                setTimeout(function() {
+                    loadjscssfile('lib/mobile-angular-ui/css/font-awesome.css', 'css');
+                }, 3000);
+            }
         }
         
 
