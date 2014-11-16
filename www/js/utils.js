@@ -562,7 +562,52 @@ var BeaconUtil = function($rootScope) {
             });
             
             return delegate;
+        },
+
+        createIosDelegate: function() {
+            var delegate = new cordova.plugins.locationManager.Delegate().implement({
+                didDetermineStateForRegion: function (pluginResult) {
+
+                    console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+
+                },
+                didStartMonitoringForRegion: function (pluginResult) {
+                    console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
+                },
+                didRangeBeaconsInRegion: function (pluginResult) {
+                    console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                    var retbeacons = pluginResult.beacons;
+                    var beacons = $rootScope.beaconmodel.beacons;
+                    _.each(beacons, function(beacon) {
+                        var match = _.find(beacons, function(beacon) {
+                            return beacon['uuid'] == region['uuid'] &&
+                                beacon['identifier'] == region['identifier'] &&
+                                beacon['major'] == region['major'] &&
+                                beacon['minor'] == region['minor'];
+                        });
+                        
+                        // determine state really change
+                        var state = beacon.state;
+                        if(match) {
+                            if(state != BEACON_IN_RANGE) { // state changed
+                                beacon.stateChange(BEACON_IN_RANGE);
+                                $rootScope.isInBuilding = true;
+                                $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
+                            }
+                        } else {
+                            if(state != BEACON_OUT_OF_RANGE) {
+                                beacon.stateChange(BEACON_OUT_OF_RANGE);
+                                $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
+                            }
+                        }
+                    });
+
+                }
+            });
+            
+            return delegate;            
         }
+
     };
     
 };

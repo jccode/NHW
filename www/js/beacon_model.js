@@ -34,6 +34,10 @@ angular.module('nhw.beacon-model', [])
 
         Beacon.prototype = {
             stateChange: function(state) {
+                console.log( 'beacon ' + this.major + ' set state. ' + 'current state is ' + this.state + ((state == this.state)? ' state not change. skip. ': '') );
+                if(state == this.state) return;
+                
+                // only apply when state really changed
                 this.state = state;
                 this.ts = Date.now();
                 this.publish(this);
