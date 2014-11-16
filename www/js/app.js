@@ -98,10 +98,18 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             // determine whether a user is inside building
             // $rootScope.isInBuilding = Util.isInBuilding();
 
-            // if(Util.isIOS()) {
-            //     startIbeacon_ios();
-            //     return;
-            // }
+            if(Util.isIOS()) {
+                // startIbeacon_ios();
+                var identifier = 'Estimote Beacon',
+                    uuid = 'b9407f30-f5f8-466e-aff9-25556b57fe6d';
+                var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid);
+                var delegate = BeaconUtil.createIosDelegate();
+                cordova.plugins.locationManager.setDelegate(delegate);
+                cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
+                cordova.plugins.locationManager.startMonitoringForRegion(region).fail(console.log).done();
+                
+                return;
+            }
             // below is for android
             
             // start ibeacon
@@ -113,14 +121,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     return BeaconUtil.createBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
                 });
 
-                var isIOS = Util.isIOS();
-                var delegate = isIOS ? BeaconUtil.createIosDelegate() : BeaconUtil.createDelegate();
+                var delegate = BeaconUtil.createDelegate();
                 cordova.plugins.locationManager.setDelegate(delegate);
                 _.each(ibeacons, function(ibeacon) {
                     if(ibeacon) {
-                        if(isIOS) {
-                            cordova.plugins.locationManager.startRangingBeaconsInRegion(ibeacon).fail(console.log).done();
-                        }
                         cordova.plugins.locationManager.startMonitoringForRegion(ibeacon).fail(console.log).done();
                     }
                 });
