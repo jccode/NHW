@@ -158,6 +158,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
 
         function startIbeacon_ios() {
+            console.log( 'start ibeacon for ios' );
 
             // models
             var STATE_BLANK = 0,
@@ -173,11 +174,19 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             };
             Beacon.prototype = {
                 setState: function(state) {
+                    console.log( 'beacon ' + this.major + ' set state. ' + 'current state is ' + this.state
+                                 + ((state == this.state)? ' state not change. skip. ': '') );
+
                     if(state == this.state) return;
                     // only apply when state really changed
                     this.state = state;
                     this.publish(this);
+                },
+
+                toString: function() {
+                    return ['[Ojbect beacon]', this.id+'', 'major:' + this.major].join(' ');
                 }
+
             };
 
             var Group = function(id) {
@@ -240,6 +249,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
                 action: function(beacon) {
                     var side = this.getSide(beacon);
+                    console.log( 'Pair action. side: ' + side );
+
                     if(!side)
                         return;
                     return this[side+'Action'](beacon);
@@ -248,6 +259,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 frontAction: function(beacon) {
                     var fs = this.front.getState(),
                         bs = this.back.getState();
+                    console.log( 'Pair front action. fs:' + fs + ' bs:' + bs );
 
                     if(fs == STATE_VISITED && bs == STATE_VISITED) {
                         console.log("ios end -> front: Push Notification: "+this.front_msg);
@@ -260,6 +272,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 backAction: function(beacon) {
                     var fs = this.front.getState(),
                         bs = this.back.getState();
+                    console.log( 'Pair front action. fs:' + fs + ' bs:' + bs );
+                    
                     if(bs == STATE_BLANK) {
                         console.log("ios front -> end: Push Notification: "+this.back_msg);
                         Util.createLocalNotification(this.back_msg);
@@ -268,7 +282,6 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     }
                 }
             };
-
 
             
             
@@ -287,6 +300,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             bg.add(bb);
             var pair = new Pair(fg, bg, 'Welcome ^^', 'Bye :)');
             _.each(beacons, function(beacon) {
+                console.log( beacon + ' add subscriber.' );
                 beacon.addSubscriber(pair.action.bind(pair));
             });
             
