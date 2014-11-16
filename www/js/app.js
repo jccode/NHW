@@ -14,6 +14,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             if(!Util.getCustomerServerURL()) { // if url not exist, skip
                 return;
             }
+
+            if(Util.isIOS()) {  // only for android
+                return;
+            }
             
             var model = {
                 beacons: [],
@@ -97,6 +101,12 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
             // determine whether a user is inside building
             // $rootScope.isInBuilding = Util.isInBuilding();
+
+            if(Util.isIOS()) {
+                startIbeacon_ios();
+                return;
+            }
+            // below is for android
             
             // start ibeacon
             Beacons.allBeacons().$promise.then(function(beacons) {
@@ -145,6 +155,168 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
              */
             
         }
+
+
+        function startIbeacon_ios() {
+
+            // models
+            var STATE_BLANK = 0,
+                STATE_VISITED = 1;
+            
+            var Beacon = function(id, major, minor) {
+                this.id = id;
+                this.major = major;
+                this.minor = minor;
+                this.state = STATE_BLANK;
+                
+                observer.make(this);
+            };
+            Beacon.prototype = {
+                setState: function(state) {
+                    if(state == this.state) return;
+                    // only apply when state really changed
+                    this.state = state;
+                    this.publish(this);
+                }
+            };
+
+            var Group = function(id) {
+                this.id = id;
+                this.beacons = []; 
+            };
+            Group.prototype = {
+                add: function(beacon) {
+                    this.beacons.push(beacon);
+                },
+
+                setState: function(state) {
+                    _.each(this.beacons, function(b) {
+                        b.setState(state);
+                    });
+                },
+
+                getState: function() {
+                    if(_.some(this.beacons, function(beacon) {
+                        return beacon.state == STATE_VISITED;
+                    })) {
+                        return STATE_VISITED;
+                    } 
+                    else {
+                        return STATE_BLANK;
+                    }
+                }
+
+            };
+                
+
+            var Pair = function(front, back, front_msg, back_msg) {
+                this.front = front;
+                this.back = back;
+                this.front_msg = front_msg;
+                this.back_msg = back_msg;
+            };
+            
+            Pair.prototype = {
+                setState: function(state) {
+                    this.front.setState(state);
+                    this.back.setState(state);
+                }, 
+
+                setStateBlank: function() {
+                    this.setState(STATE_BLANK);
+                }, 
+
+                setStateVisited: function() {
+                    this.setState(STATE_VISITED);
+                },
+
+                getSide: function(beacon) {
+                    if(_.contains(this.front, beacon))
+                        return 'front';
+                    if(_.contains(this.back, beacon))
+                        return 'back';
+                    return null;
+                }, 
+
+                action: function(beacon) {
+                    var side = this.getSide(beacon);
+                    if(!side)
+                        return;
+                    return this[side+'Action'](beacon);
+                },
+                
+                frontAction: function(beacon) {
+                    var fs = this.front.getState(),
+                        bs = this.back.getState();
+
+                    if(fs == STATE_VISITED && bs == STATE_VISITED) {
+                        console.log("ios end -> front: Push Notification: "+this.front_msg);
+                        Util.createLocalNotification(this.front_msg);
+
+                        this.setStateBlank();
+                    }
+                }, 
+
+                backAction: function(beacon) {
+                    var fs = this.front.getState(),
+                        bs = this.back.getState();
+                    if(bs == STATE_BLANK) {
+                        console.log("ios front -> end: Push Notification: "+this.back_msg);
+                        Util.createLocalNotification(this.back_msg);
+
+                        this.setStateVisited();
+                    }
+                }
+            };
+
+
+            
+            
+            // main
+            var identifier = 'Estimote Beacon',
+                uuid = 'b9407f30-f5f8-466e-aff9-25556b57fe6d';
+            
+            // var fb = {id: 26, major: 58877, minor: 52730},
+            //     tb = {id: 27, major: 55445, minor: 53655};
+            
+            var fb = new Beacon(26, 58877, 52730),
+                bb = new Beacon(27, 55445, 53655),
+                beacons = [fb, bb];
+            var fg = new Group(1), bg = new Group(2);
+            fg.add(fb);
+            bg.add(bb);
+            var pair = new Pair(fg, bg, 'Welcome ^^', 'Bye :)');
+            _.each(beacons, function(beacon) {
+                beacon.addSubscriber(pair.action.bind(pair));
+            });
+            
+            var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid);
+            var delegate = new cordova.plugins.locationManager.Delegate().implement({
+                didDetermineStateForRegion: function (pluginResult) {
+                    console.log('[ibeacon:'+self.uuid+']didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+                },
+                didStartMonitoringForRegion: function (pluginResult) {
+                    console.log('[ibeacon:'+this.uuid+']didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+                },
+                didRangeBeaconsInRegion: function (pluginResult) {
+                    console.log('[ibeacon:'+this.uuid+']didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                    if(pluginResult && pluginResult.beacons && pluginResult.beacons.length > 0) {
+                        var beacons_ret = pluginResult.beacons;
+                        _.each(beacons_ret, function(ret) {
+                            var bcon = _.find(beacons, function(beacon) {
+                                return beacon['major'] == ret['major'] &&
+                                    beacon['minor'] == ret['minor'];
+                            });
+                            bcon.setState(STATE_VISITED);
+                        });
+                    }
+                }
+            });
+            cordova.plugins.locationManager.setDelegate(delegate);
+            cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
+            cordova.plugins.locationManager.startMonitoringForRegion(region).fail(console.log).done();
+        }
+
 
         function checkAndEnableBluetooth() {
             console.log('check and enable bluetooth');

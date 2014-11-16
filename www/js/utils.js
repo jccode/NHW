@@ -102,6 +102,12 @@ var Util = {
         }
     },
 
+    isIOS: function() {
+        if(!window.device)
+            return false;
+        return device.platform.toLowerCase() == 'ios';
+    }, 
+
     isIbeaconSupported: function() {
         if(!window.device)
             return false;
@@ -111,7 +117,7 @@ var Util = {
         console.log('[util.js 110] platform: ' + platform);
         
         return platform == 'ios' || (platform == 'android' && version >= '4.3');
-    }, 
+    },
 
     createLocalNotification: function(msg) {
         var defaultOpts = {
