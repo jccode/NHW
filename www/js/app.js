@@ -173,7 +173,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 observer.make(this);
             };
             Beacon.prototype = {
-                setState: function(state) {
+                stateChange: function(state) {
                     console.log( 'beacon ' + this.major + ' set state. ' + 'current state is ' + this.state
                                  + ((state == this.state)? ' state not change. skip. ': '') );
 
@@ -182,6 +182,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     this.state = state;
                     this.publish(this);
                 },
+
+                setState: function(state) {
+                    this.state = state;
+                }, 
 
                 toString: function() {
                     return ['[Ojbect beacon]', this.id+'', 'major:' + this.major].join(' ');
@@ -263,9 +267,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
                     if(fs == STATE_VISITED && bs == STATE_VISITED) {
                         console.log("ios end -> front: Push Notification: "+this.front_msg);
-                        Util.createLocalNotification(this.front_msg);
-
                         this.setStateBlank();
+                        Util.createLocalNotification(this.front_msg);
                     }
                 }, 
 
@@ -276,9 +279,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     
                     if(bs == STATE_BLANK) {
                         console.log("ios front -> end: Push Notification: "+this.back_msg);
-                        Util.createLocalNotification(this.back_msg);
-
                         this.setStateVisited();
+                        Util.createLocalNotification(this.back_msg);
                     }
                 }
             };
@@ -334,9 +336,9 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                                 beacon['minor'] == ret['minor'];
                         });
                         if(b) {
-                            beacon.setState(STATE_VISITED);
+                            beacon.stateChange(STATE_VISITED);
                         } else {
-                            beacon.setState(STATE_BLANK);
+                            beacon.stateChange(STATE_BLANK);
                         }
                     });
                 }
