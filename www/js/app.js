@@ -240,9 +240,9 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 },
 
                 getSide: function(beacon) {
-                    if(_.contains(this.front, beacon))
+                    if(_.contains(this.front.beacons, beacon))
                         return 'front';
-                    if(_.contains(this.back, beacon))
+                    if(_.contains(this.back.beacons, beacon))
                         return 'back';
                     return null;
                 }, 
@@ -314,6 +314,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon:'+this.uuid+']didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                    /*
                     if(pluginResult && pluginResult.beacons && pluginResult.beacons.length > 0) {
                         var beacons_ret = pluginResult.beacons;
                         _.each(beacons_ret, function(ret) {
@@ -324,6 +325,20 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                             bcon.setState(STATE_VISITED);
                         });
                     }
+                     */
+                    var retbeacons = pluginResult.beacons;
+                    _.each(beacons, function(beacon) {
+                        var b = _.find(retbeacons, function(ret) {
+                            if(!ret) return false;
+                            return beacon['major'] == ret['major'] &&
+                                beacon['minor'] == ret['minor'];
+                        });
+                        if(b) {
+                            beacon.setState(STATE_VISITED);
+                        } else {
+                            beacon.setState(STATE_BLANK);
+                        }
+                    });
                 }
             });
             cordova.plugins.locationManager.setDelegate(delegate);
