@@ -583,7 +583,7 @@ var BeaconUtil = function($rootScope) {
                     _.each(beacons, function(beacon) {
                         console.log( '1. detecting ' + beacon );
 
-                        var match = _.find(beacons, function(beacon) {
+                        var match = _.find(retbeacons, function(region) {
                             return beacon['uuid'] == region['uuid'] &&
                                 // beacon['identifier'] == region['identifier'] &&
                                 beacon['major'] == region['major'] &&
