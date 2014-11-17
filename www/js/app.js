@@ -133,6 +133,9 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
         }
 
+        /**
+         * For testing
+         */
         function beacon_test() {
             var identifier1 = 'Estimote Beacon',
                 uuid1 = 'b9407f30-f5f8-466e-aff9-25556b57fe6d',
@@ -160,7 +163,9 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
 
-
+        /**
+         * ios hard code. deprecated.
+         */
         function startIbeacon_ios() {
             console.log( 'start ibeacon for ios' );
 

@@ -576,12 +576,12 @@ var BeaconUtil = function($rootScope) {
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-                    console.log( '-------------------jclog--------------------' );
+                    // console.log( '-------------------jclog--------------------' );
 
                     var retbeacons = pluginResult.beacons;
                     var beacons = $rootScope.beaconmodel.beacons;
                     _.each(beacons, function(beacon) {
-                        console.log( '1. detecting ' + beacon );
+                        // console.log( '1. detecting ' + beacon );
 
                         var match = _.find(retbeacons, function(region) {
                             return beacon['uuid'].toLowerCase() == region['uuid'].toLowerCase() &&
@@ -589,7 +589,7 @@ var BeaconUtil = function($rootScope) {
                                 beacon['major'] == region['major'] &&
                                 beacon['minor'] == region['minor'];
                         });
-                        console.log( '2. ' + (match? 'in range': 'out of range') + ' current state is ' + beacon.state );
+                        // console.log( '2. ' + (match? 'in range': 'out of range') + ' current state is ' + beacon.state );
 
                         
                         // determine state really change
