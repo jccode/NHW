@@ -576,15 +576,21 @@ var BeaconUtil = function($rootScope) {
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                    console.log( '-------------------jclog--------------------' );
+
                     var retbeacons = pluginResult.beacons;
                     var beacons = $rootScope.beaconmodel.beacons;
                     _.each(beacons, function(beacon) {
+                        console.log( '1. detecting ' + beacon );
+
                         var match = _.find(beacons, function(beacon) {
                             return beacon['uuid'] == region['uuid'] &&
                                 // beacon['identifier'] == region['identifier'] &&
                                 beacon['major'] == region['major'] &&
                                 beacon['minor'] == region['minor'];
                         });
+                        console.log( '2. ' + (match? 'in range': 'out of range') + ' current state is ' + beacon.state );
+
                         
                         // determine state really change
                         var state = beacon.state;
