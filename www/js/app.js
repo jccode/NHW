@@ -111,26 +111,29 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 return;
             }
             // below is for android
-            
-            // start ibeacon
-            Beacons.allBeacons().$promise.then(function(beacons) {
-                var ibeacons = _.map(beacons, function(beacon) {
-                    if(!beacon.Active) {
-                        return null;
-                    }
-                    return BeaconUtil.createBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
-                });
+            else {
+                // start ibeacon
+                Beacons.allBeacons().$promise.then(function(beacons) {
+                    var ibeacons = _.map(beacons, function(beacon) {
+                        if(!beacon.Active) {
+                            return null;
+                        }
+                        return BeaconUtil.createBeacon(beacon.UUID, beacon.Name, beacon.Major, beacon.Minor);
+                    });
 
-                var delegate = BeaconUtil.createDelegate();
-                cordova.plugins.locationManager.setDelegate(delegate);
-                _.each(ibeacons, function(ibeacon) {
-                    if(ibeacon) {
-                        cordova.plugins.locationManager.startMonitoringForRegion(ibeacon).fail(console.log).done();
-                    }
+                    var delegate = BeaconUtil.createDelegate();
+                    cordova.plugins.locationManager.setDelegate(delegate);
+                    _.each(ibeacons, function(ibeacon) {
+                        if(ibeacon) {
+                            cordova.plugins.locationManager.startMonitoringForRegion(ibeacon).fail(console.log).done();
+                        }
+                    });
                 });
-            });
+            }
 
-            /*
+        }
+
+        function beacon_test() {
             var identifier1 = 'Estimote Beacon',
                 uuid1 = 'b9407f30-f5f8-466e-aff9-25556b57fe6d',
                 major1 = 58877,
@@ -154,9 +157,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 cordova.plugins.locationManager.startMonitoringForRegion(beacon11).fail(console.log).done();
                 cordova.plugins.locationManager.startMonitoringForRegion(beacon2).fail(console.log).done();
             });
-             */
-            
         }
+
 
 
         function startIbeacon_ios() {

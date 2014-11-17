@@ -581,7 +581,7 @@ var BeaconUtil = function($rootScope) {
                     _.each(beacons, function(beacon) {
                         var match = _.find(beacons, function(beacon) {
                             return beacon['uuid'] == region['uuid'] &&
-                                beacon['identifier'] == region['identifier'] &&
+                                // beacon['identifier'] == region['identifier'] &&
                                 beacon['major'] == region['major'] &&
                                 beacon['minor'] == region['minor'];
                         });
@@ -590,12 +590,16 @@ var BeaconUtil = function($rootScope) {
                         var state = beacon.state;
                         if(match) {
                             if(state != BEACON_IN_RANGE) { // state changed
+                                console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
+
                                 beacon.stateChange(BEACON_IN_RANGE);
                                 $rootScope.isInBuilding = true;
                                 $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                             }
                         } else {
                             if(state != BEACON_OUT_OF_RANGE) {
+                                console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
+                                
                                 beacon.stateChange(BEACON_OUT_OF_RANGE);
                                 $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                             }
