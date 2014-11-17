@@ -584,7 +584,7 @@ var BeaconUtil = function($rootScope) {
                         console.log( '1. detecting ' + beacon );
 
                         var match = _.find(retbeacons, function(region) {
-                            return beacon['uuid'] == region['uuid'] &&
+                            return beacon['uuid'].toLowerCase() == region['uuid'].toLowerCase() &&
                                 // beacon['identifier'] == region['identifier'] &&
                                 beacon['major'] == region['major'] &&
                                 beacon['minor'] == region['minor'];
