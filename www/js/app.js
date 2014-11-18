@@ -674,6 +674,15 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 }
             })
 
+            .state("app.colleague_profile", {
+                url: "/collprofile/:uid",
+                views: {
+                    "mainContent": {
+                        templateUrl: "partials/colleague_profile.html"
+                    }
+                }
+            })
+
             .state("app.employees", {
                 url: "/employees?t",
                 views: {

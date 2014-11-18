@@ -544,8 +544,56 @@ angular.module("nhw.controllers", ['nhw.services'])
         $scope.updateUserState = function(available) {
             User.setUserState(available);
         };
+    }])
 
-        
+    .controller('ColleagueProfileCtrl', ['$scope', '$stateParams', '$rootScope', '$window', 'User', 'Util', 'SVG', 'CtrlService', function($scope, $stateParams, $rootScope, $window, User, Util, SVG, CtrlService) {
+        var uid = $stateParams.uid;
+        $scope.user = User.findById(uid);
+        $scope.iscuser = uid == $rootScope.cuser.id; 
+        // $scope.baseurl = Util.getPictureRootUrl();
+        User.favoriteCount(uid).then(function(ret) {
+            $scope.favourite_count = ret || 0;
+        });
+        User.isFavourite(uid).then(function(ret) {
+            $scope.isFavourited = ret;
+        });
+        User.hasCheckIn(uid).then(function(ret) {
+            $scope.checkinInfo = ret;
+
+            if(ret) {
+                var svg = new SVG(ret.FloorId, parseInt(ret.SeatCode));
+                svg.load().then(function(svg) {
+                    svg.init_seat_state();
+
+                    var classes = {
+                        "seat-available": false,
+                        "seat-unavailable": false
+                    };
+                    if($scope.iscuser) {
+                        classes["seat-cuser"] = true;
+                    } else {
+                        classes["seat-me"] = true;
+                    }
+                    
+                    var el = svg.innersvg.select("#circle"+svg.seat);
+                    el.classed(classes).attr("data-user", uid);
+
+                    setTimeout(function() {
+                        svg.center_map();
+                    }, 500);
+                
+                });
+            }
+        });
+
+        $scope.toggle_favourite = CtrlService.toggle_favourite;
+
+        $scope.back = function() {
+            $window.history.back();
+        }
+        $scope.updateUserState = function(available) {
+            User.setUserState(available);
+        };
     }])
 
 

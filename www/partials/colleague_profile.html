@@ -1,0 +1,90 @@
+
+<div id="user-profile" class="container-fluid profile" ng-controller="ColleagueProfileCtrl">
+    <div class="row">
+        <div class="col-xs-6 user">
+            <b>{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b> <br />
+            <small>{{user.Email}}</small> <br />
+            <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{user.UserPic}}" class="img-circle" /> <!-- src="img/avatar.jpg" -->
+        </div>
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-xs-12 workspace ">
+                    <div class="row row-padding">
+                        <div class="col-xs-12">
+                            <b>Status: </b>
+                            <span ng-show="user.IsAvailable" class="text-success">Beschikbaar</span>
+                            <span ng-hide="user.IsAvailable" class="text-danger">Niet storen</span>
+                        </div>
+                    </div>
+                    <div class="row row-padding top-line">
+                        <div class="col-xs-12 checkin-info" ng-show="checkinInfo">
+                            <h6>Ingecheckt op: </h6>
+                            <div>
+                                <label>Verdieping:</label>
+                                <b >{{checkinInfo.BuildingFloor.FloorNum}}</b>
+                            </div>
+                            <div>
+                                <label>Werkplek:</label>
+                                <b >{{checkinInfo.SeatCode}}</b>
+                            </div>
+                        </div>
+                        <div class="col-xs-12" ng-show="!checkinInfo">
+                            <b>Niet ingecheckt</b>
+                        </div>
+                    </div>
+                    <div class="row row-padding top-line text-center">
+                        <div class="col-xs-12">
+                            <a href="javascript:;" class="text-deepblue" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
+                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
+                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijder uit favorieten </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="row">
+                <div class="col-xs-12 workspace">
+                    <div class="row row-padding">
+                        <div class="col-xs-12">
+                            <b>Status</b>
+                        </div>
+                    </div>
+                    <div class="row form-group row-padding top-line">
+                        
+                        <div ng-show="!iscuser"> <!- - For colleague - ->
+                            <div class="col-xs-12 checkin-info" ng-show="checkinInfo">
+                                <h6>Ingecheckt op: </h6>
+                                <div>
+                                    <label>Verdieping:</label>
+                                    <b >{{checkinInfo.BuildingFloor.FloorNum}}</b>
+                                </div>
+                                <div>
+                                    <label>Werkplek:</label>
+                                    <b >{{checkinInfo.SeatCode}}</b>
+                                </div>
+                                <div class="available-status">
+                                    <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
+                                    <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" ng-show="!checkinInfo">
+                                Niet ingecheckt
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!- -/ end row -->
+            
+        </div>
+    </div>
+
+    <div ng-show="checkinInfo" style="background-color:#fff;" auto-height >
+        <div id="svg-wrapper" ></div>
+    </div>
+
+</div>
+
+
+
