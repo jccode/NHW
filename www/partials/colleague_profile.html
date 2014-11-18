@@ -1,14 +1,14 @@
 
-<div id="user-profile" class="container-fluid profile" ng-controller="ColleagueProfileCtrl">
-    <div class="row">
+<div id="user-colleague-profile" class="container-fluid profile user-profile" ng-controller="ColleagueProfileCtrl">
+    <div class="row bottom-line">
         <div class="col-xs-6 user">
             <b>{{user.FirstName}} {{user.MiddleName}} {{user.LastName}}</b> <br />
             <small>{{user.Email}}</small> <br />
             <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{user.UserPic}}" class="img-circle" /> <!-- src="img/avatar.jpg" -->
         </div>
         <div class="col-xs-6">
-            <div class="row">
-                <div class="col-xs-12 workspace ">
+            <div class="row ">
+                <div class="col-xs-12 workspace">
                     <div class="row row-padding">
                         <div class="col-xs-12">
                             <b>Status: </b>
@@ -42,40 +42,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--
-            <div class="row">
-                <div class="col-xs-12 workspace">
-                    <div class="row row-padding">
-                        <div class="col-xs-12">
-                            <b>Status</b>
-                        </div>
-                    </div>
-                    <div class="row form-group row-padding top-line">
-                        
-                        <div ng-show="!iscuser"> <!- - For colleague - ->
-                            <div class="col-xs-12 checkin-info" ng-show="checkinInfo">
-                                <h6>Ingecheckt op: </h6>
-                                <div>
-                                    <label>Verdieping:</label>
-                                    <b >{{checkinInfo.BuildingFloor.FloorNum}}</b>
-                                </div>
-                                <div>
-                                    <label>Werkplek:</label>
-                                    <b >{{checkinInfo.SeatCode}}</b>
-                                </div>
-                                <div class="available-status">
-                                    <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
-                                    <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" ng-show="!checkinInfo">
-                                Niet ingecheckt
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!- -/ end row -->
             
         </div>
     </div>

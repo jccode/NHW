@@ -426,31 +426,41 @@ img.bg-img {
     width: 34px;
   }
 }
-#user-profile {
+#user-profile,
+#user-colleague-profile {
   background-color: #f0f0f0;
   padding: 20px 30px 0 20px;
 }
-#user-profile .row.row-padding {
+#user-profile .row.row-padding,
+#user-colleague-profile .row.row-padding {
   margin-left: 0px;
   margin-right: 0px;
 }
-#user-profile .workspace {
+#user-profile .workspace,
+#user-colleague-profile .workspace {
   margin: 0 0 20px;
   padding: 0px;
 }
-#user-profile .footer {
+#user-profile .footer,
+#user-colleague-profile .footer {
   padding-right: 0px;
 }
 @media (max-width: 767px) {
-  #user-profile {
+  #user-profile,
+  #user-colleague-profile {
     padding: 0px;
   }
-  #user-profile .workspace {
+  #user-profile .workspace,
+  #user-colleague-profile .workspace {
     margin: 0px 0px 15px;
   }
-  #user-profile .footer {
+  #user-profile .footer,
+  #user-colleague-profile .footer {
     padding-right: 20px;
   }
+}
+#user-colleague-profile .workspace {
+  margin: 0px;
 }
 .checkin-info label {
   width: 80px;

@@ -562,7 +562,7 @@ img.bg-img {
 }
 
 
-#user-profile {
+#user-profile, #user-colleague-profile {
     background-color: @profile-user-bg;
     padding: 20px 30px 0 20px;
 
@@ -582,7 +582,7 @@ img.bg-img {
 }
 
 @media (max-width: @screen-xs-max) {
-    #user-profile {
+    #user-profile, #user-colleague-profile {
         padding: 0px;
         
         .workspace {
@@ -592,6 +592,12 @@ img.bg-img {
         .footer {
             padding-right: 20px;
         }
+    }
+}
+
+#user-colleague-profile {
+    .workspace {
+        margin: 0px;
     }
 }
 
