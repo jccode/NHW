@@ -528,9 +528,10 @@ angular.module("nhw.controllers", ['nhw.services'])
                     var el = svg.innersvg.select("#circle"+svg.seat);
                     el.classed(classes).attr("data-user", uid);
 
-                    setTimeout(function() {
+                    angular.element($window).triggerHandler('resize');
+                    // setTimeout(function() {
                         svg.center_map();
-                    }, 500);
+                    // }, 500);
                 
                 });
             }
@@ -578,9 +579,10 @@ angular.module("nhw.controllers", ['nhw.services'])
                     var el = svg.innersvg.select("#circle"+svg.seat);
                     el.classed(classes).attr("data-user", uid);
 
-                    setTimeout(function() {
+                    angular.element($window).triggerHandler('resize');
+                    // setTimeout(function() {
                         svg.center_map();
-                    }, 500);
+                    // }, 500);
                 
                 });
             }

@@ -590,7 +590,6 @@ var BeaconUtil = function($rootScope) {
                                 beacon['minor'] == region['minor'];
                         });
                         // console.log( '2. ' + (match? 'in range': 'out of range') + ' current state is ' + beacon.state );
-
                         
                         // determine state really change
                         var state = beacon.state;

@@ -145,6 +145,31 @@ angular.module('nhw.directives', [])
             }
         };
     }])
+
+    .directive('hidesidemenu', ['$rootScope', '$window', function($rootScope, $window) {
+        return {
+            link: function(scope, element, attr) {
+                
+                $rootScope.$watch('cuser', function(newval, oldval) {
+                    var w = $window.innerWidth;
+                    if(w < 1280)
+                        return;
+                    
+                    var c1 = element.hasClass('has-sidebar-left'),
+                        c2 = element.hasClass('sidebar-left-in');
+                    if(!newval) {
+                        if(c1)
+                            element.removeClass('has-sidebar-left');
+                        if(c2)
+                            element.removeClass('sidebar-left-in');
+                    } else {
+                        if(!c1 && !c2)
+                            element.addClass('has-sidebar-left');
+                    }
+                });
+            }
+        };
+    }])
 ;
 
 

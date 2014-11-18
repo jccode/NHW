@@ -545,15 +545,6 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
         
         // left sidebar responsive
-        angular.element($window).bind('resize', function() {
-            console.log($window.innerWidth);
-            if(innerWidth >= 1280 ) {
-                if(!cuser) {
-                    // document.getElementById("#mainview")
-                    // angular.element();
-                }
-            }
-        });
         
         
         // test
