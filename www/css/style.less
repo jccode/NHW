@@ -49,8 +49,6 @@
 // sidemenu
 
 .sidebar-left {
-    width: @sidemenu-width;
-
     background-color: #fff;
 
     .app-name {
@@ -65,10 +63,17 @@
     }
 }
 
-.sidebar-left-in .app {
-    -webkit-transform: translate3d(@sidemenu-width, 0px, 0px) !important;
-    transform: translate3d(@sidemenu-width, 0px, 0px) !important;
+@media (max-width: @screen-xs) {
+    .sidebar-left {
+        width: @sidemenu-width;
+    }
+
+    .sidebar-left-in .app {
+        -webkit-transform: translate3d(@sidemenu-width, 0px, 0px) !important;
+        transform: translate3d(@sidemenu-width, 0px, 0px) !important;
+    }
 }
+
 
 .app-name + .scrollable {
     padding-top: 50px;

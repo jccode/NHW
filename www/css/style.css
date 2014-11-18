@@ -30,7 +30,6 @@
   border-color: #0c077f !important;
 }
 .sidebar-left {
-  width: 200px;
   background-color: #fff;
 }
 .sidebar-left .app-name {
@@ -42,9 +41,14 @@
   padding-bottom: 5px;
   border-bottom: #ddd 1px solid;
 }
-.sidebar-left-in .app {
-  -webkit-transform: translate3d(200px, 0px, 0px) !important;
-  transform: translate3d(200px, 0px, 0px) !important;
+@media (max-width: 480px) {
+  .sidebar-left {
+    width: 200px;
+  }
+  .sidebar-left-in .app {
+    -webkit-transform: translate3d(200px, 0px, 0px) !important;
+    transform: translate3d(200px, 0px, 0px) !important;
+  }
 }
 .app-name + .scrollable {
   padding-top: 50px;

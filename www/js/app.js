@@ -489,7 +489,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     }])
 
      // run config on startup
-    .run(['$rootScope', '$state', '$stateParams', 'Util', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, Util, Bootstrap, $modalStack, User) {
+    .run(['$rootScope', '$state', '$stateParams', '$window', 'Util', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, $window, Util, Bootstrap, $modalStack, User) {
         
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
@@ -541,6 +541,18 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         
         $rootScope.$on(EVENTS.BEACON_STATE_CHANGE, function() {
             $rootScope.isInBuilding = Util.isInBuilding();
+        });
+
+        
+        // left sidebar responsive
+        angular.element($window).bind('resize', function() {
+            console.log($window.innerWidth);
+            if(innerWidth >= 1280 ) {
+                if(!cuser) {
+                    // document.getElementById("#mainview")
+                    // angular.element();
+                }
+            }
         });
         
         
