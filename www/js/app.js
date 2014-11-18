@@ -136,6 +136,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         /**
          * For testing
          */
+        /*
         function beacon_test() {
             var identifier1 = 'Estimote Beacon',
                 uuid1 = 'b9407f30-f5f8-466e-aff9-25556b57fe6d',
@@ -161,11 +162,12 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 cordova.plugins.locationManager.startMonitoringForRegion(beacon2).fail(console.log).done();
             });
         }
-
+         */
 
         /**
          * ios hard code. deprecated.
          */
+        /*
         function startIbeacon_ios() {
             console.log( 'start ibeacon for ios' );
 
@@ -325,18 +327,18 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon:'+this.uuid+']didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-                    /*
-                    if(pluginResult && pluginResult.beacons && pluginResult.beacons.length > 0) {
-                        var beacons_ret = pluginResult.beacons;
-                        _.each(beacons_ret, function(ret) {
-                            var bcon = _.find(beacons, function(beacon) {
-                                return beacon['major'] == ret['major'] &&
-                                    beacon['minor'] == ret['minor'];
-                            });
-                            bcon.setState(STATE_VISITED);
-                        });
-                    }
-                     */
+
+                    // if(pluginResult && pluginResult.beacons && pluginResult.beacons.length > 0) {
+                    //     var beacons_ret = pluginResult.beacons;
+                    //     _.each(beacons_ret, function(ret) {
+                    //         var bcon = _.find(beacons, function(beacon) {
+                    //             return beacon['major'] == ret['major'] &&
+                    //                 beacon['minor'] == ret['minor'];
+                    //         });
+                    //         bcon.setState(STATE_VISITED);
+                    //     });
+                    // }
+
                     var retbeacons = pluginResult.beacons;
                     _.each(beacons, function(beacon) {
                         var b = _.find(retbeacons, function(ret) {
@@ -356,7 +358,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
             cordova.plugins.locationManager.startMonitoringForRegion(region).fail(console.log).done();
         }
-
+         */
 
         function checkAndEnableBluetooth() {
             console.log('check and enable bluetooth');
