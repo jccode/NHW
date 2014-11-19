@@ -369,6 +369,12 @@ angular.module("nhw.controllers", ['nhw.services'])
                 var t = (el.classed('seat-cuser') || el.classed('seat-unavailable'))
                         ? "user"
                         : (hascheckin ? "seat_change" : "workspace");
+
+                // disallow user to change seat, if user not in building
+                if(!$rootScope.isInBuilding && t == "seat_change")  {
+                    return;
+                }
+                
                 $scope.$apply(function() {
                     $scope.popup = t;
                 });
