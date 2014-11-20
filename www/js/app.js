@@ -96,7 +96,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             }
 
             // determine whether a user is inside building
-            // $rootScope.isInBuilding = Util.isInBuilding();
+            $rootScope.isInBuilding = Util.isInBuilding();
 
             if(Util.isIOS()) {
                 // startIbeacon_ios();
@@ -539,13 +539,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         });
 
         
-        $rootScope.$on(EVENTS.BEACON_STATE_CHANGE, function() {
-            $rootScope.isInBuilding = Util.isInBuilding();
-        });
+        // $rootScope.$on(EVENTS.BEACON_STATE_CHANGE, function() {
+        //     $rootScope.isInBuilding = Util.isInBuilding();
+        // });
 
-        
-        // left sidebar responsive
-        
         
         // test
         // if(!Util.isRunningOnPhonegap() && Storage) {

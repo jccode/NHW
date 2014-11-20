@@ -6,10 +6,11 @@ var STORAGE_KEYS = {
     USER_DATA: 'KEY_LOCAL_USER_DATA', 
     LAST_UPDATE_DATE: 'KEY_LOCAL_LAST_UPDATE_DATE',
     CUSTOMER_SERVER_URL: 'KEY_LOCAL_CUSTOMER_SERVER_URL',
-    BEACON_STATE: 'KEY_LOCAL_BEACON_STATE', 
+    BEACON_STATE: 'KEY_LOCAL_BEACON_STATE',
+    IS_IN_BUILDEING: 'KEY_LOCAL_IS_IN_BUILDING', 
     SEAT_WILLING_CHECKIN: 'KEY_SESSION_SEAT_WILLING_CHECKIN',
     SCAN_CONFIRM_CHECKIN: 'KEY_SESSION_SCAN_CONFIRM_CHECKIN',
-    FIRSTTIME_USE: 'KEY_LOCAL_FIRSTTIME_USE'
+    FIRSTTIME_USE: 'KEY_LOCAL_FIRSTTIME_USE'    
 };
 
 var EVENTS = {
@@ -288,11 +289,17 @@ var Util = {
         this.localStorage.remove(STORAGE_KEYS.BEACON_STATE);
     }, 
 
-    isInBuilding: function() {
-        var states = Util.getBeaconStates();
-        return _.some(_.values(states), function(s) {
-            return s.state == BEACON_IN_RANGE;
-        });
+    isInBuilding: function(flag) {
+        // var states = Util.getBeaconStates();
+        // return _.some(_.values(states), function(s) {
+        //     return s.state == BEACON_IN_RANGE;
+        // });
+        
+        if(flag == undefined) {
+            return this.getUserData(STORAGE_KEYS.IS_IN_BUILDEING);
+        } else {
+            this.setUserData(STORAGE_KEYS.IS_IN_BUILDEING, flag);
+        }
     }, 
 
 
@@ -542,13 +549,11 @@ var BeaconUtil = function($rootScope) {
                         
                         if(state == 'CLRegionStateInside') {
                             match.stateChange(BEACON_IN_RANGE);
-                            $rootScope.isInBuilding = true;
                         }
                         else if(state == 'CLRegionStateOutside') {
                             match.stateChange(BEACON_OUT_OF_RANGE);
                         }
                         
-                        $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                     }
                     
                     cordova.plugins.locationManager.appendToDeviceLog('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
@@ -596,17 +601,12 @@ var BeaconUtil = function($rootScope) {
                         if(match) {
                             if(state != BEACON_IN_RANGE) { // state changed
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
-
                                 beacon.stateChange(BEACON_IN_RANGE);
-                                $rootScope.isInBuilding = true;
-                                $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                             }
                         } else {
                             if(state != BEACON_OUT_OF_RANGE) {
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
-                                
                                 beacon.stateChange(BEACON_OUT_OF_RANGE);
-                                $rootScope.$emit(EVENTS.BEACON_STATE_CHANGE);
                             }
                         }
                     });

@@ -11,7 +11,7 @@ BEACON_IN_RANGE = 1;
 BEACON_OUT_OF_RANGE = 2;
 
 angular.module('nhw.beacon-model', [])
-    .factory('BeaconModel', ['Util', 'Beacons', function(Util, Beacons) {
+    .factory('BeaconModel', ['$rootScope', 'Util', 'Beacons', function($rootScope, Util, Beacons) {
 
 
         /**
@@ -120,19 +120,19 @@ angular.module('nhw.beacon-model', [])
                 if(!this.isBeaconInRule(beacon)) {
                     return;
                 }
-                var fb = this.from.lastUpdateBeacon(),
-                    tb = this.to.lastUpdateBeacon();
-                if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
-                    // from -> to
-                    // OUT -> IN, IN -> IN, OUT -> OUT
-                    if( (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_IN_RANGE) ||
-                        (fb.state == BEACON_IN_RANGE && tb.state == BEACON_IN_RANGE) ||
-                        (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_OUT_OF_RANGE) ) {
+                if(this.isRuleTrigger()) {
+                    // push notifications.
+                    console.log("[Rule "+this.id+" trigger] Push Notification: "+this.message);
+                    Util.createLocalNotification(this.message);
+                    Beacons.logRuleTrigger(this.id);
 
-                        // push notifications.
-                        console.log("[Rule "+this.id+" trigger] Push Notification: "+this.message);
-                        Util.createLocalNotification(this.message);
-                        Beacons.logRuleTrigger(this.id);
+                    // hard code: inside / outside building
+                    if(this.id == 1 || this.id == 3) {
+                        Util.isInBuilding(true);
+                        $rootScope.isInBuilding = true;
+                    } else if(this.id == 2 || this.id == 4) {
+                        Util.isInBuilding(false);
+                        $rootScope.isInBuilding = false;
                     }
                 }
             }, 
@@ -145,9 +145,23 @@ angular.module('nhw.beacon-model', [])
                 var beacons = this.from.beacons;
                 beacons = beacons.concat(this.to.beacons);
                 return _.contains(beacons, beacon);
+            }, 
+
+            isRuleTrigger:function() {
+                var fb = this.from.lastUpdateBeacon(),
+                    tb = this.to.lastUpdateBeacon();
+                if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
+                    if( (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_IN_RANGE) ||
+                        (fb.state == BEACON_IN_RANGE && tb.state == BEACON_IN_RANGE) ||
+                        (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_OUT_OF_RANGE) ) {
+
+                        return true;
+                    }
+                }
+                
+                return false;
             }
-
-
+            
         };
 
         return {
