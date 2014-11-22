@@ -46,7 +46,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     // rules
                     Beacons.allRules().$promise.then(function(rules) {
                         _.each(rules, function(rule) {
-                            var r = new BeaconModel.Rule(rule.RuleId, groupMap[rule.From], groupMap[rule.To], rule.Message);
+                            var r = new BeaconModel.Rule(rule.RuleId, groupMap[rule.From], groupMap[rule.To], rule.Message, rule.Type);
                             model.rules.push(r);
                         });
 
@@ -60,7 +60,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
                         // test
                         console.log("Init beacon model complelted");
-                        // console.log( JSON.stringify($rootScope.beaconmodel.beacons) );
+                        // console.log( JSON.stringify($rootScope.beaconmodel.rules) );
 
                         bindRulesToBeacon(model.rules);
 

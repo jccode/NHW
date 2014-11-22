@@ -9,6 +9,8 @@
 // Constants
 BEACON_IN_RANGE = 1;
 BEACON_OUT_OF_RANGE = 2;
+RULE_TYPE_Enter = 1;
+RULE_TYPE_Exit = 2;
 
 angular.module('nhw.beacon-model', [])
     .factory('BeaconModel', ['$rootScope', 'Util', 'Beacons', function($rootScope, Util, Beacons) {
@@ -105,11 +107,12 @@ angular.module('nhw.beacon-model', [])
         };
 
 
-        function Rule(id, from, to, message) {
+        function Rule(id, from, to, message, type) {
             this.id = id;
             this.from = from;
             this.to = to;
             this.message = message;
+            this.type = type;
         }
 
         Rule.THRESHOLD = 20 * 60 * 1000;          // 20 * 60 * 1000; 20 min;
@@ -126,11 +129,11 @@ angular.module('nhw.beacon-model', [])
                     Util.createLocalNotification(this.message);
                     Beacons.logRuleTrigger(this.id);
 
-                    // hard code: inside / outside building
-                    if(this.id == 1 || this.id == 3) {
+                    // inside / outside building
+                    if(this.type == RULE_TYPE_Enter) {
                         Util.isInBuilding(true);
                         $rootScope.isInBuilding = true;
-                    } else if(this.id == 2 || this.id == 4) {
+                    } else if(this.type == RULE_TYPE_Exit) {
                         Util.isInBuilding(false);
                         $rootScope.isInBuilding = false;
                     }
