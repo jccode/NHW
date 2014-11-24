@@ -94,6 +94,7 @@ angular.module('nhw.directives', [])
                     // console.log( 'nhw src observe: ' + value );
 
                     if(!value || !IMG_REGEX.test(value)) {
+                        attr.$set("src", "img/default_avatar.jpg"); //default-avatar
                         return;
                     }
 
