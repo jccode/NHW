@@ -103,7 +103,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
             cancelFavourite: function(uid) {
                 var user = Util.currUser();
-                $http.delete(this.favouriteurl() + '/cancel/' + user.id + '/' + uid);
+                // $http.delete(this.favouriteurl() + '/cancel/' + user.id + '/' + uid);
+                $http['delete'](this.favouriteurl() + '/cancel/' + user.id + '/' + uid);
             },
 
             favoriteCount: function(uid) {

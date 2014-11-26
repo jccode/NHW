@@ -1,4 +1,9 @@
 
+;(function(window) {
+    
+
+
+
 // Constants
 
 var STORAGE_KEYS = {
@@ -680,3 +685,25 @@ _.each(['LocalStorage', 'SessionStorage'], function(storageType) {
     nhwUtils.factory(storageType, ['$window', WebStorage(storageType)]);
 });
 
+
+
+
+    // --------------------
+    // Export
+    //
+
+    var exports = {
+        "STORAGE_KEYS": STORAGE_KEYS,
+        "EVENTS": EVENTS,
+        "Log": Log,
+        "WebStorage": WebStorage,
+        "Util": Util,
+        "DataTransform": DataTransform,
+        "SingleBeacon": SingleBeacon,
+        "BeaconUtil": BeaconUtil
+    };
+
+    _.extend(window, exports);
+    
+
+})(window);    

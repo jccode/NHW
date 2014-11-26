@@ -7,6 +7,7 @@
 //
 
 // Constants
+;
 BEACON_IN_RANGE = 1;
 BEACON_OUT_OF_RANGE = 2;
 RULE_TYPE_Enter = 1;

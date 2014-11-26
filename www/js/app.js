@@ -606,7 +606,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         
             .state("app", {
                 url: "/app",
-                abstract: true,
+                "abstract": true,
                 templateUrl: "partials/main.html"
             })
 

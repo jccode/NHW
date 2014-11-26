@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+;(function(window) {
+
+    
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -91,7 +95,7 @@ var app = {
 
 
 
+window.app = app;
 
-
-
+})(window);
 

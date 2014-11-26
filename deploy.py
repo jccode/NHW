@@ -83,15 +83,16 @@ def copy_and_minify_css(src_www, deploy_www):
 def copy_and_minify_js(src_www, deploy_www):
     os.mkdir(join(deploy_www, "js"))
     js = [
-        'js/app.js', 
-        'js/observer.js', 
         'js/utils.js', 
+        'js/index.js', 
+        'js/observer.js', 
+        'js/app.js', 
         'js/directives.js', 
         'js/filters.js', 
         'js/services.js', 
         'js/controllers.js', 
         'js/beacon_model.js', 
-        'js/index.js', 
+        'js/test.js', 
     ]
     js_min(map(lambda f: join(src_www, f), js), join(deploy_www, 'js/all.min.js'))
     
@@ -101,7 +102,10 @@ def copy_and_minify_html():
     """
     pass
 
-
+def copy_index_html(deploy_root):    
+    shutil.copy(join(deploy_root, 'index.html'), join(deploy_root, 'www', 'index.html'))
+    
+    
 def minify_css_proc(content):
     return cssmin(content, keep_bang_comments=True)
     
@@ -150,6 +154,9 @@ if __name__ == '__main__':
 
     logger.info("copy and minify js files")
     copy_and_minify_js(src_www, deploy_www)
+
+    logger.info("copy index.html")
+    copy_index_html(deploy_root)
     
     logger.info("Remove exclude files")
     exclude_files(deploy_www)

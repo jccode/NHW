@@ -7,7 +7,7 @@ angular.module("nhw.test", ["nhw.services"])
         
             .state("test", {
                 url: "/test", 
-                abstract: true, 
+                "abstract": true, 
                 templateUrl: "partials/test/test.html"
             })
 
@@ -68,7 +68,7 @@ angular.module("nhw.test", ["nhw.services"])
             {name: "Checkin page", sref: "app.checkin"}, 
             {name: "After checkin", sref: "app.index"}, 
             {name: "Plugin Test", sref: "test.plugintest"}, 
-            {name: "API Test", sref: "test.apitest"}, 
+            {name: "API Test", sref: "test.apitest"}
         ];
         
     }])
