@@ -31,7 +31,9 @@ def copy_files_as_orignal(src_www, deploy_www):
         "config.xml", 
     ]
     dirs = [
-        "img"
+        "img",
+        "partials",
+        "res"
     ]
     for f in files:
         shutil.copy(join(src_www, f), join(deploy_www, f))
@@ -103,7 +105,7 @@ def copy_and_minify_html():
     pass
 
 def copy_index_html(deploy_root):    
-    shutil.copy(join(deploy_root, 'index.html'), join(deploy_root, 'www', 'index.html'))
+    shutil.copy(join(deploy_root, 'index.html.tpl'), join(deploy_root, 'www', 'index.html'))
     
     
 def minify_css_proc(content):
