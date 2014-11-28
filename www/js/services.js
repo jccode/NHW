@@ -430,6 +430,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
         SVG.prototype = {
             zoomstarted: function() {
+                d3.event.sourceEvent.stopPropagation();
             },
             
             zoomended: function() {
