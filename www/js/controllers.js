@@ -658,6 +658,11 @@ angular.module("nhw.controllers", ['nhw.services'])
         });
 
         $scope.toggle_favourite = CtrlService.toggle_favourite;
+
+        $scope.loadMore = function () {
+            console.log( 'load more' );
+        };
+
     }])
 
 ;

@@ -13,7 +13,7 @@
 <div style="position:absolute; left:0; top:0; bottom:0; width:100%; margin-bottom:45px;">
     <input type="search" class="form-control app-search awesome" ng-model="q" placeholder="&#xF002;"/>
     <div class="scrollable">
-        <div class="scrollable-content">
+        <div class="scrollable-content" infinite-scroll="loadMore();" threshold="100" can-load="true">
             <ul class="list-group employee-list">
                 <li ng-repeat="employee in employees | excludeId:'UserId':cuser.id | filter:q " class="list-group-item" ui-sref="app.colleague_profile({uid:employee.UserId})">
                     <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{employee.UserPic}}" class="img-circle" width="28px" height="28px"/>
