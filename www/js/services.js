@@ -125,6 +125,11 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 var cuser = Util.currUser(),
                     url = this.baseurl() + '/setuserstatus/'+cuser.id+'/'+isavailable;
                 return $http.put(url);
+            },
+
+            allUserPics: function() {
+                var url = this.baseurl() + '/alluserpic';
+                return Util.httpget(url);
             }, 
 
             incrementalUpdate: function(date) {
@@ -243,6 +248,11 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return Util.httpget(url);
             },
 
+            allsvgfiles: function() {
+                var url = this.baseurl() + '/allsvgfile';
+                return Util.httpget(url);
+            }, 
+
             incrementalUpdate: function(date) {
                 // return $q.when([]);
                 return Util.httpget(this.baseurl() + '/incremental/' + date);
@@ -283,7 +293,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
     }])
 
     .factory('LicenseServer', ['$resource', '$http', '$q', 'Util', function($resource, $http, $q, Util) {
-        // var LICENSE_SERVER_URL = "http://10.81.231.198/license";
+        // var LICENSE_SERVER_URL = "http://10.81.230.117/license";
         var LICENSE_SERVER_URL = "http://www.hongding.nl";
         
         return {
@@ -362,7 +372,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         };
     }])
 
-    .factory('SVG', ['$rootScope', '$window', '$q', 'Floors', function($rootScope, $window, $q, Floors) {
+    .factory('SVG', ['$rootScope', '$window', '$q', 'Floors', 'Util', function($rootScope, $window, $q, Floors, Util) {
 
         var svg_name = function(path) {
             return path.replace(/.*\/(.+\.svg)/i, '$1');
@@ -473,7 +483,8 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                     // for phonegap user
                     var svgname = svg_name(floor.SvgFile),
                         svgpath = $rootScope.SVG_DIR + svgname;
-                    
+
+                    /*
                     $window.resolveLocalFileSystemURL(svgpath, function(f) {
                         console.log( 'Found svg file in ' + f.toURL() );
                         self._load_svg(f.toURL(), loadSuccess);
@@ -500,10 +511,19 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                             self._load_svg(svgurl, loadSuccess);
                         }
                     });
+                     */
+
+
+                    Util.download(svgurl, svgpath).then(function(path) {
+                        self._load_svg(path, loadSuccess);
+                    }, function(error) {
+                        self._load_svg(svgurl, loadSuccess);
+                    });
                     
                 }, function(error) {
                     deferred.reject(error);
                 });
+                 
                 
                 return deferred.promise;
             }, 

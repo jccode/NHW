@@ -44,6 +44,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                             console.log('when login, start check and enable bluetooth');
                             Bootstrap.initBeaconModel();
                             Bootstrap.checkAndEnableBluetooth();
+                            Bootstrap.preloadOfflineFiles();
                             
                             // Bootstrap.syncData(function(ret) {
                                 $scope.loading = false;

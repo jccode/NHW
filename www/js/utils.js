@@ -90,7 +90,9 @@ var WebStorage = function(type) {
 
 
 var Util = {
-    localStorage: WebStorage('LocalStorage')(window), 
+    localStorage: WebStorage('LocalStorage')(window),
+
+    IMG_REGEX: /.*\/(.+\.(jpg|png|gif|bmp|jpeg))/i, 
 
     getAthorizationKey: function() {
         return "sdfkihernvioerj";
@@ -360,6 +362,14 @@ var Util = {
         }
 
         return directiveNormalize(attr);
+    }, 
+
+    imgName: function(url) {
+        return url.replace(this.IMG_REGEX, '$1');
+    },
+
+    svgName: function(url) {
+        return url.replace(/.*\/(.+\.svg)/i, '$1');
     }
 
 };
@@ -668,9 +678,41 @@ nhwUtils.factory('Log', function() {
         return deferred.promise;
     }
 
+    
+    function download(url, savepath) {
+        // if(!window.resolveLocalFileSystemURL) { // for desktop user
+        //     return $q.when(false);
+        // }
+        
+        var deferred = $q.defer();
+        window.resolveLocalFileSystemURL(savepath, function(f) {
+            console.log( f.toURL() + ' is exist. download cancel.' );
+            deferred.resolve(f.toURL());
+            
+        }, function(e) {
+            if(e.code == 1) {
+                console.log( 'download from ' + url + ' ...' );
+                var ft = new FileTransfer();
+                ft.download(url, savepath, function(entry) {
+                    deferred.resolve(entry.toURL());
+                    
+                }, function(msg, e) {
+                    console.log( 'error occured while downloading. ' + msg );
+                    console.log( JSON.stringify(e) );
+                    deferred.reject(e);
+                });
+            } else {
+                console.log( 'error occured when resolve local file url ' + savepath
+                           + '. error code is ' + e.code);
+                deferred.reject(e);
+            }
+        });
+        return deferred.promise;
+    }
 
     var util = _.extend({
-        httpget: httpget
+        httpget: httpget,
+        download: download
     }, Util);
     
     return util;

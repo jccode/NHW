@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, BeaconUtil, BeaconModel) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
 
         function init_beacon_model() {
             if(!Util.isIbeaconSupported()) {
@@ -470,6 +470,54 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
 
         }
 
+        function preloadUserPics() {
+            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+                return;
+            }
+            User.allUserPics().then(function(pics) {
+                _.each(pics, function(pic) {
+                    if(Util.IMG_REGEX.test(pic)) {
+                        var name = Util.imgName(pic),
+                            url = $rootScope.picurl + pic, 
+                            localUrl = $rootScope.AVATAR_DIR + name;
+                        if(!_.contains($rootScope.userpics, name)) {
+                            Util.download(url, localUrl).then(function(path) {
+                                $rootScope.userpics.push(name);
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        function preloadSvgFiles() {
+            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+                return;
+            }
+            Floors.allsvgfiles().then(function(svgs) {
+                _.each(svgs, function(svg) {
+                    var svgname = Util.svgName(svg),
+                        svgurl = $rootScope.picurl + svg, 
+                        svgpath = $rootScope.SVG_DIR + svgname;
+                    
+                    Util.download(svgurl, svgpath).then(function(path) {
+                        console.log( 'download svg file ' + path + ' successful.' );
+                    });
+                });
+            });
+        }
+
+        function preloadOfflineFiles() {
+            console.log( 'preload offline files' );
+            // for desktop user testing
+            if(!Util.isRunningOnPhonegap()) {
+                return;
+            }
+
+            preloadSvgFiles();
+            preloadUserPics();
+        }
+
 
 
         function deviceready() {
@@ -477,6 +525,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             checkAndEnableBluetooth();
             // syncDataFromServer();
             initCacheFiles();
+            preloadOfflineFiles();
         }
 
         
@@ -484,7 +533,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             deviceready: deviceready,
             // syncData: syncDataFromServer, 
             checkAndEnableBluetooth: checkAndEnableBluetooth,
-            initBeaconModel: init_beacon_model
+            initBeaconModel: init_beacon_model,
+            preloadOfflineFiles: preloadOfflineFiles
         };
     }])
 
