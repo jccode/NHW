@@ -257,6 +257,10 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         };
 
+        $scope.reflush = function () {
+            $rootScope.$broadcast(EVENTS.UPDATE_SVG_STATUS);
+        };
+
     }])
 
     .controller('BuildingsCtrl', ['$scope', '$state', '$stateParams', 'Building', function($scope, $state, $stateParams, Building) {
@@ -332,6 +336,8 @@ angular.module("nhw.controllers", ['nhw.services'])
         // svg
         var svg = new SVG(floorId, seat);
         svg.load().then(function() {
+
+            /*
             svg.init_seat_state();
 
             User.hasCheckIn().then(function(ret) {
@@ -348,7 +354,12 @@ angular.module("nhw.controllers", ['nhw.services'])
                     svg.center_map();
                 }
             });
-
+             */
+            
+            load_svg_status(function() {
+                hascheckin = true;
+                svg.center_map();
+            });
 
             svg.bind_event(function(d) {
                 var el = d3.select(d);
@@ -399,6 +410,7 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
             
         });
+        
 
         function restore_last_selected_seat() {
             if($scope.last_selected_seat) {
@@ -487,6 +499,30 @@ angular.module("nhw.controllers", ['nhw.services'])
 
         $scope.toggle_favourite = CtrlService.toggle_favourite;
         
+
+        function load_svg_status(callback) {
+            svg.init_seat_state();
+
+            User.hasCheckIn().then(function(ret) {
+                if(ret) {
+                    var el = svg.innersvg.select("#circle" + parseInt(ret.SeatCode));
+                    var classes = {
+                        "seat-available": false,
+                        "seat-unavailable": false,
+                        "seat-cuser": true
+                    };
+                    el.classed(classes).attr("data-user", cuser.id);
+
+                    callback && callback();
+                }
+            });
+        }
+
+        // update svg status
+        $scope.$on(EVENTS.UPDATE_SVG_STATUS, function(e) {
+            svg.reset_seat_state();
+            load_svg_status();
+        });
     }])
 
     .controller('CheckInModalCtrl', ['$scope', '$modalInstance', 'Util', 'data', function($scope, $modalInstance, Util, data) {

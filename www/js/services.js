@@ -542,6 +542,14 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                         el.classed(classes).attr("data-user", item.userId);
                     });
                 });
+            },
+
+            reset_seat_state: function() {
+                this.innersvg.selectAll("[id^='circle'][data-user]").classed({
+                    "seat-available": false,
+                    "seat-unavailable": false,
+                    "seat-cuser": false
+                }).attr("data-user", null);
             }, 
 
             bind_event: function(handler) {

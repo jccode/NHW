@@ -17,9 +17,11 @@
         </div>
         <div class="col-xs-5 workspace text-center">
             <div class="text-left inline-block">
-                Ingecheckt op: <br />
-                Verdieping:&nbsp;&nbsp;&nbsp;&nbsp;<b>{{floor.FloorNum}}</b> <br />
-                Werkplek:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{seat}}</b>
+                <div>Ingecheckt op: </div>
+                <div
+                    class="mt5">Verdieping:&nbsp;&nbsp;&nbsp;&nbsp;<b>{{floor.FloorNum}}</b> <br />
+                Werkplek:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{seat}}</b> </div>
+                <div class="mt5"><a  ng-click="reflush();" class="btn-reflush"><i class="fa fa-refresh">&nbsp;&nbsp;</i>Verversen</a></div>
             </div>
         </div>
     </div>

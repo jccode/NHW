@@ -422,6 +422,9 @@ img.bg-img {
 #info-section-profile .current-checkin .fa {
   color: #2ecefa;
 }
+#info-section-profile .btn-reflush {
+  color: #0c077f;
+}
 @media (max-width: 767px) {
   #info-section-profile.profile .user {
     line-height: 34px;
@@ -609,4 +612,7 @@ input.awesome {
 }
 .pointer {
   cursor: pointer;
+}
+.mt5 {
+  margin-top: 5px;
 }

@@ -21,7 +21,8 @@ var STORAGE_KEYS = {
 var EVENTS = {
     DEVICE_READY: 'deviceready',
     CHECKIN_STATE_CHANGE: 'checkin_state_change',
-    BEACON_STATE_CHANGE: 'beacon_state_change'
+    BEACON_STATE_CHANGE: 'beacon_state_change',
+    UPDATE_SVG_STATUS: 'update_svg_status'
 };
 
 // Utilities
