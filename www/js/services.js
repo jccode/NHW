@@ -21,7 +21,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 
                 var cUser = Util.currUser();
                 
-                console.log(JSON.stringify(cUser));
+                // console.log(JSON.stringify(cUser));
                 
                 if(!user && !cUser) {
                     return false;
@@ -430,7 +430,7 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
 
         SVG.prototype = {
             zoomstarted: function() {
-                d3.event.sourceEvent.stopPropagation();
+                d3.event.sourceEvent && d3.event.sourceEvent.stopPropagation();
             },
             
             zoomended: function() {

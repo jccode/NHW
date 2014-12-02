@@ -32,7 +32,6 @@ def copy_files_as_orignal(src_www, deploy_www):
     ]
     dirs = [
         "img",
-        "partials",
         "res"
     ]
     for f in files:
@@ -99,10 +98,9 @@ def copy_and_minify_js(src_www, deploy_www):
     js_min(map(lambda f: join(src_www, f), js), join(deploy_www, 'js/all.min.js'))
     
 
-def copy_and_minify_html():
-    """
-    """
-    pass
+def copy_and_minify_html(src_www, deploy_www):
+    # os.mkdir(join(deploy_www, "partials"))
+    shutil.copytree(join(src_www, "partials"), join(deploy_www, "partials"), ignore=shutil.ignore_patterns("*.bak"))
 
 def copy_index_html(deploy_root):    
     shutil.copy(join(deploy_root, 'index.html.tpl'), join(deploy_root, 'www', 'index.html'))
@@ -159,6 +157,9 @@ if __name__ == '__main__':
 
     logger.info("copy index.html")
     copy_index_html(deploy_root)
+
+    logger.info("copy html")
+    copy_and_minify_html(src_www, deploy_www)
     
     logger.info("Remove exclude files")
     exclude_files(deploy_www)

@@ -638,7 +638,7 @@ nhwUtils.factory('Log', function() {
     
     function httpget(url, resultTransform) {
         
-        console.log('HTTPGET: ' + url + ' ;');
+        // console.log('HTTPGET: ' + url + ' ;');
         // if(resultTransform) {
         //     console.log('HTTPGET: resultTransform ' + resultTransform);
         // }
