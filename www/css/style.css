@@ -374,7 +374,7 @@ img.bg-img {
 }
 .profile .user img {
   margin: 10px 30px;
-  width: 120px;
+  width: 80px;
 }
 .profile .workspace {
   background-color: #f8f8f8;
@@ -399,7 +399,7 @@ img.bg-img {
     font-size: 12px;
   }
   .profile .user img {
-    width: 80px;
+    width: 50px;
   }
   .profile .workspace {
     padding: 20px;
@@ -543,6 +543,15 @@ img.bg-img {
 .switch.switch-sm.active .switch-handle {
   -webkit-transform: translate3d(20px, 0px, 0px) !important;
   transform: translate3d(20px, 0px, 0px) !important;
+}
+.switch.switch-sm {
+  margin-top: 8px;
+}
+.form-control-wrapper {
+  line-height: 34px;
+}
+.control-label {
+  line-height: 20px;
 }
 .employee-list .list-group-item img {
   width: 28px;
