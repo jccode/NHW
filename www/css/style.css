@@ -445,7 +445,7 @@ img.bg-img {
 }
 #user-profile .workspace,
 #user-colleague-profile .workspace {
-  margin: 0 0 20px;
+  margin: 0px;
   padding: 0px;
 }
 #user-profile .footer,
@@ -457,17 +457,13 @@ img.bg-img {
   #user-colleague-profile {
     padding: 0px;
   }
-  #user-profile .workspace,
-  #user-colleague-profile .workspace {
-    margin: 0px 0px 15px;
-  }
   #user-profile .footer,
   #user-colleague-profile .footer {
     padding-right: 20px;
   }
 }
-#user-colleague-profile .workspace {
-  margin: 0px;
+#user-profile .workspace .favourite {
+  line-height: 43px;
 }
 .checkin-info label {
   width: 80px;
