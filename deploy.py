@@ -43,6 +43,7 @@ def copy_files_as_orignal(src_www, deploy_www):
 def exclude_files(deploy_www):
     files = [
         "img/map.svg"
+        "img/map.svg.bak"
     ]
     for f in files:
         os.remove(join(deploy_www, f))
