@@ -643,9 +643,10 @@ angular.module("nhw.controllers", ['nhw.services'])
 
 
     .controller('EmployeesCtrl', ['$scope', '$state', '$stateParams', 'Util', 'User', 'CtrlService', function($scope, $state, $stateParams, Util, User, CtrlService) {
-        // $scope.baseurl = Util.getPictureRootUrl();
-        // $scope.cuser = Util.currUser();
+
         $scope.type = $stateParams.t || 'all';
+        $scope.toggle_favourite = CtrlService.toggle_favourite;
+
         var fn = {
             'all': User.allWithFavourites, 
             'favourite': User.favourites,
@@ -653,14 +654,45 @@ angular.module("nhw.controllers", ['nhw.services'])
             'notcheckin': User.notCheckins
         };
 
+        /*
         $scope.$watch('type', function() {
             $scope.employees = fn[$scope.type].call(User);
         });
+         */
 
-        $scope.toggle_favourite = CtrlService.toggle_favourite;
+
+        var pageNo = 1,
+            maxNo = 1;
+        $scope.canLoad = false;
+        $scope.loading = false;
+
+
+        function calcMaxNo(count) {
+            return Math.floor(count / Util.DEFAULT_PAGE_SIZE) + (count % Util.DEFAULT_PAGE_SIZE == 0 ? 0 : 1);
+        }
+
+
+        $scope.$watchGroup(['type', 'q'], function() {
+            pageNo = 1;
+            fn[$scope.type].call(User, pageNo, $scope.q).then(function(ret) {
+                $scope.employees = ret['UserList'];
+                maxNo = calcMaxNo(ret['Count']);
+                $scope.canLoad = pageNo < maxNo;
+                // console.log( 'loading list. '+ maxNo );
+            });
+        });
 
         $scope.loadMore = function () {
-            console.log( 'load more' );
+            // console.log( 'load more' );
+            if(!$scope.loading) {
+                $scope.loading = true;
+                pageNo++;
+                $scope.canLoad = pageNo < maxNo;
+                fn[$scope.type].call(User, pageNo, $scope.q).then(function(ret) {
+                    $scope.employees = $scope.employees.concat(ret['UserList']);
+                    $scope.loading = false;
+                });
+            }
         };
 
     }])

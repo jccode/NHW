@@ -81,19 +81,34 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return $http.put(this.baseurl() + '/checkout/' + user.id);
             }, 
 
-            favourites: function() {
+            favourites: function(pageNo, keyword) {
                 var user = Util.currUser();
-                return $resource(this.baseurl() + '/favorite/:id', {id: '@id'}).query({id: user.id});
+                if(!pageNo) {
+                    return $resource(this.baseurl() + '/favorite/:id', {id: '@id'}).query({id: user.id});
+                }
+
+                var url = this.baseurl() + '/favorite/' + ([user.id, Util.DEFAULT_PAGE_SIZE, pageNo, keyword].join('/'));
+                return Util.httpget(url);
             },
 
-            allWithFavourites: function() {
+            allWithFavourites: function(pageNo, keyword) {
                 var user = Util.currUser();
-                return $resource(this.baseurl() + '/withfavorite/:id', {id: '@id'}).query({id: user.id});
+                if(!pageNo) {
+                    return $resource(this.baseurl() + '/withfavorite/:id', {id: '@id'}).query({id: user.id});
+                }
+
+                var url = this.baseurl() + '/withfavorite/' + ([user.id, Util.DEFAULT_PAGE_SIZE, pageNo, keyword].join('/'));
+                return Util.httpget(url);
             }, 
 
-            checkins: function() {
-                var user = Util.currUser();                
-                return $resource(this.baseurl() + '/online/:id', {id: '@id'}).query({id: user.id});
+            checkins: function(pageNo, keyword) {
+                var user = Util.currUser();
+                if(!pageNo) {
+                    return $resource(this.baseurl() + '/online/:id', {id: '@id'}).query({id: user.id});
+                }
+
+                var url = this.baseurl() + '/online/' + ([user.id, Util.DEFAULT_PAGE_SIZE, pageNo, keyword].join('/'));
+                return Util.httpget(url);
             },
 
             addFavourite: function(uid) {
@@ -116,9 +131,14 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
                 return Util.httpget(this.favouriteurl() + '/isfavorite/' + user.id + '/' + uid);
             }, 
 
-            notCheckins: function() {
-                var user = Util.currUser();                
-                return $resource(this.baseurl() + '/offline/:id', {id: '@id'}).query({id: user.id});
+            notCheckins: function(pageNo, keyword) {
+                var user = Util.currUser();
+                if(!pageNo) {
+                    return $resource(this.baseurl() + '/offline/:id', {id: '@id'}).query({id: user.id});
+                }
+                
+                var url = this.baseurl() + '/offline/' + ([user.id, Util.DEFAULT_PAGE_SIZE, pageNo, keyword].join('/'));
+                return Util.httpget(url);
             },
 
             setUserState: function(isavailable) {
@@ -604,4 +624,3 @@ angular.module('nhw.services', ['ngResource']) // , 'angular-underscore'
         
     }])
 ;
-

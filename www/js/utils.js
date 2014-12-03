@@ -93,7 +93,9 @@ var WebStorage = function(type) {
 var Util = {
     localStorage: WebStorage('LocalStorage')(window),
 
-    IMG_REGEX: /.*\/(.+\.(jpg|png|gif|bmp|jpeg))/i, 
+    IMG_REGEX: /.*\/(.+\.(jpg|png|gif|bmp|jpeg))/i,
+
+    DEFAULT_PAGE_SIZE: 20, 
 
     getAthorizationKey: function() {
         return "sdfkihernvioerj";

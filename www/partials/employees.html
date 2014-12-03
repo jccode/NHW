@@ -13,16 +13,22 @@
 <div style="position:absolute; left:0; top:0; bottom:0; width:100%; margin-bottom:45px;">
     <input type="search" class="form-control app-search awesome" ng-model="q" placeholder="&#xF002;"/>
     <div class="scrollable">
-        <div class="scrollable-content" > <!-- infinite-scroll="loadMore();" threshold="100" can-load="true" -->
+        <div class="scrollable-content" infinite-scroll="loadMore();" threshold="100" can-load="canLoad"> <!-- infinite-scroll="loadMore();" threshold="0" can-load="true" -->
             <ul class="list-group employee-list">
-                <li ng-repeat="employee in employees | excludeId:'UserId':cuser.id | filter:q " class="list-group-item" ui-sref="app.colleague_profile({uid:employee.UserId})">
+                <li ng-repeat="employee in employees | excludeId:'UserId':cuser.id " class="list-group-item" ui-sref="app.colleague_profile({uid:employee.UserId})">
                     <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{employee.UserPic}}" class="img-circle" width="28px" height="28px"/>
                     <b>{{employee.FirstName}} {{employee.MiddleName}} {{employee.LastName}}</b>
                     <a class="star" ng-class="{'active': employee.Favorited}" ng-click="toggle_favourite(employee.UserId, employee.Favorited);employee.Favorited=!employee.Favorited;" stop-event='click'><i class="fa fa-star"></i></a>
                 </li>
                 <li ng-hide="employees.length" class="list-group-item" style="text-align: center;">Geen resultaten gevonden</li>
+                <li class="list-group-item" style="text-align: center;" ng-show="loading"><i class="fa fa-spinner fa-spin fa-lg "></i></li>
             </ul>
         </div>
     </div>
 </div>
 </div>
+
+
+
+
+
