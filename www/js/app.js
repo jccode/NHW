@@ -471,7 +471,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
         function preloadUserPics() {
-            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+            if(!Util.getCustomerServerURL() || !Util.isRunningOnPhonegap()) { // if url not exist, skip
                 return;
             }
             User.allUserPics().then(function(pics) {
@@ -491,7 +491,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
         function preloadSvgFiles() {
-            if(!Util.getCustomerServerURL()) { // if url not exist, skip
+            if(!Util.getCustomerServerURL() || !Util.isRunningOnPhonegap()) { // if url not exist, skip
                 return;
             }
             Floors.allsvgfiles().then(function(svgs) {
