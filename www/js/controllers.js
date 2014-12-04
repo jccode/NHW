@@ -44,26 +44,26 @@ angular.module("nhw.controllers", ['nhw.services'])
                             console.log('when login, start check and enable bluetooth');
                             Bootstrap.initBeaconModel();
                             Bootstrap.checkAndEnableBluetooth();
-                            Bootstrap.preloadOfflineFiles();
                             
-                            // Bootstrap.syncData(function(ret) {
+                            Bootstrap.preloadSvgFiles().then(function() {
+                                    
                                 $scope.loading = false;
-                                // if(ret) {
-                                    User.hasCheckIn().then(function(info) {
-                                        if(info) {
-                                            var floorId = info["FloorId"],
-                                                seat = parseInt(info["SeatCode"]);
-                                            $state.go('app.index', {f:floorId, s:seat}, {location: false});
-                                            $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
-                                            // angular.element(document.getElementById('navbar')).scope().$emit(EVENTS.CHECKIN_STATE_CHANGE);
-                                        } else {
-                                            $state.go('app.checkin');
-                                        }
-                                    }, errorHandler);
-                                // } else {
-                                //     $scope.error = "Sorry, some error occured when loading data from server";
-                                // }
-                            // });
+                                User.hasCheckIn().then(function(info) {
+                                    if(info) {
+                                        var floorId = info["FloorId"],
+                                            seat = parseInt(info["SeatCode"]);
+                                        $state.go('app.index', {f:floorId, s:seat}, {location: false});
+                                        $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
+                                        // angular.element(document.getElementById('navbar')).scope().$emit(EVENTS.CHECKIN_STATE_CHANGE);
+                                    } else {
+                                        $state.go('app.checkin');
+                                    }
+                                }, errorHandler);
+
+                                Bootstrap.preloadUserPics();
+
+                            });
+
 
                         } else {
                             errorHandler();

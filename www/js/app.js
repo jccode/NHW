@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$window', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $window, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$q', '$window', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $q, $window, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
 
         function init_beacon_model() {
             if(!Util.isIbeaconSupported()) {
@@ -491,9 +491,12 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
         function preloadSvgFiles() {
+            var deferred = $q.defer();
             if(!Util.getCustomerServerURL() || !Util.isRunningOnPhonegap()) { // if url not exist, skip
-                return;
+                deferred.resolve($q.when(false));
+                return deferred.promise;
             }
+            /*
             Floors.allsvgfiles().then(function(svgs) {
                 _.each(svgs, function(svg) {
                     var svgname = Util.svgName(svg),
@@ -505,6 +508,18 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     });
                 });
             });
+             */
+
+            Floors.allsvgfiles().then(function(svgs) {
+                var promises = _.map(svgs, function(svg) {
+                    var svgname = Util.svgName(svg),
+                        svgurl = $rootScope.picurl + svg, 
+                        svgpath = $rootScope.SVG_DIR + svgname;
+                    return Util.download(svgurl, svgpath);
+                });
+                deferred.resolve($q.all(promises));
+            });
+            return deferred.promise;
         }
 
         function preloadOfflineFiles() {
@@ -534,7 +549,9 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             // syncData: syncDataFromServer, 
             checkAndEnableBluetooth: checkAndEnableBluetooth,
             initBeaconModel: init_beacon_model,
-            preloadOfflineFiles: preloadOfflineFiles
+            // preloadOfflineFiles: preloadOfflineFiles,
+            preloadSvgFiles: preloadSvgFiles,
+            preloadUserPics: preloadUserPics
         };
     }])
 
