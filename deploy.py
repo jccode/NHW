@@ -6,6 +6,8 @@ import shutil
 import logging
 from slimit import minify
 from rcssmin import cssmin
+import htmlmin
+from slimmer import html_slimmer
 
 
 # variables
@@ -100,9 +102,13 @@ def copy_and_minify_js(src_www, deploy_www):
     
 
 def copy_and_minify_html(src_www, deploy_www):
-    # os.mkdir(join(deploy_www, "partials"))
-    shutil.copytree(join(src_www, "partials"), join(deploy_www, "partials"), ignore=shutil.ignore_patterns("*.bak"))
+    # shutil.copytree(join(src_www, "partials"), join(deploy_www, "partials"), ignore=shutil.ignore_patterns("*.bak"))
+    os.mkdir(join(deploy_www, "partials"))
+    for f in os.listdir(join(src_www, "partials")):
+        if f.endswith(".html"):
+            html_min([ join(src_www, "partials", f) ], join(deploy_www, "partials", f) )
 
+            
 def copy_index_html(deploy_root):    
     shutil.copy(join(deploy_root, 'index.html.tpl'), join(deploy_root, 'www', 'index.html'))
     
@@ -112,6 +118,12 @@ def minify_css_proc(content):
     
 def minify_js_proc(content):
     return minify(content, mangle=True, mangle_toplevel=True)
+
+def minify_html_proc(content):
+    try:
+        return htmlmin.minify(content, remove_comments=True, remove_empty_space=True).encode('utf-8')
+    except:
+        return html_slimmer(content.strip().replace('\n',' ').replace('\t',' ').replace('\r',' '))
 
 def doProcessFiles(minifyProc, sourcePaths, header, minPath):
     print "Combining to %s" % minPath
@@ -134,7 +146,9 @@ def js_min(sourcePaths, minPath):
 def css_min(sourcePaths, minPath):
     return doProcessFiles(minify_css_proc, sourcePaths, '', minPath)
 
-            
+def html_min(sourcePaths, minPath):
+    return doProcessFiles(minify_html_proc, sourcePaths, '', minPath)
+                
         
 if __name__ == '__main__':
     logger.info("Prepare for deployment ")
