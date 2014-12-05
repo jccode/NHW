@@ -664,7 +664,7 @@ angular.module("nhw.controllers", ['nhw.services'])
         var pageNo = 1,
             maxNo = 1;
         $scope.canLoad = false;
-        $scope.loading = false;
+        $scope.loading = true;
 
 
         function calcMaxNo(count) {
@@ -678,6 +678,7 @@ angular.module("nhw.controllers", ['nhw.services'])
                 $scope.employees = ret['UserList'];
                 maxNo = calcMaxNo(ret['Count']);
                 $scope.canLoad = pageNo < maxNo;
+                $scope.loading = false;
                 // console.log( 'loading list. '+ maxNo );
             });
         });

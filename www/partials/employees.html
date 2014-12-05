@@ -20,7 +20,7 @@
                     <b>{{employee.FirstName}} {{employee.MiddleName}} {{employee.LastName}}</b>
                     <a class="star" ng-class="{'active': employee.Favorited}" ng-click="toggle_favourite(employee.UserId, employee.Favorited);employee.Favorited=!employee.Favorited;" stop-event='click'><i class="fa fa-star"></i></a>
                 </li>
-                <li ng-hide="employees.length" class="list-group-item" style="text-align: center;">Geen resultaten gevonden</li>
+                <li ng-show="employees.length == 0" class="list-group-item" style="text-align: center;">Geen resultaten gevonden</li>
                 <li class="list-group-item" style="text-align: center;" ng-show="loading"><i class="fa fa-spinner fa-spin fa-lg "></i></li>
             </ul>
         </div>
