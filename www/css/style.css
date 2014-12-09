@@ -621,3 +621,8 @@ input.awesome {
 .mt5 {
   margin-top: 5px;
 }
+@media (max-width: 320px) {
+  .hidden-xxs {
+    display: none !important;
+  }
+}
