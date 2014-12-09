@@ -480,13 +480,16 @@ angular.module("nhw.controllers", ['nhw.services'])
                 };
                 
                 Floors.checkin(floorId, seat).then(function(ret) {
-                    if(ret) {
+                    // $log.info("try to check-in " + seat + " , ret:" + ret['data']);
+                    if(ret && ret['data']) {
                         // $state.go("app.index", param);
                         // $rootScope.$broadcast(EVENTS.CHECKIN_STATE_CHANGE);
                         
                         $state.go("home");
                     } else {
                         // popup an error message
+                        // This seat is reserve by other person. Pls try the other seat
+                        Util.toast('Deze werkplek is al in gebruik. Graag een andere werkplek selecteren.');
                     }
                 });
 
