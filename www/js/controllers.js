@@ -356,9 +356,11 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
              */
             
-            load_svg_status(function() {
-                hascheckin = true;
-                svg.center_map();
+            load_svg_status(function(ret) {
+                if(ret) {
+                    hascheckin = true;
+                    svg.center_map();
+                }
             });
 
             svg.bind_event(function(d) {
@@ -516,15 +518,19 @@ angular.module("nhw.controllers", ['nhw.services'])
                     };
                     el.classed(classes).attr("data-user", cuser.id);
 
-                    callback && callback();
                 }
+                callback && callback(ret);
             });
         }
 
         // update svg status
         $scope.$on(EVENTS.UPDATE_SVG_STATUS, function(e) {
             svg.reset_seat_state();
-            load_svg_status();
+            load_svg_status(function(ret) {
+                if(!ret) {
+                    $state.go("home");
+                }
+            });
         });
     }])
 
