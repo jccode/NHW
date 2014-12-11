@@ -508,7 +508,7 @@ SingleBeacon.prototype = {
 };
 
 
-var BeaconUtil = function($rootScope) {
+var BeaconUtil = function($rootScope, Log) {
 
     return {
         createBeacon: function(uuid, identifier, major, minor) {
@@ -606,7 +606,8 @@ var BeaconUtil = function($rootScope) {
                     var majors = _.map(retbeacons, function(region) {
                         return region['major'];
                     });
-                    Util.toast("ranging:["+majors.join(",")+"]");
+                    // Util.toast("ranging:["+majors.join(",")+"]");
+                    Log.domlog("ranging:["+majors.join(",")+"]");
 
                     
                     
@@ -627,11 +628,13 @@ var BeaconUtil = function($rootScope) {
                         if(match) {
                             if(state != BEACON_IN_RANGE) { // state changed
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
+                                Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
                                 beacon.stateChange(BEACON_IN_RANGE);
                             }
                         } else {
                             if(state != BEACON_OUT_OF_RANGE) {
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
+                                Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
                                 beacon.stateChange(BEACON_OUT_OF_RANGE);
                             }
                         }
@@ -652,10 +655,22 @@ var BeaconUtil = function($rootScope) {
 
 var nhwUtils = angular.module("nhw.utils", []);
 
-nhwUtils.factory('Log', function() {
-    return Log;
+nhwUtils.factory('Log', ['$rootScope', function($rootScope) {
+
+    function domlog(msg) {
+        $rootScope.logs.push({
+            "time": new Date().toLocaleTimeString(),
+            "msg": msg
+        });
+    }
+
+    var _export = _.extend({
+        domlog: domlog
+    }, Log);
     
-}).factory('Util', ['$http', '$q', 'Log', function($http, $q, Log) {
+    return _export;
+    
+}]).factory('Util', ['$http', '$q', 'Log', function($http, $q, Log) {
     
     function httpget(url, resultTransform) {
         
@@ -730,8 +745,8 @@ nhwUtils.factory('Log', function() {
     
 }]).factory('DataTransform', function() {
     return DataTransform;
-}).factory('BeaconUtil', ['$rootScope', function($rootScope) {
-    return BeaconUtil($rootScope);
+}).factory('BeaconUtil', ['$rootScope', 'Log', function($rootScope, Log) {
+    return BeaconUtil($rootScope, Log);
 }]);
 
 _.each(['LocalStorage', 'SessionStorage'], function(storageType) {    

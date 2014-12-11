@@ -55,6 +55,15 @@ angular.module("nhw.test", ["nhw.services"])
                     }
                 }
             })
+
+            .state("test.log", {
+                url: "/log",
+                views: {
+                    "testContent": {
+                        templateUrl: "partials/test/log.html"
+                    }
+                }
+            })
     }])
 
 
@@ -64,6 +73,7 @@ angular.module("nhw.test", ["nhw.services"])
 
     .controller('TestNavCtrl', ['$scope', function($scope) {
         $scope.navs = [
+            {name: "Log", sref: "test.log"}, 
             {name: "Login page", sref: "welcome"}, 
             {name: "Checkin page", sref: "app.checkin"}, 
             {name: "After checkin", sref: "app.index"}, 
@@ -81,8 +91,13 @@ angular.module("nhw.test", ["nhw.services"])
 
     }])
 
-    .controller('QuickTestCtrl', ['$scope', function($scope) {
-        
+    .controller('QuickTestCtrl', ['$scope', '$rootScope', 'Log', function($scope, $rootScope, Log) {
+        $scope.writesomelog = function () {
+            var msgs = ["some", "test", "message", "hello", "world", "Here is some long long long long logs"];
+            var idx = Math.floor(Math.random()*msgs.length);
+            Log.domlog(msgs[idx]);
+        };
+
     }])
 
     .controller('StorageTestCtrl', ['$scope', 'LocalStorage', 'SessionStorage', function($scope, LocalStorage, SessionStorage) {
