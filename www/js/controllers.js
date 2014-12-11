@@ -237,7 +237,7 @@ angular.module("nhw.controllers", ['nhw.services'])
 
     }])
 
-    .controller('AppIndexCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'Util', 'Floors', 'User', function($scope, $rootScope, $state, $stateParams, Util, Floors, User) {
+    .controller('AppIndexCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$interval', 'Util', 'Floors', 'User', function($scope, $rootScope, $state, $stateParams, $interval, Util, Floors, User) {
         var floorId = $stateParams.f,
             seat = $stateParams.s;
         // $scope.user = Util.currUser();
@@ -257,10 +257,13 @@ angular.module("nhw.controllers", ['nhw.services'])
             });
         };
 
-        $scope.reflush = function () {
+        function reflush() {
             $rootScope.$broadcast(EVENTS.UPDATE_SVG_STATUS);
-        };
+        }
+        
+        $scope.reflush = reflush;
 
+        $interval(reflush, 1000 * 60); // reflush seat status every minute.
     }])
 
     .controller('BuildingsCtrl', ['$scope', '$state', '$stateParams', 'Building', function($scope, $state, $stateParams, Building) {
