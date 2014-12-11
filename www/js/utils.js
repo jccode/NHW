@@ -590,18 +590,26 @@ var BeaconUtil = function($rootScope) {
         createIosDelegate: function() {
             var delegate = new cordova.plugins.locationManager.Delegate().implement({
                 didDetermineStateForRegion: function (pluginResult) {
-
                     console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-
+                    
                 },
                 didStartMonitoringForRegion: function (pluginResult) {
                     console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-                    // console.log( '-------------------jclog--------------------' );
 
                     var retbeacons = pluginResult.beacons;
+
+
+                    // debug.
+                    var majors = _.map(retbeacons, function(region) {
+                        return region['major'];
+                    });
+                    Util.toast("ranging:["+majors.join(",")+"]");
+
+                    
+                    
                     var beacons = $rootScope.beaconmodel.beacons;
                     _.each(beacons, function(beacon) {
                         // console.log( '1. detecting ' + beacon );
