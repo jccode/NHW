@@ -102,8 +102,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 // startIbeacon_ios();
                 var identifier = 'Estimote Beacon',
                     uuid = 'b9407f30-f5f8-466e-aff9-25556b57fe6d';
-                var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid);
-                // var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, null, null, true);
+                // var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid);
+                var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, null, null, true);
                 var delegate = BeaconUtil.createIosDelegate();
                 cordova.plugins.locationManager.setDelegate(delegate);
                 cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
