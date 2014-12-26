@@ -378,4 +378,10 @@ angular.module("nhw.test", ["nhw.services"])
 
     }])
 
+    .controller('TestLogCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+        $scope.clearLog = function () {
+            $rootScope.logs = [];
+        };
+    }])
+
 ;
