@@ -598,18 +598,15 @@ var BeaconUtil = function($rootScope, Log) {
                 },
                 didRangeBeaconsInRegion: function (pluginResult) {
                     console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-
                     var retbeacons = pluginResult.beacons;
 
-
                     // debug.
+                    /*
                     var majors = _.map(retbeacons, function(region) {
                         return region['major'];
                     });
-                    // Util.toast("ranging:["+majors.join(",")+"]");
                     Log.domlog("ranging:["+majors.join(",")+"]");
-
-                    
+                     */
                     
                     var beacons = $rootScope.beaconmodel.beacons;
                     _.each(beacons, function(beacon) {
@@ -628,13 +625,13 @@ var BeaconUtil = function($rootScope, Log) {
                         if(match) {
                             if(state != BEACON_IN_RANGE) { // state changed
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
-                                Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
+                                // Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
                                 beacon.stateChange(BEACON_IN_RANGE);
                             }
                         } else {
                             if(state != BEACON_OUT_OF_RANGE) {
                                 console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
-                                Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
+                                // Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
                                 beacon.stateChange(BEACON_OUT_OF_RANGE);
                             }
                         }
