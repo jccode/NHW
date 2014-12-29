@@ -131,14 +131,24 @@ var Util = {
     },
 
     createLocalNotification: function(msg) {
-        var defaultOpts = {
-            id: +new Date() + "",
-            title: "NS Werkplek",
-            message: ""
-        };
-        var obj = _.isObject(msg)? msg: {"message": msg};
-        obj = _.extend(defaultOpts, obj);
-        window.plugin.notification.local.add(obj);
+        window.plugin.notification.local.hasPermission(function (granted) {
+            if(granted) {
+                
+                var defaultOpts = {
+                    id: +new Date() + "",
+                    title: "NS Werkplek",
+                    message: ""
+                };
+                var obj = _.isObject(msg)? msg: {"message": msg};
+                obj = _.extend(defaultOpts, obj);
+
+                // for ios8+
+                window.plugin.notification.local.promptForPermission();
+                
+                window.plugin.notification.local.add(obj);
+            }
+        });
+
     },
 
     toast: function(msg, opts) {
