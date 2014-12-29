@@ -106,6 +106,14 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                 var region = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, undefined, undefined, true);
                 var delegate = BeaconUtil.createIosDelegate();
                 cordova.plugins.locationManager.setDelegate(delegate);
+
+                // required in iOS 8+
+                try {
+                    // cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
+                    cordova.plugins.locationManager.requestAlwaysAuthorization();
+                } catch(e) {
+                }
+                
                 cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
                 cordova.plugins.locationManager.startMonitoringForRegion(region).fail(console.log).done();
                 
