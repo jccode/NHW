@@ -103,8 +103,13 @@ angular.module('nhw.beacon-model', [])
                     return beacon.ts;
                 });
                 return latest;
-            }
+            }, 
 
+            resetState: function() {
+                _.each(this.beacons, function(beacon) {
+                    beacon.state = null;
+                });
+            }
         };
 
 
@@ -131,7 +136,7 @@ angular.module('nhw.beacon-model', [])
                     Beacons.logRuleTrigger(this.id);
 
                     // reset the from beacon state
-                    this.from.state = null;
+                    this.from.resetState();
                     
                     // inside / outside building
                     if(this.type == RULE_TYPE_Enter) {
