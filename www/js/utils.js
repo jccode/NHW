@@ -595,7 +595,8 @@ var BeaconUtil = function($rootScope, Log) {
                 }
             });
              */
-            
+
+            // 3.2.1
             var delegate = new cordova.plugins.locationManager.Delegate();
             delegate.didDetermineStateForRegion = function (pluginResult) {
                 console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
@@ -686,6 +687,7 @@ var BeaconUtil = function($rootScope, Log) {
             });
              */
 
+            // 3.2.1
             var delegate = new cordova.plugins.locationManager.Delegate();
             delegate.didDetermineStateForRegion = function (pluginResult) {
                 console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));

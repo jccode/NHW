@@ -112,7 +112,6 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                     // cordova.plugins.locationManager.requestWhenInUseAuthorization(); 
                     cordova.plugins.locationManager.requestAlwaysAuthorization();
                 } catch(e) {
-                    Log.domlog('start ibeancon on ios failed to request always authorization');
                 }
                 
                 cordova.plugins.locationManager.startRangingBeaconsInRegion(region).fail(console.log).done();
