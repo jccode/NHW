@@ -527,6 +527,7 @@ var BeaconUtil = function($rootScope, Log) {
         },
         
         createDelegate: function() {
+            /* 3.1.2
             var delegate = new cordova.plugins.locationManager.Delegate().implement({
                 didDetermineStateForRegion: function (pluginResult) {
                     // console.log("--------------------------------------------------");
@@ -593,11 +594,47 @@ var BeaconUtil = function($rootScope, Log) {
                     console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
                 }
             });
+             */
+            
+            var delegate = new cordova.plugins.locationManager.Delegate();
+            delegate.didDetermineStateForRegion = function (pluginResult) {
+                console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+
+                var state = pluginResult['state'],
+                    region = pluginResult['region'];
+                
+                var beacons = $rootScope.beaconmodel.beacons;
+                var match = _.find(beacons, function(beacon) {
+                    return beacon['uuid'] == region['uuid'] &&
+                        beacon['identifier'] == region['identifier'] &&
+                        beacon['major'] == region['major'] &&
+                        beacon['minor'] == region['minor'];
+                });
+                if(match) {
+                    console.log('beacon in range ' + state);
+                    
+                    if(state == 'CLRegionStateInside') {
+                        match.stateChange(BEACON_IN_RANGE);
+                    }
+                    else if(state == 'CLRegionStateOutside') {
+                        match.stateChange(BEACON_OUT_OF_RANGE);
+                    }
+                }
+                
+                cordova.plugins.locationManager.appendToDeviceLog('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+            };
+            delegate.didStartMonitoringForRegion = function (pluginResult) {
+                console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
+            };
+            delegate.didRangeBeaconsInRegion = function (pluginResult) {
+                console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+            };
             
             return delegate;
         },
 
         createIosDelegate: function() {
+            /* 3.1.2
             var delegate = new cordova.plugins.locationManager.Delegate().implement({
                 didDetermineStateForRegion: function (pluginResult) {
                     console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
@@ -611,12 +648,10 @@ var BeaconUtil = function($rootScope, Log) {
                     var retbeacons = pluginResult.beacons;
 
                     // debug.
-                    /*
-                    var majors = _.map(retbeacons, function(region) {
-                        return region['major'];
-                    });
-                    Log.domlog("ranging:["+majors.join(",")+"]");
-                     */
+                    // var majors = _.map(retbeacons, function(region) {
+                    //     return region['major'];
+                    // });
+                    // Log.domlog("ranging:["+majors.join(",")+"]");
                     
                     var beacons = $rootScope.beaconmodel.beacons;
                     _.each(beacons, function(beacon) {
@@ -649,6 +684,45 @@ var BeaconUtil = function($rootScope, Log) {
 
                 }
             });
+             */
+
+            var delegate = new cordova.plugins.locationManager.Delegate();
+            delegate.didDetermineStateForRegion = function (pluginResult) {
+                console.log('[ibeacon]didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+            };
+            delegate.didStartMonitoringForRegion = function (pluginResult) {
+                console.log('[ibeacon]didStartMonitoringForRegion: ' + JSON.stringify(pluginResult));
+            };
+            delegate.didRangeBeaconsInRegion = function (pluginResult) {
+                console.log('[ibeacon]didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+                var retbeacons = pluginResult.beacons;  
+                var beacons = $rootScope.beaconmodel.beacons;
+                _.each(beacons, function(beacon) {
+                    var match = _.find(retbeacons, function(region) {
+                        return beacon['uuid'].toLowerCase() == region['uuid'].toLowerCase() &&
+                            // beacon['identifier'] == region['identifier'] &&
+                            beacon['major'] == region['major'] &&
+                            beacon['minor'] == region['minor'];
+                    });
+                    
+                    // determine state really change
+                    var state = beacon.state;
+                    if(match) {
+                        if(state != BEACON_IN_RANGE) { // state changed
+                            console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
+                            // Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_IN_RANGE );
+                            beacon.stateChange(BEACON_IN_RANGE);
+                        }
+                    } else {
+                        if(state != BEACON_OUT_OF_RANGE) {
+                            console.log( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
+                            // Log.domlog( 'beacon: ' + beacon['major'] + ' change state to ' + BEACON_OUT_OF_RANGE );
+                            beacon.stateChange(BEACON_OUT_OF_RANGE);
+                        }
+                    }
+                });
+                
+            };
             
             return delegate;            
         }
