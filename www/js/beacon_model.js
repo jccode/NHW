@@ -116,7 +116,7 @@ angular.module('nhw.beacon-model', [])
             this.type = type;
         }
 
-        Rule.THRESHOLD = 20 * 60 * 1000;          // 20 * 60 * 1000; 20 min;
+        Rule.THRESHOLD = 10 * 60 * 1000;          // 10 * 60 * 1000; 10 min;
 
         Rule.prototype = {
             action: function(beacon) {
