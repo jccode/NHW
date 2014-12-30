@@ -116,7 +116,7 @@ angular.module('nhw.beacon-model', [])
             this.type = type;
         }
 
-        Rule.THRESHOLD = 10 * 60 * 1000;          // 10 * 60 * 1000; 10 min;
+        Rule.THRESHOLD = 3 * 60 * 1000;          // n * 60 * 1000; n min;
 
         Rule.prototype = {
             action: function(beacon) {
@@ -130,6 +130,9 @@ angular.module('nhw.beacon-model', [])
                     Util.createLocalNotification(this.message);
                     Beacons.logRuleTrigger(this.id);
 
+                    // reset the from beacon state
+                    this.from.state = null;
+                    
                     // inside / outside building
                     if(this.type == RULE_TYPE_Enter) {
                         Util.isInBuilding(true);
