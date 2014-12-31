@@ -131,6 +131,9 @@ var Util = {
     },
 
     createLocalNotification: function(msg) {
+        // for ios8+
+        window.plugin.notification.local.promptForPermission();
+        
         window.plugin.notification.local.hasPermission(function (granted) {
             if(granted) {
                 
@@ -141,9 +144,6 @@ var Util = {
                 };
                 var obj = _.isObject(msg)? msg: {"message": msg};
                 obj = _.extend(defaultOpts, obj);
-
-                // for ios8+
-                window.plugin.notification.local.promptForPermission();
                 
                 window.plugin.notification.local.add(obj);
             }
