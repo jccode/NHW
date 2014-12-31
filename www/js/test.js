@@ -166,6 +166,7 @@ angular.module("nhw.test", ["nhw.services"])
         $scope.beacon.identifier = "Estimote Beacon";
         $scope.beacon.major = "58877";
         $scope.beacon.minor = "52730";
+        $scope.result = "";
 
         
         function createBeacon(identifier, uuid, major, minor) {
@@ -186,23 +187,22 @@ angular.module("nhw.test", ["nhw.services"])
             // });
 
             Util.createLocalNotification( message );
-        }
+        };
 
 
-        var delegate = new cordova.plugins.locationManager.Delegate().implement({
-            didDetermineStateForRegion: function (pluginResult) {
-                writeMsg('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
-                cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
-                                                                  + JSON.stringify(pluginResult));
-            },
-            didStartMonitoringForRegion: function (pluginResult) {
-                writeMsg('didStartMonitoringForRegion:', pluginResult);
-                writeMsg('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
-            },
-            didRangeBeaconsInRegion: function (pluginResult) {
-                writeMsg('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
-            }
-        });
+        var delegate = new cordova.plugins.locationManager.Delegate();
+        delegate.didDetermineStateForRegion = function (pluginResult) {
+            writeMsg('[DOM] didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+            cordova.plugins.locationManager.appendToDeviceLog('[DOM] didDetermineStateForRegion: '
+                                                              + JSON.stringify(pluginResult));
+        };
+        delegate.didStartMonitoringForRegion = function (pluginResult) {
+            writeMsg('didStartMonitoringForRegion:', pluginResult);
+            writeMsg('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+        };
+        delegate.didRangeBeaconsInRegion = function (pluginResult) {
+            writeMsg('[DOM] didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+        };
 
         var beaconRegion = createBeacon($scope.beacon.identifier, $scope.beacon.uuid, $scope.beacon.major, $scope.beacon.minor);
 
