@@ -136,7 +136,7 @@ angular.module('nhw.beacon-model', [])
                     Beacons.logRuleTrigger(this.id);
 
                     // reset the from beacon state
-                    this.from.resetState();
+                    // this.from.resetState();
                     
                     // inside / outside building
                     if(this.type == RULE_TYPE_Enter) {

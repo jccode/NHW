@@ -143,7 +143,7 @@ var Util = {
                 obj = _.extend(defaultOpts, obj);
 
                 // for ios8+
-                window.plugin.notification.local.promptForPermission();
+                // window.plugin.notification.local.promptForPermission();
                 
                 window.plugin.notification.local.add(obj);
             }
