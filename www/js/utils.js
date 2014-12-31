@@ -132,10 +132,10 @@ var Util = {
 
     createLocalNotification: function(msg) {
         // for ios8+
-        window.plugin.notification.local.promptForPermission();
+        // window.plugin.notification.local.promptForPermission();
         
-        window.plugin.notification.local.hasPermission(function (granted) {
-            if(granted) {
+        // window.plugin.notification.local.hasPermission(function (granted) {
+        //     if(granted) {
                 
                 var defaultOpts = {
                     id: +new Date() + "",
@@ -146,8 +146,8 @@ var Util = {
                 obj = _.extend(defaultOpts, obj);
                 
                 window.plugin.notification.local.add(obj);
-            }
-        });
+        //     }
+        // });
 
     },
 
