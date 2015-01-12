@@ -95,7 +95,7 @@ var Util = {
 
     IMG_REGEX: /.*\/(.+\.(jpg|png|gif|bmp|jpeg))/i,
 
-    DEFAULT_PAGE_SIZE: 20, 
+    DEFAULT_PAGE_SIZE: 30, 
 
     getAthorizationKey: function() {
         return "sdfkihernvioerj";
