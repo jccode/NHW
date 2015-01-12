@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$q', '$window', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $q, $window, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$q', '$window', '$document', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $q, $window, $document, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
 
         function init_beacon_model() {
             if(!Util.isIbeaconSupported()) {
@@ -542,9 +542,32 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             preloadUserPics();
         }
 
-
+        function bindEvents() {
+            $document.bind("pause", function() {
+                // Util.toast("app pause");
+            });
+            
+            $document.bind("resume", function() {
+                // Util.toast("app resume");
+                
+                // check bluetooth
+                /*
+                console.log( "check and renable bluetooth" );
+                bluetoothle.isEnabled(function(ret) {
+                    if(!ret['isEnabled']) {
+                        bluetoothle.enable(function() {
+                            console.log( 'bluetooth enable successful' );
+                        }, function() {
+                            console.log( 'bluetooth enable failed' );
+                        });
+                    }
+                });
+                */
+            });
+        }
 
         function deviceready() {
+            bindEvents();
             init_beacon_model();
             checkAndEnableBluetooth();
             // syncDataFromServer();
