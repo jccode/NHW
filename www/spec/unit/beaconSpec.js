@@ -61,6 +61,17 @@ describe('beacon', function() {
     rules.push(r3_12);
     rules.push(r2_3);
 
+    function resetStates() {
+        _.each(rules, function(rule) {
+            rule.from.resetState();
+            rule.to.resetState();
+        });
+        _.each(beacons, function(beacon) {
+            expect(beacon.state).toBeNull();
+        });
+    }
+
+
     describe('Basic object creation test', function() {
         it("beacon should exist", function() {
             expect(3).toEqual(beacons.length);
@@ -117,26 +128,26 @@ describe('beacon', function() {
             expect(r12_3.to.beacons.length).toEqual(1);
         });
 
-        it("Group's lastUpdateBeacon should works'", function() {
+        it("Group's latestUpdateBeacon should works'", function() {
             beacons[0].stateChange(Beacon.IN_RANGE);
             sleep(100);
             beacons[1].stateChange(Beacon.OUT_OF_RANGE);
             sleep(100);
             beacons[2].stateChange(Beacon.IN_RANGE);
 
-            expect(g1.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
-            expect(g2.lastUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
-            expect(g3.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+            expect(g1.latestUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+            expect(g2.latestUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
+            expect(g3.latestUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
 
-            expect(g12.lastUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
-            expect(g123.lastUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
+            expect(g12.latestUpdateBeacon().state).toEqual(Beacon.OUT_OF_RANGE);
+            expect(g123.latestUpdateBeacon().state).toEqual(Beacon.IN_RANGE);
         });
 
     });
 
-    describe("Final test, should detect the rule and do corrosponding action", function() {
+    describe("Should detect the rule and do corrosponding action", function() {
         it("should do corrosponding actions, show notification messages", function() {
-            console.log('==================================================');
+            console.log('==================== TEST NOTIFICATION ==============================');
             beacons[0].stateChange(Beacon.OUT_OF_RANGE);
             sleep(100);
             beacons[2].stateChange(Beacon.IN_RANGE);
@@ -147,8 +158,57 @@ describe('beacon', function() {
             sleep(100);
             beacons[2].stateChange(Beacon.IN_RANGE);
             // expected r12_3, r2_3 notification
-            
-        });
-    })
 
+        });
+    });
+
+    describe("Multiple notification test.", function() {
+        it("reset all states", function() {
+            resetStates();
+        });
+
+        it("should not receive multiple notification for rule r12_3, when user walk into b3 multiple times", function() {
+            console.log( 'User walk into b0, pass by b0, then into b2' );
+            beacons[0].stateChange(Beacon.IN_RANGE);
+            sleep(100);
+            beacons[0].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+            // expected r12_3 notification
+
+            console.log( 'User walk outside b2, then into b2 again. Should not receive any notification' );
+            beacons[2].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+            // r12_3 notification should not receive 
+        });
+
+        it("should not receive notification multiple times if a group have more than one beacon", function() {
+            console.log( 'User walk outside b2, then walk into group12, which means user get into b0 & b1, he should not receive notification 2 times' );
+            beacons[2].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[1].stateChange(Beacon.IN_RANGE);
+            sleep(100);
+            beacons[0].stateChange(Beacon.IN_RANGE);
+            // r3_12 notification should be received only one time.
+
+            sleep(100);
+            console.log( "Even though user can walk out and in g12, he should not receive any notifications" );
+            beacons[0].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[0].stateChange(Beacon.IN_RANGE);
+            sleep(100);
+            beacons[1].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[1].stateChange(Beacon.IN_RANGE);
+
+            console.log( "User walk into g3 again. r12_3 notification should be received" );
+            sleep(100);
+            beacons[0].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[1].stateChange(Beacon.OUT_OF_RANGE);
+            sleep(100);
+            beacons[2].stateChange(Beacon.IN_RANGE);
+        });
+    });
 });
