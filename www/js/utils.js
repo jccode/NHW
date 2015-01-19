@@ -295,12 +295,14 @@ var Util = {
         return this.localStorage.get(STORAGE_KEYS.BEACON_STATE);
     }, 
 
-    setBeaconState: function(id, state) {
+    setBeaconState: function(beacon) {
         var key = STORAGE_KEYS.BEACON_STATE;
         var ss = Util.getBeaconStates() || {};
-        ss[id] = {
-            'state': state,
-            'ts': Date.now()
+        ss[beacon.id] = {
+            'state': beacon.state,
+            'ts': beacon.ts,
+            'lastState': beacon.lastState,
+            'lastTs': beacon.lastTs
         };
         this.localStorage.set(key, ss);
     },

@@ -55,6 +55,8 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
                         _.each(states, function(val, key) {
                             beaconMap[key].state = val.state;
                             beaconMap[key].ts = val.ts;
+                            beaconMap[key].lastState = val.lastState;
+                            beaconMap[key].lastTs = val.lastTs;
                         });
                         
 

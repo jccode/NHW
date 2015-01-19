@@ -31,6 +31,8 @@ angular.module('nhw.beacon-model', [])
             
             this.state = null;          // null or "IN_RANGE" or "OUT_OF_RANGE"
             this.ts = 0;                // timestamp. last update time.
+            this.lastState = null;      // last state before current state
+            this.lastTs = 0;            // last timestamp before current timestamp
 
             observer.make(this);
         }
@@ -41,12 +43,14 @@ angular.module('nhw.beacon-model', [])
                 // if(state == this.state) return;
                 
                 // only apply when state really changed
+                this.lastState = this.state;
+                this.lastTs = this.ts;
                 this.state = state;
                 this.ts = Date.now();
                 this.publish(this);
                 
                 // state persistence
-                Util.setBeaconState(this.id, state);
+                Util.setBeaconState(this);
             },
 
             toString: function() {
@@ -92,7 +96,7 @@ angular.module('nhw.beacon-model', [])
              *
              * @return {state: BEACON_IN_RANGE/BEACON_OUT_OF_RANGE, ts: int}
              */
-            lastUpdateBeacon: function() {
+            latestUpdateBeacon: function() {
                 if(this.beacons.length == 0) {
                     return null;
                 }
@@ -103,7 +107,18 @@ angular.module('nhw.beacon-model', [])
                     return beacon.ts;
                 });
                 return latest;
-            }, 
+            },
+
+            lastUpdateTs: function() {
+                if(this.beacons.length == 0) {
+                    return null;
+                }
+                var lastTses = _.flatten(_.map(this.beacons, function(beacon) {
+                    return [beacon.ts, beacon.lastTs];
+                }));
+                lastTses = lastTses.sort(function(a,b) {return b-a;});
+                return lastTses[1];
+            },
 
             resetState: function() {
                 _.each(this.beacons, function(beacon) {
@@ -134,9 +149,6 @@ angular.module('nhw.beacon-model', [])
                     console.log("[Rule "+this.id+" trigger] Push Notification: "+this.message);
                     Util.createLocalNotification(this.message);
                     Beacons.logRuleTrigger(this.id);
-
-                    // reset the from beacon state
-                    // this.from.resetState();
                     
                     // inside / outside building
                     if(this.type == RULE_TYPE_Enter) {
@@ -160,14 +172,18 @@ angular.module('nhw.beacon-model', [])
             }, 
 
             isRuleTrigger:function() {
-                var fb = this.from.lastUpdateBeacon(),
-                    tb = this.to.lastUpdateBeacon();
-                if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
-                    if( (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_IN_RANGE) ||
-                        (fb.state == BEACON_IN_RANGE && tb.state == BEACON_IN_RANGE) ||
-                        (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_OUT_OF_RANGE) ) {
+                var fb = this.from.latestUpdateBeacon(),
+                    tb = this.to.latestUpdateBeacon(),
+                    tLastUpdateTs = this.to.lastUpdateTs();
 
-                        return true;
+                if(fb.ts - tLastUpdateTs > 0) {    // erase multiple entrance case
+                    if(tb.ts - fb.ts > 0 && tb.ts - fb.ts < Rule.THRESHOLD) {
+                        if( (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_IN_RANGE) ||
+                            (fb.state == BEACON_IN_RANGE && tb.state == BEACON_IN_RANGE) ||
+                            (fb.state == BEACON_OUT_OF_RANGE && tb.state == BEACON_OUT_OF_RANGE) ) {
+
+                            return true;
+                        }
                     }
                 }
                 
