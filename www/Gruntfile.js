@@ -19,6 +19,13 @@ module.exports = function(grunt) {
                     'po/template.pot': ['partials/*.html']
                 }
             }
+        }, 
+        nggettext_compile: {
+            all: {
+                files: {
+                    'js/translations.js': ['po/*.po']
+                }
+            }
         }
     });
 
@@ -27,6 +34,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-gettext');
 
     // Default task(s).
-    grunt.registerTask('default', ['nggettext_extract']);
+    grunt.registerTask('default', ['nggettext_extract', 'nggettext_compile']);
 
 };

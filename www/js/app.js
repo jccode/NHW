@@ -1,5 +1,5 @@
 
-angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.controllers', 'nhw.beacon-model', 'nhw.test']) 
+angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui', 'ui.bootstrap', 'nhw.directives', 'nhw.filters', 'nhw.utils', 'nhw.services', 'nhw.controllers', 'nhw.beacon-model', 'nhw.test', 'gettext']) 
 
     .constant("_", window._)    // allow DI for underscore
 
@@ -590,7 +590,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     }])
 
      // run config on startup
-    .run(['$rootScope', '$state', '$stateParams', '$window', 'Util', 'Bootstrap', '$modalStack', 'User', function($rootScope, $state, $stateParams, $window, Util, Bootstrap, $modalStack, User) {
+    .run(['$rootScope', '$state', '$stateParams', '$window', 'Util', 'Bootstrap', '$modalStack', 'User', 'gettextCatalog', function($rootScope, $state, $stateParams, $window, Util, Bootstrap, $modalStack, User, gettextCatalog) {
         
         
         // It's very handy to add references to $state and $stateParams to the $rootScope
@@ -659,9 +659,10 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         if(!Util.isRunningOnPhonegap()) {
             $rootScope.isInBuilding = true;
         }
+
+        // set language
+        gettextCatalog.setCurrentLanguage('nl');
         
-
-
         // device ready
         $rootScope.$on('deviceready', function(e) {
             console.log('bootstrap');

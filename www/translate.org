@@ -1,0 +1,50 @@
+
+- Work Space
+- Werkplek
+
+- Menu
+- Menu opties
+
+- My Profile
+- Mijn profiel
+
+- Colleagues
+- Vind een collega
+
+- Check In
+- Inchecken
+
+- Check Out
+- Uitchecken
+
+- My Workspace
+- Mijn Werkplek
+
+------------------------------
+
+- Handmatig inchecken
+  Manual Check-in
+  
+- Inchecken via scan
+  Check-in via scan
+
+- Werkafspraken
+  Our Rules
+
+- Welkom bij NS
+
+  
+- Emailadres
+  Email address
+  
+- Personeelsnummer
+  Employee number
+
+- Autorisatiesleutel
+  Authentication key
+
+- Aanmelden
+  Sign In
+
+- 
+

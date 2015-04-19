@@ -7,14 +7,14 @@
     <div class="row " >
         <div class="col-xs-12">
             <button type="button" class="btn btn-primary btn-lg btn-block" ui-sref="app.buildings">
-                {{ isInBuilding ? "Handmatig inchecken" : "Werkplek overzicht" }}
+                {{ isInBuilding ? ("Manual Check-in"|translate) : "Werkplek overzicht" }}
             </button>
 
         </div>
     </div>
     <div class="row " >
         <div class="col-xs-12">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()">Inchecken via scan</button>          </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="scanBarcode()" translate >Check-in via scan</button>          </div>
     </div>
     <div class="row " ng-show="error">
         <div class="col-xs-12" ng-bind-html="error" >
@@ -22,7 +22,7 @@
     </div>
     <div class="row row-padding top-dotted-line">
         <div class="col-xs-12">
-            <button type="button" class="btn btn-lg btn-block btn-primary-reverse" ng-click="showRuleScreen()">Werkafspraken</button>
+            <button type="button" class="btn btn-lg btn-block btn-primary-reverse" ng-click="showRuleScreen()" translate>Our Rules</button>
         </div>
     </div>
 

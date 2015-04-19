@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: HNW\n"
+"PO-Revision-Date: 2015-04-20 03:01+0800\n"
+"Last-Translator: jcchen <junchangchen@gmail.com>\n"
+"Language-Team: jcchen <junchangchen@gmail.com>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: partials/welcome.html:23
+msgid "Authentication key"
+msgstr "Autorisatiesleutel"
+
+#: partials/main.html:21
+msgid "Check In"
+msgstr "Inchecken"
+
+#: partials/main.html:27 partials/main.html:64 partials/main.html:88
+msgid "Check Out"
+msgstr "Uitchecken"
+
+#: partials/main.html:18
+msgid "Colleagues"
+msgstr "Vind een collega"
+
+#: partials/welcome.html:17
+msgid "Email address"
+msgstr "Emailadres"
+
+#: partials/welcome.html:20
+msgid "Employee number"
+msgstr "Personeelsnummer"
+
+#: partials/main.html:5
+msgid "Menu opties"
+msgstr "Menu options"
+
+#: partials/main.html:15
+msgid "My Profile"
+msgstr "Mijn profiel"
+
+#: partials/main.html:24
+#, fuzzy
+msgid "My Workspace"
+msgstr "Werkplek"
+
+#: partials/welcome.html:26
+msgid "Sign In"
+msgstr "Aanmelden"
+
+#: partials/main.html:55
+msgid "Work Space"
+msgstr "Werkplek"

@@ -23,6 +23,7 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor spec/protractor-conf.js",
-    "makemessages": "grunt nggettext_extract"
+    "makemessages": "grunt nggettext_extract",
+    "compilemessages": "grunt nggettext_compile"
   }
 }

@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: partials/welcome.html:23
+msgid "Authentication key"
+msgstr ""
+
+#: partials/main.html:21
+msgid "Check In"
+msgstr ""
+
+#: partials/main.html:27
+#: partials/main.html:64
+#: partials/main.html:88
+msgid "Check Out"
+msgstr ""
+
+#: partials/checkin.html:17
+msgid "Check-in via scan"
+msgstr ""
+
+#: partials/main.html:18
+msgid "Colleagues"
+msgstr ""
+
+#: partials/welcome.html:17
+msgid "Email address"
+msgstr ""
+
+#: partials/welcome.html:20
+msgid "Employee number"
+msgstr ""
+
+#: partials/main.html:5
+msgid "Menu opties"
+msgstr ""
+
+#: partials/main.html:15
+msgid "My Profile"
+msgstr ""
+
+#: partials/main.html:24
+msgid "My Workspace"
+msgstr ""
+
+#: partials/checkin.html:25
+msgid "Our Rules"
+msgstr ""
+
+#: partials/welcome.html:26
+msgid "Sign In"
+msgstr ""
+
+#: partials/main.html:55
+msgid "Work Space"
+msgstr ""
