@@ -26,6 +26,7 @@
         <script src="lib/angular-ui/angular-ui-router.min.js"></script>
         <script src="lib/mobile-angular-ui/js/mobile-angular-ui.min.js"></script>
         <script src="lib/ui-bootstrap/ui-bootstrap-tpls-0.12.3-ts.min.js"></script>
+        <script src="lib/angular-gettext/angular-gettext.min.js"></script>
         <script src="lib/d3.v3.min.js"></script>
         <script src="lib/underscore-min.js"></script>
 
