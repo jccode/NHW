@@ -10,25 +10,24 @@
                     <span class="valign-wrapper">
                         <div><strong>{{cuser.name}}</strong> </div>
                         <div>{{cuser.email}}</div>
-                        <div class="current-checkin"><span ><i class="fa fa-circle"></i> = Uw werkplek</span></div>
+                        <div class="current-checkin"><span ><i class="fa fa-circle"></i> = <translate>Your location</translate></span></div>
                     </span>
                 </div>
             </div>
         </div>
         <div class="col-xs-5 workspace text-center">
             <div class="text-left inline-block">
-                <div>Ingecheckt op: </div>
-                <div
-                    class="mt5">Verdieping:&nbsp;&nbsp;&nbsp;&nbsp;<b>{{floor.FloorNum}}</b> <br />
-                Werkplek:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{seat}}</b> </div>
-                <div class="mt5"><a  ng-click="reflush();" class="btn-reflush"><i class="fa fa-refresh">&nbsp;&nbsp;</i>Verversen</a></div>
+                <div ><span translate>Checked in at</span>: </div>
+                <div class="mt5"><span translate>Floor</span>:&nbsp;&nbsp;&nbsp;&nbsp;<b>{{floor.FloorNum}}</b> <br />
+                <span translate>Seat</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{seat}}</b> </div>
+                <div class="mt5"><a  ng-click="reflush();" class="btn-reflush"><i class="fa fa-refresh">&nbsp;&nbsp;</i><translate>Refresh</translate></a></div>
             </div>
         </div>
     </div>
     <!--
     <div class="row">
         <div class="col-xs-12 footer top-line">
-            <button class="btn" ng-click='checkout();'>Uitchecken</button>
+            <button class="btn" ng-click='checkout();'>Check out</button>
         </div>
     </div>
     -->

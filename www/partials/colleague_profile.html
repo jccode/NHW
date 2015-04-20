@@ -12,31 +12,31 @@
                     <div class="row row-padding">
                         <div class="col-xs-12">
                             <b>Status: </b>
-                            <span ng-show="user.IsAvailable" class="text-success">Beschikbaar</span>
-                            <span ng-hide="user.IsAvailable" class="text-danger">Niet storen</span>
+                            <span ng-show="user.IsAvailable" class="text-success" translate >Available</span>
+                            <span ng-hide="user.IsAvailable" class="text-danger" translate >Do not disturb</span>
                         </div>
                     </div>
                     <div class="row row-padding top-line">
                         <div class="col-xs-12 checkin-info" ng-show="checkinInfo">
-                            <h6>Ingecheckt op: </h6>
+                            <h6><translate>Checked in at</translate>: </h6>
                             <div>
-                                <label>Verdieping:</label>
+                                <label><translate>Floor</translate>:</label>
                                 <b >{{checkinInfo.BuildingFloor.FloorNum}}</b>
                             </div>
                             <div>
-                                <label>Werkplek:</label>
+                                <label><translate>Seat</translate>:</label>
                                 <b >{{checkinInfo.SeatCode}}</b>
                             </div>
                         </div>
                         <div class="col-xs-12" ng-show="!checkinInfo">
-                            <b>Niet ingecheckt</b>
+                            <b translate>Not checked in</b>
                         </div>
                     </div>
                     <div class="row row-padding top-line text-center">
                         <div class="col-xs-12">
                             <a href="javascript:;" class="text-deepblue" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
-                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
-                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijder uit favorieten </span>
+                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i><translate>Add favorites</translate> </span>
+                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i><translate>Remove from favorites</translate> </span>
                             </a>
                         </div>
                     </div>

@@ -4,8 +4,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
+#: partials/colleague_profile.html:38
+#: partials/profile.html:26
+msgid "Add favorites"
+msgstr ""
+
+#: partials/employees.html:6
+msgid "All"
+msgstr ""
+
 #: partials/welcome.html:23
 msgid "Authentication key"
+msgstr ""
+
+#: partials/floors.html:21
+#: partials/floors.html:7
+msgid "available"
+msgstr ""
+
+#: partials/colleague_profile.html:15
+#: partials/profile.html:18
+msgid "Available"
 msgstr ""
 
 #: partials/main.html:21
@@ -22,8 +41,27 @@ msgstr ""
 msgid "Check-in via scan"
 msgstr ""
 
+#: partials/floors.html:19
+#: partials/floors.html:7
+msgid "checked in"
+msgstr ""
+
+#: partials/employees.html:8
+msgid "Checked in"
+msgstr ""
+
+#: partials/app-index.html:20
+#: partials/colleague_profile.html:21
+msgid "Checked in at"
+msgstr ""
+
 #: partials/main.html:18
 msgid "Colleagues"
+msgstr ""
+
+#: partials/colleague_profile.html:16
+#: partials/profile.html:19
+msgid "Do not disturb"
 msgstr ""
 
 #: partials/welcome.html:17
@@ -32,6 +70,17 @@ msgstr ""
 
 #: partials/welcome.html:20
 msgid "Employee number"
+msgstr ""
+
+#: partials/employees.html:7
+#: partials/profile.html:30
+msgid "Favorites"
+msgstr ""
+
+#: partials/app-index.html:21
+#: partials/colleague_profile.html:23
+#: partials/floors.html:18
+msgid "Floor"
 msgstr ""
 
 #: partials/main.html:5
@@ -46,8 +95,46 @@ msgstr ""
 msgid "My Workspace"
 msgstr ""
 
+#: partials/employees.html:23
+msgid "No results found"
+msgstr ""
+
+#: partials/colleague_profile.html:32
+msgid "Not checked in"
+msgstr ""
+
+#: partials/employees.html:9
+msgid "Not Checked in"
+msgstr ""
+
 #: partials/checkin.html:25
 msgid "Our Rules"
+msgstr ""
+
+#: partials/app-index.html:23
+msgid "Refresh"
+msgstr ""
+
+#: partials/colleague_profile.html:39
+#: partials/profile.html:27
+msgid "Remove from favorites"
+msgstr ""
+
+#: partials/employees.html:4
+msgid "Search"
+msgstr ""
+
+#: partials/app-index.html:22
+#: partials/colleague_profile.html:27
+msgid "Seat"
+msgstr ""
+
+#: partials/floors.html:5
+msgid "Select a floor"
+msgstr ""
+
+#: partials/buildings.html:4
+msgid "Select a location"
 msgstr ""
 
 #: partials/welcome.html:26
@@ -56,4 +143,8 @@ msgstr ""
 
 #: partials/main.html:55
 msgid "Work Space"
+msgstr ""
+
+#: partials/app-index.html:13
+msgid "Your location"
 msgstr ""

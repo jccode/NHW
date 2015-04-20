@@ -2,9 +2,9 @@
 <div ng-controller="FloorsCtrl">
 
 <div content-for="info-bar-title">
-    Selecteer een verdieping:
+    <translate>Select a floor</translate>:
     <div class="pull-right">
-        <i> {{countInfo.UnavailableSeatCount}} ingecheckt </i>&nbsp;&nbsp;| <i> {{countInfo.AvailableSeatCount}} beschikbaar</i>
+        <i> {{countInfo.UnavailableSeatCount}} <translate>checked in</translate> </i>&nbsp;&nbsp;| <i> {{countInfo.AvailableSeatCount}} <translate>available</translate></i>
     </div>
 </div>
 
@@ -15,10 +15,10 @@
                 <div class="floor-list-container">
                     <table class="table table-striped floor-list">
                         <tr ng-repeat="floor in floors" ui-sref="app.floor_select({f:floor.FloorId})"> 
-                            <td>Verdieping {{floor.FloorNum}}</td>
-                            <td>{{floor.NonEmptySeat}} ingecheckt <i class="fa fa-users"></i></td>
+                            <td><translate>Floor</translate> {{floor.FloorNum}}</td>
+                            <td>{{floor.NonEmptySeat}} <translate>checked in</translate> <i class="fa fa-users"></i></td>
                             <td>
-                                {{floor.SeatCount - floor.NonEmptySeat}} beschikbaar 
+                                {{floor.SeatCount - floor.NonEmptySeat}} <translate>available</translate> 
                                 <i class="fa fa-ban text-danger" ng-if="floor.SeatCount == 0 || floor.SeatCount - floor.NonEmptySeat == 0"></i>
                                 <i class="fa fa-check-circle text-success" ng-if="(floor.SeatCount>0) && (floor.SeatCount-floor.NonEmptySeat>0)"></i>                                
                             </td>

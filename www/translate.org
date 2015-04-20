@@ -1,4 +1,5 @@
 
+* DONE
 - Work Space
 - Werkplek
 
@@ -46,5 +47,76 @@
 - Aanmelden
   Sign In
 
-- 
+------------------------------
 
+- Zoek
+  Search
+
+- Iedereen
+  All
+
+- Favoriet
+  Favorites
+
+- Ingecheckt
+  Checked in
+
+- Niet ingecheckt
+  Not Checked in
+
+- Geen resultaten gevonden
+  No results found
+
+- Uw werkplek
+  Your location
+
+- Ingecheckt op
+  Checked in at
+
+- Verdieping
+  Floor
+
+- Werkplek
+  Seat
+
+- Verversen
+  Refresh
+
+------------------------------
+- Beschikbaar
+  Available
+  
+- Niet storen
+  Do not disturb
+
+- Toevoegen favorieten
+  Add favorites
+
+- Verwijder uit favorieten
+  Remove from favorites
+
+- Favorieten
+  favorites
+
+- Niet ingecheckt
+  Not checked in
+  
+------------------------------
+* TODO
+  
+- Selecteer een locatie
+  Select a location
+  
+- Selecteer een verdieping
+  Select a floor
+
+- ingecheckt
+  checked in
+
+- beschikbaar
+  available
+
+- Verdieping
+  Floor
+
+- 

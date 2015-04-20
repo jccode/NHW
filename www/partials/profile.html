@@ -15,19 +15,19 @@
                                 <switch ng-model="user.IsAvailable" class="inline switch-sm green" ng-change="updateUserState(user.IsAvailable);"></switch>
                             </label>
                             <div class="form-control-wrapper col-xs-9 col-sm-10 col-lg-11">
-                                <span ng-show="user.IsAvailable" >Beschikbaar</span>
-                                <span ng-hide="user.IsAvailable" >Niet storen</span>
+                                <span ng-show="user.IsAvailable" translate >Available</span>
+                                <span ng-hide="user.IsAvailable" translate >Do not disturb</span>
                             </div>
                         <!-- </div> -->
                     </div>
                     <div class="row row-padding top-line favourite">
                         <div class="col-xs-12">
                             <a href="javascript:;" class="text-deepblue" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited" ng-hide="iscuser">
-                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
-                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijder uit favorieten </span>
+                                <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i><translate>Add favorites</translate> </span>
+                                <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i><translate>Remove from favorites</translate> </span>
                             </a>
                             <a href="javascript:;" class="text-deepblue" ui-sref="app.employees({t:'favourite'})" ng-show="iscuser">
-                                <i class="fa fa-star golden">&nbsp;&nbsp;</i>{{favourite_count}} Favorieten
+                                <i class="fa fa-star golden">&nbsp;&nbsp;</i>{{favourite_count}} <translate>Favorites</translate>
                             </a>
                         </div>
                     </div>
