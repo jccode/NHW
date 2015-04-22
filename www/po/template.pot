@@ -6,6 +6,7 @@ msgstr ""
 
 #: partials/colleague_profile.html:38
 #: partials/profile.html:26
+#: partials/svg.html:33
 msgid "Add favorites"
 msgstr ""
 
@@ -13,8 +14,20 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+#: partials/svg.html:87
+msgid "Are you sure you want to change your seat to seat number {{seat}}?"
+msgstr ""
+
+#: partials/main.html:91
+msgid "Are you sure you want to check out?"
+msgstr ""
+
 #: partials/welcome.html:23
 msgid "Authentication key"
+msgstr ""
+
+#: partials/floor_select.html:6
+msgid "Automatic Seat Selection"
 msgstr ""
 
 #: partials/floors.html:21
@@ -24,7 +37,20 @@ msgstr ""
 
 #: partials/colleague_profile.html:15
 #: partials/profile.html:18
+#: partials/svg.html:23
 msgid "Available"
+msgstr ""
+
+#: partials/svg.html:122
+msgid "Change location"
+msgstr ""
+
+#: partials/svg.html:83
+msgid "Change Location"
+msgstr ""
+
+#: partials/svg.html:48
+msgid "Check in"
 msgstr ""
 
 #: partials/main.html:21
@@ -35,6 +61,10 @@ msgstr ""
 #: partials/main.html:64
 #: partials/main.html:88
 msgid "Check Out"
+msgstr ""
+
+#: partials/svg.html:103
+msgid "Check-in successful"
 msgstr ""
 
 #: partials/checkin.html:17
@@ -59,8 +89,17 @@ msgstr ""
 msgid "Colleagues"
 msgstr ""
 
+#: partials/svg.html:94
+msgid "Confirm Change"
+msgstr ""
+
+#: partials/svg.html:70
+msgid "Confirm Check in"
+msgstr ""
+
 #: partials/colleague_profile.html:16
 #: partials/profile.html:19
+#: partials/svg.html:22
 msgid "Do not disturb"
 msgstr ""
 
@@ -79,7 +118,10 @@ msgstr ""
 
 #: partials/app-index.html:21
 #: partials/colleague_profile.html:23
+#: partials/floor_select.html:5
 #: partials/floors.html:18
+#: partials/svg.html:115
+#: partials/svg.html:53
 msgid "Floor"
 msgstr ""
 
@@ -93,6 +135,10 @@ msgstr ""
 
 #: partials/main.html:24
 msgid "My Workspace"
+msgstr ""
+
+#: partials/main.html:97
+msgid "No"
 msgstr ""
 
 #: partials/employees.html:23
@@ -117,6 +163,7 @@ msgstr ""
 
 #: partials/colleague_profile.html:39
 #: partials/profile.html:27
+#: partials/svg.html:34
 msgid "Remove from favorites"
 msgstr ""
 
@@ -126,7 +173,13 @@ msgstr ""
 
 #: partials/app-index.html:22
 #: partials/colleague_profile.html:27
+#: partials/svg.html:116
+#: partials/svg.html:61
 msgid "Seat"
+msgstr ""
+
+#: partials/floor_select.html:12
+msgid "seats available"
 msgstr ""
 
 #: partials/floors.html:5
@@ -143,6 +196,14 @@ msgstr ""
 
 #: partials/main.html:55
 msgid "Work Space"
+msgstr ""
+
+#: partials/main.html:96
+msgid "Yes"
+msgstr ""
+
+#: partials/svg.html:114
+msgid "You are checked in:"
 msgstr ""
 
 #: partials/app-index.html:13

@@ -661,7 +661,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
         }
 
         // set language
-        gettextCatalog.setCurrentLanguage('nl');
+        gettextCatalog.setCurrentLanguage('en');
         
         // device ready
         $rootScope.$on('deviceready', function(e) {

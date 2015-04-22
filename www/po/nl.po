@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: HNW\n"
-"PO-Revision-Date: 2015-04-21 00:37+0800\n"
+"PO-Revision-Date: 2015-04-22 23:35+0800\n"
 "Last-Translator: jcchen <junchangchen@gmail.com>\n"
 "Language-Team: jcchen <junchangchen@gmail.com>\n"
 "Language: nl\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: partials/colleague_profile.html:38 partials/profile.html:26
+#: partials/svg.html:33
 msgid "Add favorites"
 msgstr "Toevoegen favorieten"
 
@@ -22,17 +23,44 @@ msgstr "Toevoegen favorieten"
 msgid "All"
 msgstr "Iedereen"
 
+#: partials/svg.html:87
+msgid "Are you sure you want to change your seat to seat number {{seat}}?"
+msgstr "Weet u zeker dat u uw locatie wilt wijzigen naar Werkplek {{seat}}?"
+
+#: partials/main.html:91
+msgid "Are you sure you want to check out?"
+msgstr "Weet u zeker dat u wilt uitchecken?"
+
 #: partials/welcome.html:23
 msgid "Authentication key"
 msgstr "Autorisatiesleutel"
+
+#: partials/floor_select.html:6
+msgid "Automatic Seat Selection"
+msgstr "Automatisch inchecken"
 
 #: partials/floors.html:21 partials/floors.html:7
 msgid "available"
 msgstr "beschikbaar"
 
 #: partials/colleague_profile.html:15 partials/profile.html:18
+#: partials/svg.html:23
 msgid "Available"
 msgstr "Beschikbaar"
+
+#: partials/svg.html:122
+#, fuzzy
+msgid "Change location"
+msgstr "Werkplek wijzigen"
+
+#: partials/svg.html:83
+msgid "Change Location"
+msgstr "Werkplek wijzigen"
+
+#: partials/svg.html:48
+#, fuzzy
+msgid "Check in"
+msgstr "Inchecken"
 
 #: partials/main.html:21
 msgid "Check In"
@@ -41,6 +69,10 @@ msgstr "Inchecken"
 #: partials/main.html:27 partials/main.html:64 partials/main.html:88
 msgid "Check Out"
 msgstr "Uitchecken"
+
+#: partials/svg.html:103
+msgid "Check-in successful"
+msgstr "Check-in geslaagd"
 
 #: partials/checkin.html:17
 msgid "Check-in via scan"
@@ -62,7 +94,16 @@ msgstr "Inchecken"
 msgid "Colleagues"
 msgstr "Vind een collega"
 
+#: partials/svg.html:94
+msgid "Confirm Change"
+msgstr "Inchecken bevestigen"
+
+#: partials/svg.html:70
+msgid "Confirm Check in"
+msgstr "Inchecken bevestigen"
+
 #: partials/colleague_profile.html:16 partials/profile.html:19
+#: partials/svg.html:22
 msgid "Do not disturb"
 msgstr "Niet storen"
 
@@ -79,7 +120,8 @@ msgid "Favorites"
 msgstr "Favoriet"
 
 #: partials/app-index.html:21 partials/colleague_profile.html:23
-#: partials/floors.html:18
+#: partials/floor_select.html:5 partials/floors.html:18 partials/svg.html:115
+#: partials/svg.html:53
 msgid "Floor"
 msgstr "Verdieping"
 
@@ -94,6 +136,10 @@ msgstr "Mijn profiel"
 #: partials/main.html:24
 msgid "My Workspace"
 msgstr "Werkplek"
+
+#: partials/main.html:97
+msgid "No"
+msgstr "Nee"
 
 #: partials/employees.html:23
 msgid "No results found"
@@ -116,6 +162,7 @@ msgid "Refresh"
 msgstr "Verversen"
 
 #: partials/colleague_profile.html:39 partials/profile.html:27
+#: partials/svg.html:34
 msgid "Remove from favorites"
 msgstr "Verwijder uit favorieten"
 
@@ -124,8 +171,13 @@ msgid "Search"
 msgstr "Zoek"
 
 #: partials/app-index.html:22 partials/colleague_profile.html:27
+#: partials/svg.html:116 partials/svg.html:61
 msgid "Seat"
 msgstr "Werkplek"
+
+#: partials/floor_select.html:12
+msgid "seats available"
+msgstr "werkplekken beschikbaar"
 
 #: partials/floors.html:5
 msgid "Select a floor"
@@ -143,6 +195,17 @@ msgstr "Aanmelden"
 msgid "Work Space"
 msgstr "Werkplek"
 
+#: partials/main.html:96
+msgid "Yes"
+msgstr "Ja"
+
+#: partials/svg.html:114
+msgid "You are checked in:"
+msgstr "U bent ingecheckt op:"
+
 #: partials/app-index.html:13
 msgid "Your location"
 msgstr "Uw werkplek"
+
+#~ msgid "werkplekken beschikbaar"
+#~ msgstr "seats available"

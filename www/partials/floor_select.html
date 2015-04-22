@@ -2,14 +2,14 @@
 <div ng-controller="FloorSelectCtrl" class="container-fluid" style="height: 100%;">
     
     <div content-for="info-bar-title">
-        Verdieping {{floor.FloorNum}}
-        <button type="button" class="btn btn-primary btn-sm info-bar-btn" ng-show="isInBuilding" ng-click="auto_reserve(floor.FloorId)">Automatisch inchecken</button>
+        <translate>Floor</translate> {{floor.FloorNum}}
+        <button type="button" class="btn btn-primary btn-sm info-bar-btn" ng-show="isInBuilding" ng-click="auto_reserve(floor.FloorId)" translate>Automatic Seat Selection</button>
     </div>
 
     <ng-include src="'partials/svg.html'" style="position:absolute;left:0;top:0;bottom:65px;width:100%;"></ng-include>
     
     <div id="svg-footer">
-        <span class="text-success">{{floor.free}} werkplekken beschikbaar</span>
+        <span class="text-success">{{floor.free}} <translate>seats available</translate></span>
     </div>
 
 </div>

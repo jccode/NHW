@@ -102,7 +102,6 @@
   Not checked in
   
 ------------------------------
-* TODO
   
 - Selecteer een locatie
   Select a location
@@ -119,4 +118,49 @@
 - Verdieping
   Floor
 
-- 
+------------------------------
+
+- Automatisch inchecken
+  Automatic Seat Selection
+  
+- Inchecken
+  Check in
+
+- Inchecken bevestigen
+  Confirm Check in
+
+- Werkplek wijzigen
+  Change Location
+
+- Weet u zeker dat u uw locatie wilt wijzigen naar Werkplek {{seat}}?
+  Are you sure you want to change your seat to seat number {{seat}}?
+
+- Inchecken bevestigen
+  Confirm Change
+  
+* TODO
+
+- Check-in geslaagd
+  Check-in successful
+  
+- U bent ingecheckt op:
+  You are checked in:
+
+- Werkplek wijzigen
+  Change location
+
+- Weet u zeker dat u wilt uitchecken?
+  Are you sure you want to check out?
+
+- Ja
+  Yes
+
+- Nee
+  No
+
+- werkplekken beschikbaar
+  seats available
+
+  
+
+  

@@ -19,8 +19,8 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-9 col-xs-offset-3 ">
-                        <b ng-hide="user.IsAvailable" class="text-danger">Niet storen</b>
-                        <b ng-show="user.IsAvailable" class="text-success">Beschikbaar</b>
+                        <b ng-hide="user.IsAvailable" class="text-danger" translate>Do not disturb</b>
+                        <b ng-show="user.IsAvailable" class="text-success" translate>Available</b>
                     </div>
                 </div>
                 <div class="row footer-row" ng-hide="user.UserId == cuser.id">
@@ -30,8 +30,8 @@
                     </div>  -->
                     <div class="col-xs-9">
                         <a class="text-deepblue" href="javascript:;" ng-click="toggle_favourite(user.UserId, isFavourited); isFavourited=!isFavourited">
-                            <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i>Toevoegen favorieten </span>
-                            <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i>Verwijder uit favorieten </span>
+                            <span ng-show="!isFavourited"><i class="fa fa-star golden">&nbsp;&nbsp;</i> <translate>Add favorites</translate> </span>
+                            <span ng-show="isFavourited"><i class="fa fa-star text-muted">&nbsp;&nbsp;</i> <translate>Remove from favorites</translate> </span>
                         </a>
                     </div>
                 </div>
@@ -45,12 +45,12 @@
             <div class="container-fluid no-gutter">
                 <div class="row">
                     <div class="col-xs-12">
-                        <b>Inchecken</b>
+                        <b translate >Check in</b>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        Verdieping:
+                        <translate>Floor</translate>:
                     </div>
                     <div class="col-xs-8">
                         {{floor.FloorNum}}
@@ -58,7 +58,7 @@
                 </div>
                 <div class="row ">
                     <div class="col-xs-4">
-                        Werkplek:
+                        <translate>Seat</translate>:
                     </div>
                     <div class="col-xs-8">
                         {{seat}}
@@ -67,7 +67,7 @@
                 <div class="row footer-row top-line" ng-show="isInBuilding">
                     <div class="col-xs-12">
                         <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
-                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                        <a class="text-deepblue" ng-click="confirm_checkin()" translate>Confirm Check in</a>
                     </div>
                 </div>
             </div>
@@ -80,18 +80,18 @@
             <div class="container-fluid no-gutter">
                 <div class="row">
                     <div class="col-xs-12">
-                        <b>Werkplek wijzigen</b>
+                        <b translate >Change Location</b>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-11">
-                        Weet u zeker dat u uw locatie wilt wijzigen naar Werkplek {{seat}}?
+                    <div class="col-xs-11" translate>
+                        Are you sure you want to change your seat to seat number {{seat}}?
                     </div>
                 </div>
                 <div class="row footer-row top-line">
                     <div class="col-xs-12">
                         <i class="fa fa-map-marker">&nbsp;&nbsp;</i>
-                        <a class="text-deepblue" ng-click="confirm_checkin()">Inchecken bevestigen</a>
+                        <a class="text-deepblue" ng-click="confirm_checkin()" translate>Confirm Change</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
         <script type="text/ng-template" id="checkin_modal.html">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="cancel()"><i class="fa fa-times" ></i></button>
-                <h4 class="modal-title">Check-in geslaagd</h4>
+                <h4 class="modal-title" translate>Check-in successful</h4>
             </div>
             <div class="modal-body" id="checkin_modal">
                 <div class="container-fluid no-gutter profile ">
@@ -111,15 +111,15 @@
                             <img src="img/default_avatar.jpg" nhw-src="{{picurl}}{{cuser.photo}}" class="img-circle" /> <!-- src="img/avatar.jpg" -->
                         </div>
                         <div class="col-xs-6 workspace">
-                            <p>U bent ingecheckt op:</p>
-                            <p>Verdieping:  <b>{{data.floor.FloorNum}}</b></p>
-                            <p>Werkplek:   <b>{{data.seat}}</b></p>
+                            <p translate>You are checked in:</p>
+                            <p><translate>Floor</translate>:  <b>{{data.floor.FloorNum}}</b></p>
+                            <p><translate>Seat</translate>:   <b>{{data.seat}}</b></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" ng-click="cancel()"><i class="fa fa-repeat text-muted">&nbsp;&nbsp;</i> Werkplek wijzigen</button> <!-- ok('Locatie wijzigen') -->
+                <button class="btn" ng-click="cancel()"><i class="fa fa-repeat text-muted">&nbsp;&nbsp;</i> <translate>Change location</translate></button> <!-- ok('Locatie wijzigen') -->
                 <button class="btn" ng-click="ok('ok')">&nbsp;&nbsp;Ok&nbsp;&nbsp;</button>
             </div>
         </script>
