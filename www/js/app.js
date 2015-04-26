@@ -4,7 +4,7 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
     .constant("_", window._)    // allow DI for underscore
 
     // bootstrap etc
-    .factory("Bootstrap", ['$log', '$rootScope', '$q', '$window', '$document', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', function($log, $rootScope, $q, $window, $document, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel) {
+    .factory("Bootstrap", ['$log', '$rootScope', '$q', '$window', '$document', '_', 'Util', 'Beacons', 'User', 'Floors', 'BeaconUtil', 'BeaconModel', 'gettextCatalog', function($log, $rootScope, $q, $window, $document, _, Util, Beacons, User, Floors, BeaconUtil, BeaconModel, gettextCatalog) {
 
         function init_beacon_model() {
             if(!Util.isIbeaconSupported()) {
