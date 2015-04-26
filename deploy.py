@@ -96,6 +96,7 @@ def copy_and_minify_js(src_www, deploy_www):
         'js/services.js', 
         'js/controllers.js', 
         'js/beacon_model.js', 
+        'js/translations.js', 
         'js/test.js', 
     ]
     js_min(map(lambda f: join(src_www, f), js), join(deploy_www, 'js/all.min.js'))
