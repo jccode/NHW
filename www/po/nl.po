@@ -6,13 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: HNW\n"
-"PO-Revision-Date: 2015-04-22 23:35+0800\n"
+"PO-Revision-Date: 2015-04-27 02:17+0800\n"
 "Last-Translator: jcchen <junchangchen@gmail.com>\n"
 "Language-Team: jcchen <junchangchen@gmail.com>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: partials/checkin.html:9
+msgid "{{ isInBuilding ? \"Manual Check-in\" : \"Workspace overview\" }}"
+msgstr "{{ isInBuilding ? 'Handmatig inchecken' : 'Werkplek overzicht' }}"
 
 #: partials/colleague_profile.html:38 partials/profile.html:26
 #: partials/svg.html:33

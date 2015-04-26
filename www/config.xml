@@ -47,6 +47,7 @@
     <gap:plugin name="org.apache.cordova.device" version="0.2.8"/>
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
+    <gap:plugin name="org.apache.cordova.globalization" />
     <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.5" />
     <gap:plugin name="com.phonegap.plugins.barcodescanner" version="2.0.0" />
     <gap:plugin name="com.brodysoft.sqliteplugin" version="1.0.0" />

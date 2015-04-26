@@ -138,7 +138,6 @@
 - Inchecken bevestigen
   Confirm Change
   
-* TODO
 
 - Check-in geslaagd
   Check-in successful
@@ -161,6 +160,7 @@
 - werkplekken beschikbaar
   seats available
 
-  
-
+* TODO  
+- Workspace overview
+  Werkplek overzicht
   

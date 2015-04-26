@@ -4,6 +4,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
+#: partials/checkin.html:9
+msgid "{{ isInBuilding ? \"Manual Check-in\" : \"Workspace overview\" }}"
+msgstr ""
+
 #: partials/colleague_profile.html:38
 #: partials/profile.html:26
 #: partials/svg.html:33

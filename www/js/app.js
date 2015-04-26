@@ -568,7 +568,25 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             });
         }
 
+        function setLanguage() {
+            navigator.globalization.getPreferredLanguage(
+                function (language) {
+                    var val = language.value;
+                    if(val.indexOf("-") > 0) {
+                        val = val.split("-")[0];
+                    }
+                    gettextCatalog.setCurrentLanguage(val);
+                    Log.log('Set ' + val + ' as language code \n');
+                },
+                function () {
+                    Log.log('Error getting language.\n');
+                }
+            );
+        }
+
+
         function deviceready() {
+            setLanguage();
             bindEvents();
             init_beacon_model();
             checkAndEnableBluetooth();
@@ -660,9 +678,6 @@ angular.module('nhw', ['ui.router', 'ngTouch', 'ngSanitize', 'mobile-angular-ui'
             $rootScope.isInBuilding = true;
         }
 
-        // set language
-        gettextCatalog.setCurrentLanguage('en');
-        
         // device ready
         $rootScope.$on('deviceready', function(e) {
             console.log('bootstrap');
