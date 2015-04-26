@@ -14,6 +14,10 @@ msgstr ""
 msgid "Add favorites"
 msgstr ""
 
+#: partials/checkin.html:60
+msgid "Agree"
+msgstr ""
+
 #: partials/employees.html:6
 msgid "All"
 msgstr ""
@@ -196,6 +200,10 @@ msgstr ""
 
 #: partials/welcome.html:26
 msgid "Sign In"
+msgstr ""
+
+#: partials/checkin.html:33
+msgid "Welcome to NS"
 msgstr ""
 
 #: partials/main.html:55

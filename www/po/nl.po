@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: HNW\n"
-"PO-Revision-Date: 2015-04-27 02:17+0800\n"
+"PO-Revision-Date: 2015-04-27 02:37+0800\n"
 "Last-Translator: jcchen <junchangchen@gmail.com>\n"
 "Language-Team: jcchen <junchangchen@gmail.com>\n"
 "Language: nl\n"
@@ -22,6 +22,10 @@ msgstr "{{ isInBuilding ? 'Handmatig inchecken' : 'Werkplek overzicht' }}"
 #: partials/svg.html:33
 msgid "Add favorites"
 msgstr "Toevoegen favorieten"
+
+#: partials/checkin.html:60
+msgid "Agree"
+msgstr "Akkoord"
 
 #: partials/employees.html:6
 msgid "All"
@@ -195,6 +199,11 @@ msgstr "Selecteer een locatie"
 msgid "Sign In"
 msgstr "Aanmelden"
 
+# Welkom bij NS
+#: partials/checkin.html:33
+msgid "Welcome to NS"
+msgstr "Welkom bij NS"
+
 #: partials/main.html:55
 msgid "Work Space"
 msgstr "Werkplek"
@@ -211,5 +220,3 @@ msgstr "U bent ingecheckt op:"
 msgid "Your location"
 msgstr "Uw werkplek"
 
-#~ msgid "werkplekken beschikbaar"
-#~ msgstr "seats available"

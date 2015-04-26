@@ -160,7 +160,12 @@
 - werkplekken beschikbaar
   seats available
 
-* TODO  
 - Workspace overview
   Werkplek overzicht
-  
+
+- Welkom bij NS
+  Welcome to NS
+
+- Akkoord
+  Agree
+
